@@ -221,3 +221,77 @@ Sadece `main`.
 
 ### İstisna
 Büyük mimari değişiklik (örn. Next.js major upgrade) geçici branch açılabilir, ama default `main`.
+
+---
+
+## ADR-009: SSR inline JSON-LD > Script afterInteractive (canlı vaka)
+
+**Tarih:** 2026-05-25 (akşam)
+**Durum:** Kabul edildi — bug fix uygulandı (site repo commit `29f0b29`)
+
+### Bağlam
+hayrettinsendil.tr `layout.tsx`'inde Person JSON-LD schema'ı `next/script` ile `strategy="afterInteractive"` olarak inject ediliyordu:
+
+```tsx
+<Script
+  id="person-schema"
+  type="application/ld+json"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+/>
+```
+
+Aynı pattern blog detay sayfasında Article schema için de kullanıldı. Plugin v1.0 kurulumu sonrası **ilk smoke test** — PO baseline audit sonucu: **site genelinde 0 JSON-LD bloku**. Kod doğru görünüyor ama HTML response'unda yok.
+
+### Kök Neden
+`strategy="afterInteractive"` Next.js'in JS bundle yüklendikten sonra script'i HTML'e enjekte eden modu. Sonuç:
+
+- Initial HTML response'da `<script type="application/ld+json">` **YOK**
+- Yalnızca tarayıcıda JS render olduktan sonra DOM'a inject
+- **Crawler etkisi:**
+  - Google bot çoğunlukla JS render eder, ama **first-pass crawl**'da göremez (ilk index yavaşlar)
+  - LinkedIn / X / Slack / Facebook bot'ları **JS render etmez** → rich preview'de schema verisi yok
+  - Rich Results Test ilk pass'te fail edebilir
+
+### Karar
+Tüm JSON-LD schema'lar **SSR inline** olarak render edilmeli:
+
+```tsx
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+/>
+```
+
+`next/script` yerine plain `<script>` (server-rendered, initial HTML'de bulunur).
+
+### Alternatifler
+| Seçenek | Avantaj | Dezavantaj | Karar |
+|---|---|---|---|
+| **Script `afterInteractive`** | Next.js native, perf cilası | Crawler'a görünmez | **Eleendi (gerçek bug)** |
+| **Script `beforeInteractive`** | Daha erken inject | Hala JS bağımlı, marjinal kazanç | Bot uyumluluğu garantilenemez |
+| **SSR inline `<script>` (seçilen)** | Initial HTML'de mevcut, tüm bot'lar görür | Performans bedeli yok (statik string) | **Seçildi** |
+| **JSON-LD route handler** (`/schema.json`) | Cache control | Ekstra HTTP request, runtime cost | Aşırı mühendislik |
+
+### Vaka — Bug Tespiti ve Fix
+
+- **Audit:** 2026-05-25 baseline (plugin install sonrası ilk smoke test)
+- **Tespit:** SEO ajan HTML'de `<script type="application/ld+json">` ararken hiç bulamadı (site geneli)
+- **Fix:** WEB ajan brief'i, tek commit (4 dosya, +108/-38 LOC):
+  - `src/app/layout.tsx` — Person + WebSite SSR inline
+  - `src/app/blog/[slug]/page.tsx` — BlogPosting + BreadcrumbList SSR inline
+  - `src/app/about/page.tsx` — canonical + per-page OG/Twitter
+  - `src/app/blog/page.tsx` — canonical + per-page OG/Twitter
+- **Commit:** `29f0b29` — `feat(seo): baseline P0 fixes — canonical + per-page metadata + inline JSON-LD`
+- **Deploy:** Vercel READY 31 sn (atomic, zero-downtime)
+- **Doğrulama:** 6/6 canlı check PASS
+
+### Ders (genel pattern)
+**SEO için JS-injected schema yetersiz.** Schema markup statik HTML zorunluluğu — bu kural Next.js dışında Vue, Svelte, React Router gibi tüm SSR framework'lerde geçerli.
+
+**Bonus ders — plugin gerçek değer üretti.** Sahip ve "yardımcı" (Claude) kodun var olduğuna güvenmişti; SKILL'lerde "JSON-LD eklendi" yazıyordu. Ajan-bazlı baseline audit kör noktayı gösterdi.
+
+> **Auditless trust = bug.** Pre-flight check + baseline audit, multi-agent setup'ın en değerli yan ürünü.
+
+### Yan ürün
+Bu vaka blog yazısı serisinin 1. yazısının (`Kişisel siteyi 7 ajanlı takım nasıl yönetir?`) ana hikayesidir. Pattern aynı zamanda `docs/patterns.md` Pattern 6 (Pre-flight Check) gerçek uygulaması.
