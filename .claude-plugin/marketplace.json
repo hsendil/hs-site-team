@@ -7,7 +7,10 @@
   "plugins": [
     {
       "name": "hs-site-team",
-      "source": ".",
+      "source": {
+        "source": "github",
+        "repo": "hsendil/hs-site-team"
+      },
       "description": "AI-managed personal site — orchestrator + 5 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social)."
     }
   ]
