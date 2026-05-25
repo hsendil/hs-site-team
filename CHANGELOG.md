@@ -3,6 +3,31 @@
 Tüm önemli değişiklikler bu dosyada belgelenir.
 Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) · SemVer.
 
+## [1.1.0] — 2026-05-26
+
+Minor sürüm — ilk MCP zinciri otomasyonu (Faz 2 Sprint 1).
+
+### Eklendi
+- **Chain 2: Vercel Deploy Triage** — her 6 saatte bir otomatik (GitHub Actions cron)
+  - `.github/workflows/chain2-deploy-triage.yml` — cron + manuel tetik
+  - `scripts/run-deploy-triage.sh` — Vercel API → Claude analiz → Notion kaydı (uctan uca implementasyon)
+  - `scripts/README.md` — setup, secrets, risk, maliyet rehberi
+- **Pattern P10:** Otonom CI/CD gözlemcisi — LLM-based incident triage (yeni pattern, sonraki commit'te docs/patterns.md'ye eklenecek)
+
+### Mimari
+- Plugin **hem chat-driven** (Claude Code) **hem otonom** (GitHub Actions cron) işler
+- Ajan tanımları tek kaynak: `skills/hs-site-po/references/WEB.md` Claude API system prompt olarak kullanılır (context isolation korunur)
+- Notion `pages` API ile her incident yeni sayfa (parent page UUID `NOTION_INCIDENT_DB` secret'ı)
+
+### Gereken kullanıcı adımları
+GitHub Actions secrets (6 adet): `ANTHROPIC_API_KEY`, `VERCEL_TOKEN`, `VERCEL_TEAM_ID`, `VERCEL_PROJECT_ID`, `NOTION_API_KEY`, `NOTION_INCIDENT_DB`. Detay: `scripts/README.md`.
+
+### Sonraki
+- Sprint 2: Chain 1 (içerik radarı — GCal → CON → Notion)
+- Sprint 3: Chain 3 (sertifika pipeline — Gmail → CON → site)
+
+---
+
 ## [1.0.1] — 2026-05-25 (akşam)
 
 Patch sürüm — dokümantasyon + canlı vaka kaydı.
