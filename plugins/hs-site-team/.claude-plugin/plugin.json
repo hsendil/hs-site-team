@@ -1,0 +1,23 @@
+{
+  "name": "hs-site-team",
+  "version": "1.0.0",
+  "description": "AI-managed personal site — orchestrator + 5 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social).",
+  "author": {
+    "name": "Hayrettin Şendil",
+    "email": "hayri.sendil@gmail.com",
+    "url": "https://hayrettinsendil.tr"
+  },
+  "homepage": "https://github.com/hsendil/hs-site-team",
+  "repository": "https://github.com/hsendil/hs-site-team",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "agent-skills",
+    "multi-agent",
+    "orchestrator",
+    "context-engineering",
+    "nextjs",
+    "vercel",
+    "personal-site"
+  ]
+}
