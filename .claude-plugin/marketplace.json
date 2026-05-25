@@ -1,0 +1,14 @@
+{
+  "name": "hs-site-team",
+  "owner": {
+    "name": "Hayrettin Şendil",
+    "url": "https://hayrettinsendil.tr"
+  },
+  "plugins": [
+    {
+      "name": "hs-site-team",
+      "source": ".",
+      "description": "AI-managed personal site — orchestrator + 5 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social)."
+    }
+  ]
+}
