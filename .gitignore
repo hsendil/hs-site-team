@@ -9,6 +9,9 @@ Thumbs.db
 
 # Logs
 *.log
+triage-log.txt
+content-radar-log.txt
+cert-pipeline-log.txt
 
 # Local secrets — asla commit edilmemeli
 .env

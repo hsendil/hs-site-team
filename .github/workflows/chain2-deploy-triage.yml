@@ -1,0 +1,60 @@
+# Chain 2 — Vercel Deploy Failure Auto-Triage
+#
+# Tetik: her 6 saatte bir (UTC). Vercel API'den hayrettinsendil son
+# deployment'ın state'ini kontrol eder. ERROR ise WEB ajan analizini
+# tetikler, sonucu Notion 'Incident Log' sayfasına yazar.
+#
+# Manuel test: workflow_dispatch ile UI'dan tetiklenebilir.
+#
+# Gerekli secrets (Settings → Secrets and variables → Actions):
+#   ANTHROPIC_API_KEY   — Claude API key (console.anthropic.com'dan)
+#   VERCEL_TOKEN        — Vercel personal access token (vercel.com/account/tokens)
+#   VERCEL_TEAM_ID      — team_a9MIpygh4KGHrdhTQgHYrG7A (route34 team)
+#   VERCEL_PROJECT_ID   — prj_i1bszxeuqlWGSw7Lkae97pfKmm7O (hayrettinsendil project)
+#   NOTION_API_KEY      — Notion integration token (notion.so/my-integrations)
+#   NOTION_INCIDENT_DB  — Notion 'Incident Log' database ID
+
+name: Chain 2 — Vercel Deploy Triage
+
+on:
+  schedule:
+    # Her 6 saatte bir: 00:00, 06:00, 12:00, 18:00 UTC
+    - cron: '0 */6 * * *'
+  workflow_dispatch:  # Manuel tetik (UI'dan)
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout plugin repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          # jq + curl pre-installed
+          # Anthropic SDK opsiyonel (script direct curl kullanıyor)
+          echo "Tools ready"
+
+      - name: Run deploy triage
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_INCIDENT_DB: ${{ secrets.NOTION_INCIDENT_DB }}
+        run: bash scripts/run-deploy-triage.sh
+
+      - name: Upload run log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-log-${{ github.run_id }}
+          path: triage-log.txt
+          retention-days: 30
