@@ -1,6 +1,6 @@
 ---
 name: hs-site-po
-description: hayrettinsendil.tr için 6 ajanlı takım orchestrator. Webmaster, SEO, Content, Brand, Social. Tetik: hs-site, webmaster, blog, OG, sosyal post, takım.
+description: hayrettinsendil.tr için 7 ajanlı takım orchestrator. Webmaster, SEO, Content, Brand, Social, Editor. Tetik: hs-site, webmaster, blog, OG, sosyal post, takım, editöryal review.
 ---
 
 # hs-site-po — hayrettinsendil.tr Product Owner
@@ -26,6 +26,7 @@ Hayrettin Şendil = sahip / karar verici. Tüm çıktılar ona sunulur, kritik k
 | CON | Content | MDX blog taslak, başlık, tag, içerik takvimi | references/CON.md |
 | BRD | Brand | Renk/font tutarlılığı, OG image üretimi, ikon | references/BRD.md |
 | SOC | Social | LinkedIn/X/Instagram taslakları (draft-only) | references/SOC.md |
+| EDT | Editor | Editöryal denetim, stil/imla/tutarlılık review (üretmez, denetler) | references/EDT.md |
 
 **Paylaşılan context (her ajan okur):** `shared/brand.md`, `shared/stack.md`, `shared/governance.md`
 
@@ -38,8 +39,11 @@ Hayrettin Şendil = sahip / karar verici. Tüm çıktılar ona sunulur, kritik k
 | Yeni sayfa / component | Brief → WEB kod → BRD görsel kontrol | WEB + BRD |
 | Performans / Lighthouse | WEB audit → kök neden → fix | WEB |
 | Meta / JSON-LD / sitemap | SEO brief → WEB entegrasyon | SEO + WEB |
-| Blog yazısı taslağı | CON yazı → BRD OG image → SEO meta | CON + BRD + SEO |
-| Yeni blog yayını | CON published=true → SOC drafts | CON + SOC |
+| Blog yazısı taslağı | CON yaz → EDT review → CON revize → BRD OG image → SEO meta | CON + EDT + BRD + SEO |
+| Yeni blog yayını | EDT son pass → CON published=true → SOC drafts | EDT + CON + SOC |
+| Yayın öncesi son denetim | EDT pass → CON minor fix → BRD görsel | EDT + CON + BRD |
+| Site geneli editöryal audit | EDT tüm yazılı içeriği tara (blog + about + ana sayfa + footer) | EDT |
+| Tutarlılık kontrolü (yeni yazı vs eski) | EDT karşılaştırma raporu | EDT |
 | OG image yenile | BRD doğrudan | BRD |
 | Sosyal medya postu | SOC platform başına 3 taslak | SOC |
 | Renk / font değişikliği | BRD → shared/brand.md güncelle → WEB uygula | BRD + WEB |
@@ -112,6 +116,7 @@ Detay: shared/stack.md
 | references/CON.md | Blog, MDX, yazı, içerik takvimi |
 | references/BRD.md | OG image, renk, font, görsel sistem |
 | references/SOC.md | LinkedIn, X, Instagram post |
+| references/EDT.md | Editöryal review, stil/imla denetimi, audit, tutarlılık karşılaştırma |
 | shared/brand.md | Marka standardı sorgusu (her ajan) |
 | shared/stack.md | Tech detay sorgusu (her ajan) |
 | shared/governance.md | Commit/branch/deploy kuralı sorgusu (her ajan) |
@@ -145,4 +150,4 @@ Detay: shared/stack.md
 
 ---
 
-*v1.0 — 2026-05-25 | Pattern referansı: r34-team v1.0*
+*v1.2.0 — 2026-05-26 | Pattern referansı: r34-team v1.0 | EDT (Editor) sub-agent eklendi*

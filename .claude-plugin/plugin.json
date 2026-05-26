@@ -1,7 +1,7 @@
 {
   "name": "hs-site-team",
-  "version": "1.0.0",
-  "description": "AI-managed personal site — orchestrator + 5 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social).",
+  "version": "1.2.0",
+  "description": "AI-managed personal site — orchestrator + 6 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social, Editor).",
   "author": {
     "name": "Hayrettin Şendil",
     "email": "hayri.sendil@gmail.com",

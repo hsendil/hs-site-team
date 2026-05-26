@@ -3,6 +3,32 @@
 Tüm önemli değişiklikler bu dosyada belgelenir.
 Format: [Keep a Changelog](https://keepachangelog.com/tr/1.0.0/) · SemVer.
 
+## [1.2.0] — 2026-05-26
+
+Minor sürüm — peer-review katmanı: 7. ajan EDT (Editor) eklendi.
+
+### Eklendi
+- **EDT (Editor) sub-agent** — 7. ajan. İçerik üretmez, denetler.
+  - Editöryal stil, em-dash/hyphen, 3. tekil şahıs sızıntısı, uzun cümle, madde-itis, "biz" yasağı, Türkçe imla, tutarlılık, okunabilirlik
+  - Çıktı: P0/P1/P2 önceliklendirmesi + tablo formatında bulgu + CON için fix brief
+  - Otonomi: review/Notion arşiv/brief otonom; kod commit yasak (öneri üretir, başka ajan commit eder)
+  - `plugins/hs-site-team/skills/hs-site-po/references/EDT.md` (73 LOC)
+- `SKILL.md` routing tablosuna 4 yeni EDT senaryosu (blog draft pipeline, yayın öncesi pass, site geneli audit, tutarlılık karşılaştırma)
+- `SKILL.md` takım yapısı tablosu: EDT satırı; lazy load listesi: `references/EDT.md`
+
+### Referans
+- `shared/brand.md` → **Editöryal Stil** bölümü (1049c09 commit'inde eklenmişti) EDT'nin denetleyeceği kuralların tek otoritesi.
+
+### Değişti
+- `plugin.json` (her iki kopya): version 1.1.0 → 1.2.0, description "6 sub-agents (..., Editor)"
+- `SKILL.md` description: "6 ajanlı" → "7 ajanlı"; "Editor" eklendi
+
+### Mimari kararlar
+- Peer-review pattern: yazan ajan (CON) ile denetleyen ajan (EDT) ayrı. "Auditless trust = bug" (ADR-009) anti-pattern'inin yapısal karşı önlemi.
+- EDT kod commit yetkisi yok — sahip onayı dışı yan etki üretmez.
+
+---
+
 ## [1.1.0] — 2026-05-26
 
 Minor sürüm — ilk MCP zinciri otomasyonu (Faz 2 Sprint 1).

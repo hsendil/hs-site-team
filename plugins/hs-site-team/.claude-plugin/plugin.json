@@ -1,7 +1,7 @@
 {
   "name": "hs-site-team",
-  "version": "1.1.0",
-  "description": "AI-managed personal site — orchestrator + 5 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social). Includes autonomous CI/CD observer (Chain 2 — Vercel deploy triage).",
+  "version": "1.2.0",
+  "description": "AI-managed personal site — orchestrator + 6 sub-agents for hayrettinsendil.tr (Webmaster, SEO, Content, Brand, Social, Editor). Includes autonomous CI/CD observer (Chain 2 — Vercel deploy triage).",
   "author": {
     "name": "Hayrettin Şendil",
     "email": "hayri.sendil@gmail.com",
