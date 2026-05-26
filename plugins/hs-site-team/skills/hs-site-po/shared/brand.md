@@ -152,6 +152,17 @@ Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **6 ajanlı
 - About portresi: `public/images/hero.png`
 - Tüm görseller `<Image>` ile sunulur (lazy, optimize)
 
+## Terim Kuralları (canonical)
+
+EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği — sahip kararıyla bu noktada netleştirildi.
+
+- **"AI" baskın** — teknik tonda, kısa, jargon parens'siz. Tüm prose, UI string, blog body'sinde varsayılan.
+- **İlk geçişte (yalnızca about ABOUT_DESCRIPTION gibi tanımlayıcı meta pozisyonlarda) "yapay zeka (AI)"** tek seferlik tanım. Sonraki tüm geçişler "AI".
+- **"Yapay Zeka" yalnız özel ad pozisyonu** (örn. unvan: "Yapay Zeka Genel Müdürü") — yoksa "AI".
+- **PMP referansı:** **"PMP + 8 Anthropic"** (OG image standardı). "PMP ve 8 Anthropic" yasak.
+- **Domain:** lowercase **"hayrettinsendil.tr"**. Cümle başında "Hayrettinsendil.tr" yerine cümleyi yeniden yapılandır: "Bu siteyi (hayrettinsendil.tr)..." gibi.
+- **Compound korunur:** `multi-agent`, `sub-agent`, `tek-ajan`, `JSON-LD`, `ADR-009`, `draft-only`, `chat-driven` — hyphenli compound terimler değiştirilmez.
+
 ## Sosyal Medya Handle ve İletişim
 
 - **LinkedIn:** `eniac` → linkedin.com/in/eniac
@@ -161,4 +172,4 @@ Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **6 ajanlı
 - **E-posta (resmi/iş):** `support@hayrettinsendil.tr` — workshop, danışmanlık, ekip eğitimi
 - **E-posta (kişisel):** `hayrettin.sendil@hotmail.com.tr` — yalnızca kişisel/gizli yazışma, public yerlerde KULLANMA
 
-*Son güncelleme: 2026-05-26 — editöryal stil kuralları eklendi (sahip review sonrası)*
+*Son güncelleme: 2026-05-26 — editöryal stil kuralları + Terim Kuralları (AI canonical, EDT audit sonrası) eklendi*
