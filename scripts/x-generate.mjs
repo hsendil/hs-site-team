@@ -20,6 +20,7 @@ const SITE = "https://hayrettinsendil.tr";
 const QUEUE_DIR = "queue/x";
 const MODEL = process.env.CLAUDE_MODEL ?? "claude-sonnet-4-5-20250929";
 const TWEET_LIMIT = 280;
+const MAX_ATTEMPTS = 3;
 
 // Marka kuralları — kaynak: skills/hs-site-po/shared/brand.md + sahip editoryal kararları
 const BRAND_RULES = `
@@ -31,11 +32,16 @@ TON VE DİL:
 - Reklam dili YASAK: "en iyi", "devrim", "10x", "geçmişi değiştiren",
   "dijital geleceğinizi şekillendiren" gibi ifadeler kullanılmaz.
 
-BİÇİM:
+BİÇİM VE UZUNLUK (en sık ihlal edilen kural — dikkat et):
+- Her tweet KESİNLİKLE en fazla ${TWEET_LIMIT} karakter.
+- HEDEF: her tweet 240-260 karakter aralığında kalsın. Böylece sınıra
+  yaklaşmadan güvenli alan bırakırsın.
+- Link içeren tweet için linke 30 karakter rezerv ayır; kalan metin en fazla
+  230 karakter olmalı.
+- Yazdıktan sonra HER tweet'in karakterlerini tek tek say ve kontrol et.
 - Em-dash (—) KULLANMA. Yerine nokta, virgül veya iki nokta kullan.
 - Emoji kullanma.
-- Her tweet en fazla ${TWEET_LIMIT} karakter (link dahil say).
-- Thread ise 3-6 tweet. Tek post yeterliyse 1 tweet.
+- Thread 3-6 tweet. Tek post yeterliyse 1 tweet.
 - Hashtag en fazla 2 adet ve yalnız son tweet'te. Niş olsun
   (örn. #ContextEngineering), genel olmasın (#ai #teknoloji gibi değil).
 
@@ -80,7 +86,8 @@ async function fetchBlogPost(slug) {
   return { title, url, text: text.slice(0, 12000) };
 }
 
-async function generate(prompt) {
+/** Anthropic API çağrısı — mesaj geçmişi taşır (düzeltme döngüsü için) */
+async function callClaude(messages) {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) throw new Error("ANTHROPIC_API_KEY tanımlı değil");
 
@@ -91,11 +98,7 @@ async function generate(prompt) {
       "x-api-key": key,
       "anthropic-version": "2023-06-01",
     },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 2000,
-      messages: [{ role: "user", content: prompt }],
-    }),
+    body: JSON.stringify({ model: MODEL, max_tokens: 2000, messages }),
   });
 
   if (!res.ok) {
@@ -105,22 +108,32 @@ async function generate(prompt) {
   const raw = json.content?.[0]?.text ?? "";
   const match = raw.match(/\[[\s\S]*\]/);
   if (!match) throw new Error(`Yanıtta JSON dizi bulunamadı:\n${raw.slice(0, 400)}`);
-  return JSON.parse(match[0]);
+  return { tweets: JSON.parse(match[0]), raw };
 }
 
-/** Üretim sonrası otomatik denetim — ihlal varsa kuyruğa hiç yazılmaz */
-function audit(tweets) {
+/** Marka denetimi — ihlal varsa kuyruğa hiç yazılmaz */
+function audit(tweets, sourceUrl) {
   const banned = [
     "en iyi", "devrim", "10x", "muhteşem", "inanılmaz", "efsane",
     "geleceğinizi şekillendir", "çığır aç", "oyunun kurallarını değiştir",
   ];
   const errors = [];
 
+  if (!Array.isArray(tweets) || !tweets.length) {
+    return ["hiç tweet üretilmedi"];
+  }
+  if (tweets.length > 8) errors.push(`${tweets.length} tweet çok uzun (max 8)`);
+
   tweets.forEach((t, i) => {
     const n = i + 1;
     if (typeof t !== "string" || !t.trim()) return errors.push(`tweet ${n}: boş`);
-    if (t.length > TWEET_LIMIT) errors.push(`tweet ${n}: ${t.length} karakter (limit ${TWEET_LIMIT})`);
-    if (t.includes("—")) errors.push(`tweet ${n}: em-dash içeriyor`);
+    if (t.length > TWEET_LIMIT) {
+      errors.push(
+        `tweet ${n}: ${t.length} karakter, limit ${TWEET_LIMIT}. ` +
+          `${t.length - TWEET_LIMIT} karakter fazla, kısalt.`
+      );
+    }
+    if (t.includes("—")) errors.push(`tweet ${n}: em-dash içeriyor, kaldır`);
     const lower = t.toLocaleLowerCase("tr-TR");
     banned.forEach((b) => {
       if (lower.includes(b)) errors.push(`tweet ${n}: yasaklı ifade "${b}"`);
@@ -128,8 +141,10 @@ function audit(tweets) {
     if (/viennalife/i.test(t)) errors.push(`tweet ${n}: kurum adı geçiyor (editoryal kural)`);
   });
 
-  if (!tweets.length) errors.push("hiç tweet üretilmedi");
-  if (tweets.length > 8) errors.push(`${tweets.length} tweet çok uzun (max 8)`);
+  // Link son tweet'te olmalı (trafik yönlendirmesi bu akışın asıl amacı)
+  if (sourceUrl && !tweets.some((t) => typeof t === "string" && t.includes(sourceUrl))) {
+    errors.push(`son tweet'te kaynak link eksik: ${sourceUrl}`);
+  }
 
   return errors;
 }
@@ -166,21 +181,48 @@ ${contextBlock}
 GÖREV: Yukarıdaki içerikten X için bir thread üret.
 - İlk tweet dikkat çekmeli ve tek başına anlamlı olmalı (hook).
 - Ortadaki tweet'ler somut fikir/örnek taşımalı.
-- SON tweet'e şu linki ekle: ${sourceUrl}
+- SON tweet'e şu linki AYNEN ekle: ${sourceUrl}
 - Link, son tweet'in karakter sayısına dahildir.
 
 YALNIZCA bir JSON dizisi döndür, başka açıklama yazma. Örnek biçim:
 ["ilk tweet metni", "ikinci tweet metni", "son tweet metni + link"]`;
 
   console.log(`→ Üretiliyor (mode=${mode}, model=${MODEL})...`);
-  const tweets = await generate(prompt);
 
-  const errors = audit(tweets);
-  if (errors.length) {
-    console.error("\n✗ Marka denetimi başarısız:");
-    errors.forEach((e) => console.error(`   - ${e}`));
-    console.error("\nÜretilen içerik kuyruğa YAZILMADI.");
-    process.exit(1);
+  const messages = [{ role: "user", content: prompt }];
+  let tweets = null;
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const result = await callClaude(messages);
+    const errors = audit(result.tweets, sourceUrl);
+
+    if (!errors.length) {
+      tweets = result.tweets;
+      console.log(`✓ Deneme ${attempt}: marka denetimi geçti`);
+      break;
+    }
+
+    console.log(`⚠ Deneme ${attempt}: ${errors.length} ihlal`);
+    errors.forEach((e) => console.log(`   - ${e}`));
+
+    if (attempt === MAX_ATTEMPTS) {
+      console.error(
+        `\n✗ ${MAX_ATTEMPTS} denemede marka kurallarına uyan içerik üretilemedi.`
+      );
+      console.error("Üretilen içerik kuyruğa YAZILMADI.");
+      process.exit(1);
+    }
+
+    // İhlalleri modele geri besle ve düzeltme iste
+    messages.push({ role: "assistant", content: result.raw });
+    messages.push({
+      role: "user",
+      content:
+        `Çıktın şu kuralları ihlal etti:\n${errors.map((e) => `- ${e}`).join("\n")}\n\n` +
+        `Bunları düzelt. Karakter sınırını aşan tweet'leri anlamını koruyarak kısalt; ` +
+        `gerekirse bir tweet'i ikiye böl. Hedef: her tweet 240-260 karakter.\n\n` +
+        `YALNIZCA düzeltilmiş JSON dizisini döndür, açıklama yazma.`,
+    });
   }
 
   const date = new Date().toISOString().slice(0, 10);
@@ -207,7 +249,7 @@ YALNIZCA bir JSON dizisi döndür, başka açıklama yazma. Örnek biçim:
     ) + "\n"
   );
 
-  console.log(`✓ Kuyruğa yazıldı: ${file} (${tweets.length} tweet)`);
+  console.log(`\n✓ Kuyruğa yazıldı: ${file} (${tweets.length} tweet)`);
   tweets.forEach((t, i) => console.log(`\n[${i + 1}] (${t.length} kr)\n${t}`));
 
   // Workflow PR gövdesinde kullanır
