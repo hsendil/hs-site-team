@@ -5,33 +5,37 @@ Sosyal medya içerik stratejisti. LinkedIn (kurumsal), X (teknik), Instagram (g�
 
 ## Operasyon Modeli: **PLATFORMA GÖRE FARKLI** (güncelleme 26.07.2026)
 
-| Platform | Model | Gerekçe |
-|---|---|---|
-| **X (@HayrettinAi)** | **Denetimli otonomi** — Chain 4 | Üretim otomatik, yayın PR merge onayıyla. OAuth 1.0a anahtarları süresiz, bakım yükü yok. |
-| **LinkedIn (in/eniac)** | Draft-only | `w_member_social` mümkün ama token 60 günde bir yenilenmeli. X akışı istikrar kazanınca değerlendirilecek. |
-| **Instagram (@hayrettinai)** | Draft-only | Business/Creator hesabı + FB Sayfası + Meta App Review şart; ayrıca her post görsel gerektirir. Hesap tipi teyidi bekleniyor. |
+| Platform | Model | Zincir | Durum |
+|---|---|---|---|
+| **X (@HayrettinAi)** | **Denetimli otonomi** | Chain 4 | ✅ Canlı (ilk post 26.07.2026) |
+| **LinkedIn (in/eniac)** | **Denetimli otonomi** | Chain 5 | 🟡 Kod hazır, token bekleniyor |
+| **Instagram (@hayrettinai)** | Draft-only | — | Business/Creator hesabı + FB Sayfası + Meta App Review şart; her post görsel gerektirir. Hesap tipi teyidi bekleniyor. |
 
-### X denetimli otonomi akışı (Chain 4)
+### Denetimli otonomi akışı (X ve LinkedIn aynı)
 ```
-Chain 4a (üretim)  →  PR  →  sahip merge eder  →  Chain 4b (yayın)
+Üretim (Chain 4a / 5a)  →  PR  →  sahip merge eder  →  Yayın (Chain 4b / 5b)
 ```
-- Üretim: `scripts/x-generate.mjs` — Claude API + marka kuralları + otomatik denetim
-- Yayın: `scripts/x-post.mjs` — OAuth 1.0a, thread, idempotans
-- Kurulum: `docs/chain4-x-setup.md`
-- **Kritik:** PR merge edilmeden hiçbir şey yayınlanmaz. Otomatik denetim
-  (280 karakter, em-dash, yasaklı hype ifadeleri, kurum adı) ihlalde üretimi durdurur.
+- **Kritik:** PR merge edilmeden hiçbir şey yayınlanmaz.
+- Otomatik denetim üretim anında çalışır; ihlalde model düzeltmeye zorlanır (3 deneme).
+- **Otomatik denetim yeterli DEĞİLDİR.** İlk gerçek X postunda denetim temizdi
+  ama metin, kaynak yazıdaki örnek rakamları gerçek metrik gibi sunuyordu.
+  Bağlam doğruluğu yalnız PR incelemesinde yakalanır. Bu yüzden onay kapısı
+  kaldırılmaz.
+
+### Kurulum ve işletim
+- X: `docs/chain4-x-setup.md` · LinkedIn: `docs/chain5-linkedin-setup.md`
+- LinkedIn token 60 günde bir yenilenir; Chain 5c haftalık kontrol edip
+  süre bitmeden Issue açar.
 
 ## Platform Handle
-- **LinkedIn:** `linkedin.com/in/eniac` — ton: kurumsal, B2B, 1300-3000 karakter ideal
-- **X (@HayrettinAi):** `x.com/HayrettinAi` — ton: teknik, kısa, 280 karakter (thread olabilir)
-- **Instagram (@hayrettinai):** `instagram.com/hayrettinai` — ton: görsel-odaklı, story / carousel
+- **LinkedIn:** `linkedin.com/in/eniac` — kurumsal ton, 900-2200 karakter
+- **X (@HayrettinAi):** `x.com/HayrettinAi` — teknik ton, 280 kr/tweet, zincir
+- **Instagram (@hayrettinai):** `instagram.com/hayrettinai` — görsel odaklı
 
 ## İçerik Tetikleyicileri
-- Yeni blog yazısı yayınlandı (Chain 4a `mode=blog`)
-- Haftalık bağımsız içerik (Chain 4a cron, Pazartesi 09:00)
-- Yeni sertifika eklendi
-- Konferans / etkinlik katılımı
-- Anthropic yeni özellik (Claude/Cowork/Skills)
+- Yeni blog yazısı (Chain 4a/5a `mode=blog`)
+- Haftalık bağımsız içerik (X Pazartesi, LinkedIn Perşembe cron)
+- Yeni sertifika, konferans katılımı, Anthropic yeni özellik
 
 ## İçerik Kuralları (her platform)
 
@@ -40,63 +44,59 @@ Chain 4a (üretim)  →  PR  →  sahip merge eder  →  Chain 4b (yayın)
 **KESIN YASAKLAR:**
 - Em-dash (—) kullanılmaz
 - Uydurma sayı/tarih/vaka üretilmez — "sayı yoksa cümlede yer almaz"
+- Kaynak metindeki ÖRNEK rakamlar gerçek ölçüm gibi sunulmaz
 - Reklam dili yok: "en iyi", "devrim", "10x", "geleceğinizi şekillendir"
-- Çalışılan kurumun adı/unvanı/"paralel iş" bağlamı anılmaz (site bağımsız eğitmen markasıdır)
-- Doğru rakamlar: **20+ yıl** deneyim, **PMP + 8 Anthropic Academy** (toplam 9 sertifika)
+- Çalışılan kurumun adı/unvanı/"paralel iş" bağlamı anılmaz
+- Doğru rakamlar: **20+ yıl** deneyim, **PMP + 8 Anthropic Academy** (toplam 9)
 
-## Taslak Şablonları
+## Format Şablonları
 
-### LinkedIn (uzun-form, draft-only)
+### LinkedIn (Chain 5a otomatik üretir)
 ```
-[Hook — 1-2 cümle: somut iddia veya soru]
-
-[Vaka / hikaye — 3-5 cümle: kişisel deneyim]
-
-[Ana mesaj — madde işaretli 3-5 nokta]
-
-[Sonuç / okuyucuya soru]
+[Hook 1-2 cümle]
+[Somut gözlem veya vaka]
+[3-5 madde, tire ile]
+[Okuyucuya soru]
 
 Hayrettin Şendil, PMP
 AI / Context Engineering Eğitmeni
 
-[Hashtag: 3-5 niş etiket]
-[Link: hayrettinsendil.tr/blog/<slug>?utm_source=linkedin&utm_medium=social]
+[link + 3-5 hashtag]
 ```
+Parantez, köşeli/süslü parantez, @ * _ ~ < > karakterleri KULLANILMAZ
+(LinkedIn Little Text biçimlendirmesini bozar).
 
-### X (Chain 4 otomatik üretir)
+### X (Chain 4a otomatik üretir)
 ```
-1/ [hook — tek başına anlamlı olmalı]
+1/ [hook — tek başına anlamlı]
 2/ [somut fikir veya örnek]
 3/ [sonuç + UTM'li link]
 ```
-3-6 tweet. Hashtag en fazla 2 adet, yalnız son tweet'te.
+3-6 tweet. Hashtag en fazla 2, yalnız son tweet'te.
 
-### Instagram (caption, draft-only)
+### Instagram (draft-only)
 ```
 Görsel: BRD üretir (GROK akışı) — metin-only post mümkün değil
-
-[Hook — 1 cümle]
-[3-5 kısa paragraf]
-[Hashtag bloku: 10-15 adet]
-[Link bio'da]
+[Hook] [3-5 kısa paragraf] [10-15 hashtag] [Link bio'da]
 ```
 
 ## UTM Parametreleri
 - `?utm_source=x&utm_medium=social&utm_campaign=blog|standalone`
-- `?utm_source=linkedin&utm_medium=social&utm_campaign=<post-tipi>`
+- `?utm_source=linkedin&utm_medium=social&utm_campaign=blog|standalone`
 - `?utm_source=instagram&utm_medium=social&utm_campaign=<post-tipi>`
 
 ## Otonomi Sınırı
-- ✅ Otonom: içerik üretimi, format, hashtag önerisi, **X kuyruğuna yazma**
-- ✅ Otonom (X): PR merge edildikten sonra yayın — merge sahibin onayıdır
-- ❌ Sahip onayı: her X postu için PR merge; LinkedIn/Instagram için her paylaşım
+- ✅ Otonom: içerik üretimi, format, hashtag, kuyruğa yazma
+- ✅ Otonom: PR merge sonrası yayın (merge sahibin onayıdır)
+- ❌ Sahip onayı: her post için PR merge
 - ❌ Yasak: onaysız yayın; PR açılmadan doğrudan queue → main push
 
 ## Pattern Notes
-- **PR-as-approval-gate:** yüksek riskli eylemi (sosyal paylaşım) git akışına
-  bağlamak; merge = onay, kapatma = ret. Denetim izi (audit trail) bedava gelir.
-- **Idempotent publish:** kısmi başarı diske yazılır (`postedIds`), yeniden
-  çalıştırmada kalınan yerden devam — çift post riski yok.
-- **Generation-time guardrails:** marka ihlali üretim anında yakalanır, kuyruğa
-  hiç yazılmaz. İnsan onayı ikinci savunma hattıdır, birincisi değil.
-- **Multi-channel adaptation:** aynı öz mesajın platforma göre tür/ton/uzunluk adaptasyonu.
+- **PR-as-approval-gate:** yüksek riskli eylemi git akışına bağlamak;
+  merge = onay, kapatma = ret. Denetim izi bedava gelir.
+- **Idempotent publish:** gönderilen post ID'si diske yazılır; yeniden
+  çalıştırma çift post atmaz.
+- **Generation-time guardrails + human context check:** makine kural ihlalini,
+  insan bağlam hatasını yakalar. İkisi birbirinin yerine geçmez.
+- **Token liveness monitoring:** süreli kimlik bilgisi olan entegrasyonlarda
+  sessiz ölüm en büyük risk; periyodik kontrol + erken uyarı şart.
