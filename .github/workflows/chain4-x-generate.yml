@@ -1,0 +1,92 @@
+# Chain 4a — X Post Üretimi
+#
+# Ne yapar: blog yazısından veya verilen konudan X thread'i üretir,
+# queue/x/ altına yazar ve PR açar. YAYIN YAPMAZ.
+#
+# Onay modeli: PR'ı merge etmek = yayın onayı (chain4-x-publish tetiklenir).
+# PR'ı kapatmak = içeriği çöpe atmak. Düzeltmek istersen PR içindeki JSON'u
+# doğrudan düzenleyip merge edebilirsin.
+#
+# Gerekli secrets:
+#   ANTHROPIC_API_KEY — console.anthropic.com
+
+name: Chain 4a — X Post Üretimi
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Kaynak türü'
+        required: true
+        default: 'blog'
+        type: choice
+        options: [blog, standalone]
+      slug:
+        description: 'Blog slug (mode=blog için)'
+        required: false
+        type: string
+      topic:
+        description: 'Konu (mode=standalone için)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Sadece önizle, PR açma'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # Pazartesi 09:00 Europe/Istanbul (06:00 UTC) — haftalık bağımsız içerik
+    - cron: '0 6 * * 1'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Post üret
+        id: gen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MODE: ${{ github.event.inputs.mode || 'standalone' }}
+          SLUG: ${{ github.event.inputs.slug }}
+          TOPIC: ${{ github.event.inputs.topic || 'Kurumsal ekiplerde yapay zeka okuryazarlığını artırmanın pratik yolu' }}
+        run: node scripts/x-generate.mjs
+
+      - name: PR aç
+        if: github.event.inputs.dry_run != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          BRANCH="x-post/$(date +%Y-%m-%d-%H%M)"
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git checkout -b "$BRANCH"
+          git add queue/x
+          git commit -m "content(x): yeni post kuyruğa alındı
+
+          Kaynak: ${{ github.event.inputs.mode || 'schedule' }}
+          Tweet sayısı: ${{ steps.gen.outputs.tweet_count }}
+
+          Merge = yayın onayı."
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "X postu onayı: ${{ steps.gen.outputs.queue_file }}" \
+            --body "Chain 4a üretti. **Merge edersen yayınlanır**, kapatırsan çöpe gider.
+
+          - Tweet sayısı: ${{ steps.gen.outputs.tweet_count }}
+          - Dosya: \`${{ steps.gen.outputs.queue_file }}\`
+          - Marka denetimi: geçti (280 karakter, em-dash, yasaklı ifade, kurum adı)
+
+          Metni beğenmezsen PR içindeki JSON'u düzenleyip merge edebilirsin.
+          Beklemeye almak için \`status\` alanını \`hold\` yap." \
+            --base main --head "$BRANCH"
