@@ -1,0 +1,11 @@
+{
+  "id": "2026-07-26-bu-site-neden-var",
+  "platform": "linkedin",
+  "source": "blog:bu-site-neden-var",
+  "title": "Bu site neden var? Türkçe AI ve Context Engineering için yeni adres | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/bu-site-neden-var?utm_source=linkedin&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "createdAt": "2026-07-26T20:31:22.371Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "text": "20 yıl BT operasyonlarında çalışırken hep aynı şeyi gördüm: yeni bir teknoloji gelir, satıcı slaytları ile konferans konuşmaları yayılır, ama somut vaka üzerinden nasıl kurulacağını anlatan Türkçe kaynak yoktur.\n\nYapay zeka ile aynı döngü tekrarlandı. Kurumsal BT liderleriyle konuştuğumda üç temel şikayet duyuyorum:\n\n- Reklam vurgulu içerik: Her şeyi katlar denir, tarih ve repository olmaz. Pilot sonrası ilk hata ile sistem çöker.\n- Yüzeysel rehberler: Şu promptu kopyala türü örnekler. Üretim ortamında bağlam yönetimi ve mimari düşünülmemiştir.\n- Vendor-bağımlı yayınlar: Tek bir ürünün demosundan ibaret içerik. Prensip yok, satış var.\n\nBu boşluktan dolayı yeni bir site kurdum: hayrettinsendil.tr\n\nBurada paylaştığım her vaka canlı sistemlerden gelir. Commit hash, tarih, repository linkiyle birlikte. Örnek: kişisel sitemi yöneten 6 ajanlı Claude Code takımı, orchestrator yapısı, P0 bug fix senaryoları, tümü MIT lisanslı.\n\nSlogan değil; pilot'tan üretime, hata günlüklerinden mimari kararlara kadar açık defter.\n\nSoruyorum: sizin ekibinizde AI projesini pilot'tan prod'a taşırken en çok hangi noktada tıkanma yaşanıyor?\n\nHayrettin Şendil, PMP\nAI / Context Engineering Eğitmeni\n\nhttps://hayrettinsendil.tr/blog/bu-site-neden-var?utm_source=linkedin&utm_medium=social&utm_campaign=blog\n\n#ContextEngineering #KurumsalAI #BTYönetimi #DijitalDönüşüm #AIOps"
+}
