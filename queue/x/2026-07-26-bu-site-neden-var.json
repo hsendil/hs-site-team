@@ -1,0 +1,15 @@
+{
+  "id": "2026-07-26-bu-site-neden-var",
+  "platform": "x",
+  "source": "blog:bu-site-neden-var",
+  "title": "Bu site neden var? Türkçe AI ve Context Engineering için yeni adres | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/bu-site-neden-var?utm_source=x&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "createdAt": "2026-07-26T18:40:59.629Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "tweets": [
+    "20+ yıldır BT operasyonlarında çalışıyorum, son iki yıldır Claude ve Context Engineering öğretiyorum. Bu siteyi neden kurdum? Türkçe AI içeriğinde gördüğüm üç sorun var: reklam vurgulu başlıklar, yüzeysel rehberler, vendor-bağımlı yayınlar.",
+    "Eksik olan: gerçek vakalar, derin teknik Türkçe yazım, açık kaynak referansı ve LLM-agnostik mühendislik bakışı. Yaklaşık iyileşme değil, 31 saniyede deploy. RAG retrieval 1.2sn'den 380ms'e düştü gibi somut sayılar paylaşıyorum.",
+    "Slayt değil, çalışan sistem. Her örnek canlı vakadır: commit hash, tarih, repository linki var. Süs değil, güven. Kimler için yazıyorum ve ne bulacaksın? https://hayrettinsendil.tr/blog/bu-site-neden-var?utm_source=x&utm_medium=social&utm_campaign=blog"
+  ]
+}
