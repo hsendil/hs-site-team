@@ -1,0 +1,56 @@
+# Chain 5b — LinkedIn Yayın
+#
+# Tetik: main'e queue/linkedin/** push edildiğinde (PR merge = onay).
+#
+# Gerekli secret:
+#   LINKEDIN_ACCESS_TOKEN — 60 günde bir yenilenir (chain5-token-check izler)
+
+name: Chain 5b — LinkedIn Yayın
+
+on:
+  push:
+    branches: [main]
+    paths: ['queue/linkedin/**']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Gerçek post atmadan doğrula'
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: chain5-linkedin-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Kuyruğu yayınla
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+        run: node scripts/linkedin-post.mjs
+
+      - name: Arşivi commit'le
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Değişiklik yok."
+            exit 0
+          fi
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git add -A queue published
+          git commit -m "chore(linkedin): yayınlanan postlar arşive taşındı [skip ci]"
+          git push

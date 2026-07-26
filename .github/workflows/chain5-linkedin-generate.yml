@@ -1,0 +1,87 @@
+# Chain 5a — LinkedIn Post Üretimi
+#
+# Blog yazısından veya konudan LinkedIn postu üretir, PR açar. YAYIN YAPMAZ.
+# Merge = yayın onayı (chain5-linkedin-publish tetiklenir).
+#
+# Gerekli secret: ANTHROPIC_API_KEY
+
+name: Chain 5a — LinkedIn Post Üretimi
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Kaynak türü'
+        required: true
+        default: 'blog'
+        type: choice
+        options: [blog, standalone]
+      slug:
+        description: 'Blog slug (mode=blog için)'
+        required: false
+        type: string
+      topic:
+        description: 'Konu (mode=standalone için)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Sadece önizle, PR açma'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # Perşembe 09:00 Europe/Istanbul (06:00 UTC)
+    # X Pazartesi, LinkedIn Perşembe — aynı içerik aynı gün iki kanalda çıkmasın
+    - cron: '0 6 * * 4'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Post üret
+        id: gen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          MODE: ${{ github.event.inputs.mode || 'standalone' }}
+          SLUG: ${{ github.event.inputs.slug }}
+          TOPIC: ${{ github.event.inputs.topic || 'Kurumsal ekiplerde yapay zeka okuryazarlığını artırmanın pratik yolu' }}
+        run: node scripts/linkedin-generate.mjs
+
+      - name: PR aç
+        if: github.event.inputs.dry_run != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          BRANCH="li-post/$(date +%Y-%m-%d-%H%M)"
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git checkout -b "$BRANCH"
+          git add queue/linkedin
+          git commit -m "content(linkedin): yeni post kuyruğa alındı
+
+          Kaynak: ${{ github.event.inputs.mode || 'schedule' }}
+          Uzunluk: ${{ steps.gen.outputs.char_count }} karakter
+
+          Merge = yayın onayı."
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "LinkedIn postu onayı: ${{ steps.gen.outputs.queue_file }}" \
+            --body "Chain 5a üretti. **Merge edersen yayınlanır**, kapatırsan çöpe gider.
+
+          - Uzunluk: ${{ steps.gen.outputs.char_count }} karakter
+          - Dosya: \`${{ steps.gen.outputs.queue_file }}\`
+          - Marka denetimi geçti: uzunluk, em-dash, yasaklı ifade, kurum adı, imza bloğu, link
+
+          Metni değiştirmek için JSON'daki \`text\` alanını düzenle.
+          Beklemeye almak için \`status\` alanını \`hold\` yap." \
+            --base main --head "$BRANCH"
