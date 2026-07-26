@@ -1,0 +1,67 @@
+# Chain 4b — X Yayın
+#
+# Tetik: main'e queue/x/** değişikliği push edildiğinde (yani Chain 4a'nın
+# açtığı PR merge edildiğinde). PR merge = yayın onayı.
+#
+# Yayın sonrası dosya published/x/ altına taşınır ve geri commit'lenir;
+# böylece kuyruk temizlenir ve arşiv oluşur.
+#
+# Gerekli secrets (X Developer Portal → Keys and tokens):
+#   X_API_KEY, X_API_SECRET          — Consumer Keys
+#   X_ACCESS_TOKEN, X_ACCESS_SECRET  — Access Token and Secret (Read+Write)
+
+name: Chain 4b — X Yayın
+
+on:
+  push:
+    branches: [main]
+    paths: ['queue/x/**']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Gerçek post atmadan doğrula'
+        required: false
+        default: true
+        type: boolean
+
+# Çift post riskine karşı: aynı anda tek çalıştırma, sıradakini iptal etme
+concurrency:
+  group: chain4-x-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Kuyruğu yayınla
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          MAX_TWEETS: '10'
+        run: node scripts/x-post.mjs
+
+      - name: Arşivi commit'le
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Değişiklik yok."
+            exit 0
+          fi
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git add -A queue published
+          git commit -m "chore(x): yayınlanan postlar arşive taşındı [skip ci]"
+          git push
