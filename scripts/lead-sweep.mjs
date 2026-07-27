@@ -33,7 +33,7 @@ const sbHeaders = {
 async function fetchPending() {
   const url =
     `${SUPABASE_URL}/rest/v1/lead_requests` +
-    `?notified_at=is.null&select=id,name,company,need,preferred_date,created_at&order=created_at.asc`;
+    `?notified_at=is.null&select=id,name,company,email,phone,need,preferred_date,requested_day,status,created_at&order=created_at.asc`;
   const res = await fetch(url, { headers: sbHeaders });
   if (!res.ok) throw new Error(`Supabase okuma hatasi: ${res.status} ${await res.text()}`);
   return res.json();
@@ -47,27 +47,43 @@ function tr(dtIso) {
   });
 }
 
+function trGun(dIso) {
+  if (!dIso) return "(secilmedi)";
+  return new Date(dIso + "T00:00:00Z").toLocaleDateString("tr-TR", {
+    timeZone: "UTC",
+    dateStyle: "long",
+  });
+}
+
 async function createNotionCard(lead) {
-  const title = `${lead.name} · ${tr(lead.created_at)}`;
+  const gunEtiketi = lead.requested_day ? ` · ${trGun(lead.requested_day)}` : "";
+  const title = `${lead.name}${gunEtiketi} · ${tr(lead.created_at)}`;
   const para = (text) => ({
     object: "block",
     type: "paragraph",
-    paragraph: { rich_text: [{ type: "text", text: { content: text.slice(0, 1900) } }] },
+    paragraph: { rich_text: [{ type: "text", text: { content: String(text).slice(0, 1900) } }] },
   });
+  const children = [
+    para(`Ad Soyad: ${lead.name}`),
+    para(`Kurum: ${lead.company || "(belirtilmedi)"}`),
+    para(`E-posta: ${lead.email || "(eski kayit, yok)"}`),
+    para(`Telefon: ${lead.phone || "(belirtilmedi)"}`),
+    para(`Secilen gun: ${trGun(lead.requested_day)}`),
+    para(`Durum: ${lead.status || "pending"}`),
+    para("Ihtiyac:"),
+    para(lead.need || "(bos)"),
+    para(`Kayit zamani: ${tr(lead.created_at)} (TR) · Kaynak: hayrettinsendil.tr formu · Yanit sozu: 2 is gunu`),
+  ];
+  if (lead.preferred_date) {
+    children.splice(5, 0, para(`Eski serbest metin tarih: ${lead.preferred_date}`));
+  }
   const body = {
     parent: { page_id: LEADS_PAGE },
     icon: { type: "emoji", emoji: "📩" },
     properties: {
       title: { title: [{ type: "text", text: { content: title } }] },
     },
-    children: [
-      para(`Ad Soyad: ${lead.name}`),
-      para(`Kurum: ${lead.company || "(belirtilmedi)"}`),
-      para(`Tercih edilen donem: ${lead.preferred_date || "(belirtilmedi)"}`),
-      para("Ihtiyac:"),
-      para(lead.need || "(bos)"),
-      para(`Kayit zamani: ${tr(lead.created_at)} (TR) · Kaynak: hayrettinsendil.tr formu · Yanit sozu: 2 is gunu`),
-    ],
+    children,
   };
   const res = await fetch("https://api.notion.com/v1/pages", {
     method: "POST",
