@@ -11,6 +11,11 @@
  *   DRY_RUN=1 node scripts/linkedin-post.mjs
  *
  * Gerekli env: LINKEDIN_ACCESS_TOKEN
+ *
+ * LinkedIn-Version notu: LinkedIn REST sürümleri (YYYYMM) yayından sonra
+ * en az 1 yıl desteklenir, sonra sunset edilir. Sürüm hatası
+ * (426 NONEXISTENT_VERSION) görülürse buradaki varsayılanı güncel aya çek:
+ * https://learn.microsoft.com/en-us/linkedin/marketing/versioning
  */
 
 import fs from "node:fs";
@@ -18,7 +23,7 @@ import path from "node:path";
 
 const QUEUE_DIR = "queue/linkedin";
 const PUBLISHED_DIR = "published/linkedin";
-const API_VERSION = process.env.LINKEDIN_API_VERSION ?? "202506";
+const API_VERSION = process.env.LINKEDIN_API_VERSION ?? "202607";
 const DRY_RUN = process.env.DRY_RUN === "1";
 const CHAR_LIMIT = 3000;
 
