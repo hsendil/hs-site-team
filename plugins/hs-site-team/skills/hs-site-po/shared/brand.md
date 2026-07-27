@@ -50,9 +50,9 @@ Referans: ADR-009 (SSR inline JSON-LD) + 2026-05-26 prose contrast + inline code
 
 ---
 
-## EDITÖRYAL STİL KURALLARI (2026-05-26 sahip review)
+## EDITÖRYAL STİL KURALLARI (2026-05-26 sahip review · 2026-07-27 güncelleme)
 
-> Bu bölüm tüm yazılı çıktılarda zorunlu: blog, hakkımda, ana sayfa, sosyal medya draft'ları, e-posta. **CON, SOC, BRD ajanların okuması şart.**
+> Bu bölüm tüm yazılı çıktılarda zorunlu: blog, hakkımda, ana sayfa, sosyal medya draft'ları, e-posta. **CON, SOC, BRD, EDT ajanların okuması şart.**
 
 ### Genel ton
 - **Birinci tekil şahıs** — yazıyorum, kuruyorum, öğretiyorum
@@ -61,7 +61,7 @@ Referans: ADR-009 (SSR inline JSON-LD) + 2026-05-26 prose contrast + inline code
 - Sayı, tarih, sertifika ID açıkça belirtilir
 - Övgü değil kanıt ("PMP + 8 Anthropic sertifikası")
 - Doğrudan eylem fiili ("yapıyorum", "kuruyorum")
-- Okuyucuya **"sen"** (samimi), "siz" değil
+- **Hitap — sahip kararı (2026-07-27):** Blog ve kişisel anlatı **"sen"** (samimi). Dönüşüm yüzeyleri — iletisim formu, CTA metinleri, başarı/hata mesajları, SSS, /egitimler program metni — **"siz"** (kurumsal alıcı muhatap). İki mod aynı cümlede karışmaz; sayfa içinde blok bazında ayrışır.
 
 ### Kural 1 — Em-dash (—) azlığı
 Çok em-dash makine çevirisi hissi verir. Sayfada **toplam 2-3 em-dash** ideal, asla 10+ değil.
@@ -83,11 +83,11 @@ Birinci tekil yazılıyor, sahip kendinden "Hayrettin Şendil yazdı" gibi 3. te
 **Yanlış:**
 - "Hayrettin Şendil yazdı"
 - "Bu yazıyı Hayrettin Şendil hazırladı"
-- "Hayrettin Şendil 21 yıl tecrübesini paylaşıyor"
+- "Hayrettin Şendil 20+ yıl tecrübesini paylaşıyor"
 
 **Doğru:**
 - İmza kartı: foto + "**Hayrettin Şendil**" + tarih + 2 link (yazı tarzı yok, sadece kart)
-- Yazı içinde: "21 yıllık deneyimimde..."
+- Yazı içinde: "20+ yıllık deneyimimde..."
 
 ### Kural 3 — AuthorBio Template (kalıcı)
 
@@ -133,7 +133,18 @@ Yoksa doğal cümle akışı: "Üç şey değişti: kontrast, link rengi, yazar 
 
 ### Kural 6 — "biz" yasak
 
-Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **6 ajanlı takım** referansı.
+Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **7 ajanlı takım** referansı.
+
+### Kural 7 — Kaynak açık olmadan sayı yazılmaz (2026-07-27)
+
+> Kök neden kaydı: 26.05.2026 tarihli iki yazı ADR log ve CHANGELOG yanda olmadan hafızadan yazıldı. Sonuç: uydurma metrik ("RAG 380ms"), yanlış tarih ("21 Mayıs"), elenen çözümün reçete diye öğretilmesi. İki ay canlıda kaldı, sosyal medya postlarına sızdı. Yazan ve denetleyen aynı modeldi; fark bağlamdı.
+
+- Her sayısal veya teknik iddia, **yazım anında** kaynağa karşı doğrulanır: ADR log, CHANGELOG, commit, SKILL.md. "Hatırlıyorum" kanıt değildir.
+- Doğrulanamayan sayı cümleden çıkar; cümle sayısız ayakta duramıyorsa cümle de çıkar.
+- Tahmin ile ölçüm ayrı etiketlenir: kaynakta "tahmini" yazan sayı, yazıda da tahmin diye geçer.
+- Metrik kapsamı genişletilemez: "deploy 31 sn", uçtan uca süre olarak sunulamaz.
+- Gelecek vaadi (yayın kadansı, "her yazıda X") sahip onayı olmadan yazılmaz.
+- Prosedürün tamamı: `references/CON.md` → Kaynak Zorunluluğu bölümü. Denetim: her yazı yayın öncesi EDT'den geçer.
 
 ---
 
@@ -147,7 +158,7 @@ Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **6 ajanlı
 
 ## Logo / Görsel Varlık
 
-- Kişisel marka — kurumsal logo yok
+- Kişisel marka işareti var (2026-07-26, Claude Design): mor zeminli HS monogramı. Site tarafında kod üretir — `src/components/BrandMark.tsx` + `src/app/icon.svg` + `src/lib/brandMark.ts` (OG data URI). Kaynak dosyalar sahip arşivinde (`HS-WWW/logo/`).
 - Hero görsel: `public/images/about-bw.png` (şimdi AuthorBio için de)
 - About portresi: `public/images/hero.png`
 - Tüm görseller `<Image>` ile sunulur (lazy, optimize)
@@ -158,10 +169,13 @@ EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği — sahip
 
 - **"AI" baskın** — teknik tonda, kısa, jargon parens'siz. Tüm prose, UI string, blog body'sinde varsayılan.
 - **İlk geçişte (yalnızca about ABOUT_DESCRIPTION gibi tanımlayıcı meta pozisyonlarda) "yapay zeka (AI)"** tek seferlik tanım. Sonraki tüm geçişler "AI".
+- **SEO istisnası (2026-07-27):** çekirdek keyword'ler ("kurumsal yapay zeka eğitimi", "Türkçe yapay zeka eğitmeni" vb.) title / H1 / meta pozisyonlarında keyword formunu korur; "AI baskın" kuralı gövde prose'u içindir.
 - **"Yapay Zeka" yalnız özel ad pozisyonu** (örn. unvan: "Yapay Zeka Genel Müdürü") — yoksa "AI".
 - **PMP referansı:** **"PMP + 8 Anthropic"** (OG image standardı). "PMP ve 8 Anthropic" yasak.
+- **Deneyim yılı:** **"20+ yıl"** — tek standart. "20 yıllık", "21 yıl", "21+ yıl" varyantları yasak.
+- **Takım kadrosu:** **"7 ajanlı takım"** (PO + WEB + SEO + CON + BRD + SOC + EDT). Eski "6 ajanlı" ifadesi kullanılmaz.
 - **Domain:** lowercase **"hayrettinsendil.tr"**. Cümle başında "Hayrettinsendil.tr" yerine cümleyi yeniden yapılandır: "Bu siteyi (hayrettinsendil.tr)..." gibi.
-- **Compound korunur:** `multi-agent`, `sub-agent`, `tek-ajan`, `JSON-LD`, `ADR-009`, `draft-only`, `chat-driven` — hyphenli compound terimler değiştirilmez.
+- **Compound korunur:** `multi-agent`, `sub-agent`, `JSON-LD`, `ADR-009`, `draft-only`, `chat-driven` — İngilizce compound terimler değişmez. Türkçe sıfat tamlamalarında tire kullanılmaz: "tek ajan", "dar kapsamlı", "çok ajanlı" (keyword listesindeki tarihsel "çok-ajanlı sistemler" yazımı SEO sürekliliği için korunur).
 
 ## Sosyal Medya Handle ve İletişim
 
@@ -172,4 +186,4 @@ EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği — sahip
 - **E-posta (resmi/iş):** `support@hayrettinsendil.tr` — workshop, danışmanlık, ekip eğitimi
 - **E-posta (kişisel):** `hayrettin.sendil@hotmail.com.tr` — yalnızca kişisel/gizli yazışma, public yerlerde KULLANMA
 
-*Son güncelleme: 2026-05-26 — editöryal stil kuralları + Terim Kuralları (AI canonical, EDT audit sonrası) eklendi*
+*Son güncelleme: 2026-07-27 — Kural 7 (kaynak zorunluluğu), sen/siz istisnası, deneyim yılı + kadro canonical'ı, marka işareti kaydı*
