@@ -11,7 +11,7 @@
 
 ## Ne işe yarar?
 
-Kişisel sitenizi tek başınıza yönetmek yerine **uzmanlaşmış ajan takımının** yönetmesini sağlar. Claude Code'da bir komutla webmaster, SEO uzmanı, içerik editörü, marka tasarımcısı, sosyal medya stratejisti ve editöryaldençi çağırırsınız; her biri kendi alanında çalışır, doğrudan site repo'suna commit + deploy eder.
+Kişisel sitenizi tek başınıza yönetmek yerine **uzmanlaşmış ajan takımının** yönetmesini sağlar. Claude Code'da bir komutla webmaster, SEO uzmanı, içerik editörü, marka tasarımcısı, sosyal medya stratejisti ve editöryal denetçi çağırırsınız; her biri kendi alanında çalışır, doğrudan site repo'suna commit + deploy eder.
 
 ### Mimari
 
