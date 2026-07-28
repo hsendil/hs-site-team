@@ -28,6 +28,7 @@ async function oneriUret(yazilar) {
     "Hedef kitle: kurumsal BT ve dijital donusum liderleri, egitim satin alan IK/gelisim birimleri.",
     "Konu alani: kurumsal AI, context engineering, Claude Code ve Cowork, MCP, agent skill'ler, cok ajanli sistemler, AI ile ITSM/ITIL kesisimi, pilottan uretime gecis.",
     "Kurallar: em-dash karakteri YASAK. Abarti ve reklam dili yasak. Her oneri sahibin canli sistemlerinden (site repo'su, 7 ajanli takim, is pratigi) uretilebilecek kanita baglanmali.",
+    "gerekce ve kanit_ihtiyaci alanlari en fazla 2 cumle olsun.",
     'Cikti YALNIZ gecerli JSON: {"oneriler":[{"baslik":"...","format":"derin-vaka","gerekce":"...","kanit_ihtiyaci":"..."}]}',
   ].join(" ");
 
@@ -50,15 +51,31 @@ async function oneriUret(yazilar) {
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 1500,
+      max_tokens: 3000,
       system,
       messages: [{ role: "user", content: user }],
     }),
   });
   if (!res.ok) throw new Error(`Anthropic ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const json = await res.json();
-  const text = (json.content?.[0]?.text ?? "").replace(/^```json?\s*|```\s*$/g, "").trim();
-  const data = JSON.parse(text);
+  if (json.stop_reason === "max_tokens") {
+    throw new Error("Yanit max_tokens sinirinda kesildi; siniri artir.");
+  }
+  const ham = (json.content ?? [])
+    .filter((b) => b.type === "text")
+    .map((b) => b.text)
+    .join("");
+  const start = ham.indexOf("{");
+  const end = ham.lastIndexOf("}");
+  if (start === -1 || end === -1 || end <= start) {
+    throw new Error(`Yanitta JSON bulunamadi. Yanit basi: ${ham.slice(0, 200)}`);
+  }
+  let data;
+  try {
+    data = JSON.parse(ham.slice(start, end + 1));
+  } catch (e) {
+    throw new Error(`JSON parse hatasi: ${e.message}. Yanit basi: ${ham.slice(0, 200)}`);
+  }
   if (!Array.isArray(data.oneriler) || data.oneriler.length !== 5) {
     throw new Error(`Beklenen 5 oneri, gelen: ${data.oneriler?.length}`);
   }
