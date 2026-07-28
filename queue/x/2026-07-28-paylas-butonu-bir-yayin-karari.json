@@ -1,0 +1,17 @@
+{
+  "id": "2026-07-28-paylas-butonu-bir-yayin-karari",
+  "platform": "x",
+  "source": "blog:paylas-butonu-bir-yayin-karari",
+  "title": "Paylaş butonu bir yayın kararıdır: Claude sohbetleri Google'a nasıl düştü? | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/paylas-butonu-bir-yayin-karari?utm_source=x&utm_medium=social&utm_campaign=blog",
+  "status": "queued",
+  "createdAt": "2026-07-27T20:50:45.463844+00:00",
+  "model": "claude-fable-5",
+  "reviewedBy": "owner",
+  "tweets": [
+    "25 Temmuz'da bir Reddit kullanıcısı Google'a şunu yazdı: site:claude.ai/share. Karşısına başkalarının Claude sohbetleri çıktı; haberlere göre yüzlerce sohbet, içlerinde kripto cüzdan bilgileri bile var. Sorun iki günde kapatıldı ama ders kalıcı.",
+    "Kök neden bir web temeli: robots.txt gizlilik aracı değildir. Taramayı engeller, indekslemeyi değil. Google sayfayı açamayınca noindex'i de göremez; link dışarıda paylaşıldıysa dizine girebilir. Aynı hata 2025'te ChatGPT'de yaşandı; özellik tamamen kaldırıldı.",
+    "Paylaş butonu bir yayın kararıdır. Deindex silinmek değildir; arşivler unutmaz. Vaka analizi ve bugün uygulanabilecek 5 adımlık kontrol listesi blog'da: https://hayrettinsendil.tr/blog/paylas-butonu-bir-yayin-karari?utm_source=x&utm_medium=social&utm_campaign=blog"
+  ],
+  "reviewedAt": "2026-07-27T21:42:43.526936+00:00"
+}
