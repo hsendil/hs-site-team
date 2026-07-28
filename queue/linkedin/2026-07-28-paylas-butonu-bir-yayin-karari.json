@@ -1,0 +1,13 @@
+{
+  "id": "2026-07-28-paylas-butonu-bir-yayin-karari",
+  "platform": "linkedin",
+  "source": "blog:paylas-butonu-bir-yayin-karari",
+  "title": "Paylaş butonu bir yayın kararıdır: Claude sohbetleri Google'a nasıl düştü? | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/paylas-butonu-bir-yayin-karari?utm_source=linkedin&utm_medium=social&utm_campaign=blog",
+  "status": "queued",
+  "createdAt": "2026-07-27T20:50:45.463844+00:00",
+  "model": "claude-fable-5",
+  "reviewedBy": "owner",
+  "reviewedAt": "2026-07-27T21:42:43.526936+00:00",
+  "text": "25 Temmuz'da bir Reddit kullanıcısı Google'a tek bir arama yazdı: site:claude.ai/share. Sonuç listesinde başkalarının Claude sohbetleri vardı; haberlere göre yüzlerce sohbet, içlerinde hukuki tartışmalar ve kripto cüzdan bilgileri.\n\nAnthropic sorunu iki günde kapattı. Ama olayın asıl dersi bir ürün hatası değil, bir web temeli: robots.txt bir gizlilik aracı değildir.\n\nParadoks şu: robots.txt taramayı engeller, indekslemeyi değil. Google sayfayı açamayınca içindeki noindex talimatını da göremez; link bir foruma düştüyse \"içeriğini bilmediğim ama var olduğunu bildiğim sayfa\" olarak dizine girebilir. Aynı hata 2025'te ChatGPT'de yaşandı, şimdi Claude'da tekrarlandı.\n\nKurumsal tarafta karşılığı net: AI sohbet paylaşımı bir yayın kararıdır. Deindex edilmek silinmek değildir; arşivler unutmaz, kopyalanan veri veridir.\n\nBlog'da vaka analizini yazdım: ne oldu, kök neden ne, bugün uygulanabilecek beş adımlık kontrol listesi ve ekipler için tek sayfalık paylaşım kuralı önerisi.\n\nEkibinizde AI sohbet paylaşımını düzenleyen yazılı bir kural var mı?\n\nHayrettin Şendil, PMP\nAI / Context Engineering Eğitmeni\n\nhttps://hayrettinsendil.tr/blog/paylas-butonu-bir-yayin-karari?utm_source=linkedin&utm_medium=social&utm_campaign=blog\n\n#AIGüvenliği #VeriGizliliği #KurumsalAI #ContextEngineering #YapayZeka"
+}
