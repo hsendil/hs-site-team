@@ -168,6 +168,28 @@ Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **7 ajanlı
 - About portresi: `public/images/hero.png`
 - Tüm görseller `<Image>` ile sunulur (lazy, optimize)
 
+### Yazı Görselleri: Grok Standart Prompt Şablonu (sahip talebi, 2026-07-28)
+
+Her yazı için soyut, yazısız, palete kilitli görsel seti üretilir. Üretim Grok'ta manueldir; prompt iki bloktan oluşur.
+
+Sabit stil bloğu (her yazıda aynı):
+
+```
+Abstract minimal digital artwork for a corporate technology blog. Dark indigo background with a subtle diagonal gradient from #1E1B4B to #2D1B69. Glowing violet accents in #7C3AED with soft lavender highlights in #A78BFA. Clean geometric composition, soft radial glow, subtle film grain, generous negative space. No text, no letters, no numbers, no logos, no people, no faces. Professional editorial illustration, premium and restrained, not futuristic cliche.
+```
+
+Konsept bloğu: yazı taslağıyla birlikte üretilir (CON teslim eder, BRD kalitesinden sorumludur). Yazının ana metaforu tek paragraflık soyut bir sahneye çevrilir. Örnek (olay-analizi-30-dakika): üç ayrı cam panelde dağınık noktalar, panelleri aşan ışıklı mor iplikler, tek parlak takımyıldız deseni; ayrı sistemlerde saklı korelasyonun görünür olması.
+
+Boyut seti (üç ayrı üretim):
+
+| Kullanım | Oran | Kompozisyon notu |
+|---|---|---|
+| Hero | 16:9 (1920x1080) | Desen merkezin hafif sağında, sol üçte bir sakin boşluk |
+| OG | 1.91:1 (1200x630) | Desen ortada, kenarlardan bol pay |
+| Card | 1:1 (1080x1080) | Sıkı kırpım, desen kadrajı doldurur |
+
+Kurallar: metin/harf/rakam/logo yasak; insan ve yüz yasak; palet dışına çıkılmaz; AI klişeleri (beyin, robot kafası, devre kartı, nöron ağı) yasak. Üretilen dosyalar sahipten gelir; repoya Chrome web arayüzüyle yüklenir (GitHub MCP binary dosyayı bozar, 27.07.2026 kanıtlı).
+
 ## Terim Kuralları (canonical)
 
 EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği — sahip kararıyla bu noktada netleştirildi.
@@ -192,4 +214,4 @@ EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği — sahip
 - **E-posta (resmi/iş):** `talep@hayrettinsendil.tr` — workshop, danışmanlık, ekip eğitimi (27.07.2026: support@ tüm görünür yüzeylerden kaldırıldı)
 - **E-posta (kişisel):** `hayrettin.sendil@hotmail.com.tr` — yalnızca kişisel/gizli yazışma, public yerlerde KULLANMA
 
-*Son güncelleme: 2026-07-28 — Misyon beyanı, Telif ve Atıf Kuralı referansı, talep@ düzeltmesi, şirket sayfası eklendi*
+*Son güncelleme: 2026-07-28 — Misyon beyanı, Telif ve Atıf Kuralı referansı, talep@ düzeltmesi, şirket sayfası, Grok görsel şablonu eklendi*
