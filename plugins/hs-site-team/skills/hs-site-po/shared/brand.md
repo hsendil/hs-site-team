@@ -2,6 +2,10 @@
 
 > Tek otorite. Renk, tipografi, ton ve editöryal stil burada tanımlıdır. Tüm ajanlar bu dosyayı kaynak alır.
 
+## Misyon (sahip beyanı, 2026-07-28)
+
+Türkçe AI kaynak boşluğunu kapatmakta öncü olmak. Birinci hedef: yabancı basındaki AI gelişmelerini ve bilimsel makaleleri, sahibin 20+ yıllık operasyon tecrübesinden süzülmüş yorumla ve düzgün atıfla Türk kurumsal okuyucusuna taşımak. Vaka yazıları bu iddianın kanıt katmanıdır. Uygulama çerçevesi: `references/CON.md` → Haftalık İçerik Boru Hattı + Telif ve Atıf Kuralı. Güvenilir kaynak listesi: `sources/kaynaklar.json` + `docs/kaynak-listesi.md`.
+
 ## Renk Paleti
 
 | Token | Hex | Kullanım |
@@ -144,6 +148,7 @@ Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **7 ajanlı
 - Tahmin ile ölçüm ayrı etiketlenir: kaynakta "tahmini" yazan sayı, yazıda da tahmin diye geçer.
 - Metrik kapsamı genişletilemez: "deploy 31 sn", uçtan uca süre olarak sunulamaz.
 - Gelecek vaadi (yayın kadansı, "her yazıda X") sahip onayı olmadan yazılmaz.
+- Dış kaynaklı içerikte ek çerçeve: `references/CON.md` → Telif ve Atıf Kuralı (birebir çeviri yasak, alıntı sınırı, link zorunluluğu).
 - Prosedürün tamamı: `references/CON.md` → Kaynak Zorunluluğu bölümü. Denetim: her yazı yayın öncesi EDT'den geçer.
 
 ---
@@ -180,10 +185,11 @@ EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği — sahip
 ## Sosyal Medya Handle ve İletişim
 
 - **LinkedIn:** `eniac` → linkedin.com/in/eniac
+- **LinkedIn Şirket Sayfası:** linkedin.com/company/hayrettinsendil
 - **X:** `@HayrettinAi` → x.com/HayrettinAi
 - **Instagram:** `hayrettinai` → instagram.com/hayrettinai
 - **GitHub:** `hsendil` → github.com/hsendil
-- **E-posta (resmi/iş):** `support@hayrettinsendil.tr` — workshop, danışmanlık, ekip eğitimi
+- **E-posta (resmi/iş):** `talep@hayrettinsendil.tr` — workshop, danışmanlık, ekip eğitimi (27.07.2026: support@ tüm görünür yüzeylerden kaldırıldı)
 - **E-posta (kişisel):** `hayrettin.sendil@hotmail.com.tr` — yalnızca kişisel/gizli yazışma, public yerlerde KULLANMA
 
-*Son güncelleme: 2026-07-27 — Kural 7 (kaynak zorunluluğu), sen/siz istisnası, deneyim yılı + kadro canonical'ı, marka işareti kaydı*
+*Son güncelleme: 2026-07-28 — Misyon beyanı, Telif ve Atıf Kuralı referansı, talep@ düzeltmesi, şirket sayfası eklendi*

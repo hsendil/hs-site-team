@@ -1,0 +1,47 @@
+# Chain 8: Kaynak Tarayici
+#
+# Pazartesi 08:30 TR: sources/kaynaklar.json listesindeki feed'leri tarar,
+# son 7 gunden en degerli 10 adayi Issue olarak sunar. Icerik yazmaz.
+# Sahip secer; secilenler Atifli Yorum formatina girer (CON.md).
+# Chain 7'den (09:00) once kosar; iki Issue ayni sabah sahibin onune duser.
+#
+# Gerekli secret: ANTHROPIC_API_KEY
+
+name: 'Chain 8: Kaynak Tarayici'
+
+on:
+  schedule:
+    # Pazartesi 08:30 Europe/Istanbul (05:30 UTC)
+    - cron: '30 5 * * 1'
+  workflow_dispatch:
+    inputs:
+      gun:
+        description: 'Kac gunluk pencere taransin'
+        required: false
+        default: '7'
+        type: string
+
+concurrency:
+  group: chain8-kaynak-tarayici
+  cancel-in-progress: false
+
+jobs:
+  tara:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Feed'leri tara ve Issue ac
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GUN: ${{ github.event.inputs.gun || '7' }}
+        run: node scripts/kaynak-tarayici.mjs
