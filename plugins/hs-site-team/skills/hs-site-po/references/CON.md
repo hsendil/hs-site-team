@@ -33,6 +33,29 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 | "Vercel deploy READY 31 sn" | ölçüm | CHANGELOG 1.0.1 |
 | "%40-60 token tasarrufu" | tahmin | ADR-002 |
 
+## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28)
+
+Kadans: haftada 2 içerik. Format kuralı kesin: **1 Derin Vaka + 1 Saha Notu.** Aynı haftaya iki derin vaka sıkıştırılmaz; kanıt üretimi yetişmez ve Kaynak Zorunluluğu zorlanır. Kalite kapıları hiçbir formatta gevşemez.
+
+| Gün | Adım |
+|---|---|
+| Pazartesi | Chain 7 Issue'su: 5 konu önerisi; sahip 2 konu seçer; seçilenler Notion İçerik Takvimi'ne "Onaylı" olarak işlenir |
+| Salı | Derin Vaka taslağı (CON) + İddia Envanteri → EDT denetimi → PR (preview linkiyle) |
+| Çarşamba | Sahip merge = yayın 1; yayın oturumunda Chain 5a slug ile tetiklenir |
+| Perşembe | Kişisel LinkedIn postu 1 (Chain 5b, PR merge = yayın); Saha Notu taslağı → EDT → PR |
+| Cumartesi | Sahip merge = yayın 2; Chain 5a ikinci tetik |
+| Pazar/Pazartesi | Kişisel post 2; şirket sayfası varyantları kişisel posttan 24-48 saat sonra MANUEL basılır (sayfa API onayı yok) |
+
+Format tanımları:
+- **Derin Vaka:** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
+- **Saha Notu:** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
+
+Araç ve sorumluluklar:
+- Boru hattının tek durum kaynağı Notion **"İçerik Takvimi · hayrettinsendil.tr"** DB'sidir (Site Operations altı, id `6017db6a-5fa9-4eab-97ea-68bcf84803e1`). Durum akışı: Fikir → Onaylı → Taslak → EDT → PR → Yayında → Sosyal Çıktı.
+- Chain 7 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
+- Chain 5a yalnız workflow_dispatch ile koşar (cron 28.07.2026'da kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir).
+- Şirket sayfası kanal rolü: kişisel profil erişim motoru, sayfa güven çapası; sıra hep kişisel → sayfa, repaylaşım değil öz metinli varyant.
+
 ## Frontmatter Standardı
 
 ```yaml

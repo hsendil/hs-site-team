@@ -1,0 +1,41 @@
+# Chain 7: Konu Onerici
+#
+# Pazartesi 09:00 TR: canli sitenin sitemap'inden mevcut yazilari okur,
+# Claude ile 5 konu onerisi uretir (2 derin vaka + 3 saha notu), Issue acar.
+# Yayin karari YOKTUR. Sahip Issue'da haftanin 2 konusunu isaretler
+# (1 Derin Vaka + 1 Saha Notu); secilenler Pazartesi oturumunda
+# Notion Icerik Takvimi'ne islenir.
+#
+# Gerekli secret: ANTHROPIC_API_KEY
+
+name: 'Chain 7: Konu Onerici'
+
+on:
+  schedule:
+    # Pazartesi 09:00 Europe/Istanbul (06:00 UTC)
+    - cron: '0 6 * * 1'
+  workflow_dispatch: {}
+
+concurrency:
+  group: chain7-konu-onerici
+  cancel-in-progress: false
+
+jobs:
+  oner:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Konu onerileri uret ve Issue ac
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/konu-onerici.mjs

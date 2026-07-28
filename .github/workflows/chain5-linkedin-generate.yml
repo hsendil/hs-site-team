@@ -3,6 +3,11 @@
 # Blog yazısından veya konudan LinkedIn postu üretir, PR açar. YAYIN YAPMAZ.
 # Merge = yayın onayı (chain5-linkedin-publish tetiklenir).
 #
+# Tetik yalnız manuel (workflow_dispatch). Cron 28.07.2026'da kaldırıldı:
+# haftalık 2 yayın ritminde üretim, yayın oturumunda slug ile tetiklenir;
+# cron slug bilemez ve jenerik post üretip kuyruğu kirletirdi.
+# Ritim: Çarşamba derin vaka + Cumartesi saha notu yayını; post ertesi gün.
+#
 # Gerekli secret: ANTHROPIC_API_KEY
 
 name: Chain 5a — LinkedIn Post Üretimi
@@ -29,10 +34,6 @@ on:
         required: false
         default: false
         type: boolean
-  schedule:
-    # Perşembe 09:00 Europe/Istanbul (06:00 UTC)
-    # X Pazartesi, LinkedIn Perşembe — aynı içerik aynı gün iki kanalda çıkmasın
-    - cron: '0 6 * * 4'
 
 jobs:
   generate:

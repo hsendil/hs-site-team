@@ -1,0 +1,119 @@
+#!/usr/bin/env node
+/**
+ * Chain 7: Konu Onerici
+ *
+ * Canli sitenin sitemap'inden mevcut blog yazilarini okur, Claude ile
+ * 5 konu onerisi uretir (2 derin vaka + 3 saha notu) ve GitHub Issue acar.
+ * Bu script yayin YAPMAZ, icerik YAZMAZ; yalniz oneri listeler.
+ * Haftalik kural (sahip onayi 28.07.2026): 1 Derin Vaka + 1 Saha Notu secilir.
+ *
+ * Gerekli env: ANTHROPIC_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY
+ */
+
+const SITE = "https://hayrettinsendil.tr";
+const MODEL = process.env.CHAIN7_MODEL ?? "claude-sonnet-5";
+
+async function mevcutYazilar() {
+  const res = await fetch(`${SITE}/sitemap.xml`);
+  if (!res.ok) throw new Error(`sitemap ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const xml = await res.text();
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  return locs.filter((u) => u.includes("/blog/") && !u.endsWith("/blog"));
+}
+
+async function oneriUret(yazilar) {
+  const system = [
+    "Turkce yazan kidemli bir kurumsal icerik editorusun.",
+    "Site: hayrettinsendil.tr. Sahibi kurumsal yapay zeka ve context engineering egitmeni; 20+ yil BT operasyon liderligi gecmisi var.",
+    "Hedef kitle: kurumsal BT ve dijital donusum liderleri, egitim satin alan IK/gelisim birimleri.",
+    "Konu alani: kurumsal AI, context engineering, Claude Code ve Cowork, MCP, agent skill'ler, cok ajanli sistemler, AI ile ITSM/ITIL kesisimi, pilottan uretime gecis.",
+    "Kurallar: em-dash karakteri YASAK. Abarti ve reklam dili yasak. Her oneri sahibin canli sistemlerinden (site repo'su, 7 ajanli takim, is pratigi) uretilebilecek kanita baglanmali.",
+    'Cikti YALNIZ gecerli JSON: {"oneriler":[{"baslik":"...","format":"derin-vaka","gerekce":"...","kanit_ihtiyaci":"..."}]}',
+  ].join(" ");
+
+  const user = [
+    "Sitede yayinda olan yazilar:",
+    ...yazilar.map((u) => `- ${u}`),
+    "",
+    "5 yeni konu onerisi uret: tam 2 adet derin-vaka, tam 3 adet saha-notu.",
+    "Mevcut yazilarla konu cakismasi olmasin. Basliklar 60 karakterin altinda kalsin.",
+    "derin-vaka: 1000-2000 kelimelik, commit/tarih/olcum kanitli vaka calismasi.",
+    "saha-notu: 400-600 kelimelik, tek pratik ders anlatan kisa yazi.",
+  ].join("\n");
+
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": process.env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 1500,
+      system,
+      messages: [{ role: "user", content: user }],
+    }),
+  });
+  if (!res.ok) throw new Error(`Anthropic ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const json = await res.json();
+  const text = (json.content?.[0]?.text ?? "").replace(/^```json?\s*|```\s*$/g, "").trim();
+  const data = JSON.parse(text);
+  if (!Array.isArray(data.oneriler) || data.oneriler.length !== 5) {
+    throw new Error(`Beklenen 5 oneri, gelen: ${data.oneriler?.length}`);
+  }
+  for (const o of data.oneriler) {
+    if (String(o.baslik).includes("—")) throw new Error(`Em-dash tespit edildi: ${o.baslik}`);
+  }
+  return data.oneriler;
+}
+
+async function issueAc(oneriler) {
+  const tarih = new Date().toLocaleDateString("tr-TR", { timeZone: "Europe/Istanbul" });
+  const satirlar = oneriler
+    .map((o) =>
+      [
+        `- [ ] **${o.baslik}**`,
+        `  - Format: ${o.format === "derin-vaka" ? "Derin Vaka" : "Saha Notu"}`,
+        `  - Gerekce: ${o.gerekce}`,
+        `  - Kanit ihtiyaci: ${o.kanit_ihtiyaci}`,
+      ].join("\n")
+    )
+    .join("\n");
+
+  const body = [
+    "Bu haftanin konu onerileri. Kural: haftada 1 Derin Vaka + 1 Saha Notu secilir.",
+    "",
+    satirlar,
+    "",
+    "Secilen 2 konuyu isaretle; Pazartesi oturumunda Notion Icerik Takvimi'ne islenir.",
+    "Bu issue yalniz oneridir. Yayin kapilari degismez: taslak + Iddia Envanteri, EDT denetimi, PR ve sahip onayi.",
+  ].join("\n");
+
+  const res = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ title: `Konu onerileri: ${tarih}`, body }),
+  });
+  if (!res.ok) throw new Error(`Issue acilamadi ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const issue = await res.json();
+  return issue.html_url;
+}
+
+async function main() {
+  const yazilar = await mevcutYazilar();
+  console.log(`Mevcut yazi: ${yazilar.length}`);
+  const oneriler = await oneriUret(yazilar);
+  for (const o of oneriler) console.log(`- [${o.format}] ${o.baslik}`);
+  const url = await issueAc(oneriler);
+  console.log(`Issue: ${url}`);
+}
+
+main().catch((err) => {
+  console.error(`HATA: ${err.message ?? err}`);
+  process.exit(1);
+});
