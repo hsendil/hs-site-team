@@ -7,6 +7,11 @@
 # PR'ı kapatmak = içeriği çöpe atmak. Düzeltmek istersen PR içindeki JSON'u
 # doğrudan düzenleyip merge edebilirsin.
 #
+# Tetik yalnız manuel (workflow_dispatch). Pazartesi cron'u 29.07.2026'da
+# kaldırıldı: yeni ritimde X de makale bazlı beslenir, yayın oturumunda
+# slug ile tetiklenir; jenerik konu üretimi kuyruğu kirletiyordu.
+# Kanal takvimi: CON.md → Haftalık İçerik Boru Hattı.
+#
 # Gerekli secrets:
 #   ANTHROPIC_API_KEY — console.anthropic.com
 
@@ -34,9 +39,6 @@ on:
         required: false
         default: false
         type: boolean
-  schedule:
-    # Pazartesi 09:00 Europe/Istanbul (06:00 UTC) — haftalık bağımsız içerik
-    - cron: '0 6 * * 1'
 
 jobs:
   generate:

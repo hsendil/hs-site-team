@@ -33,27 +33,32 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 | "Vercel deploy READY 31 sn" | ölçüm | CHANGELOG 1.0.1 |
 | "%40-60 token tasarrufu" | tahmin | ADR-002 |
 
-## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28, misyon revizyonu aynı gün)
+## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28 · kanal takvimi revizyonu 2026-07-29)
 
 Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel makaleleri sahibin yorumu ve düzgün atıfla Türk kurumsal okuyucusuna taşımak (brand.md → Misyon). Vaka yazıları bu iddianın kanıt katmanıdır.
 
-Kadans: haftada 2 içerik. **Çarşamba: Atıflı Yorum** (ana slot, misyonun birinci hedefi). **Cumartesi: dönüşümlü Derin Vaka veya Saha Notu.** Kalite kapıları hiçbir formatta gevşemez.
+Kadans: haftada 2 içerik. **Çarşamba: Atıflı Yorum** (ana slot). **Cumartesi: dönüşümlü Derin Vaka veya Saha Notu.** Kalite kapıları hiçbir formatta gevşemez.
+
+**Kanal ilkesi (2026-07-29):** Her yazı üç ayrı günde üç kanala yayılır: site → ertesi gün LinkedIn → ondan sonraki gün X. Aynı içerik aynı gün iki kanalda çıkmaz; kanallar birbirinin erişimini yemez.
 
 | Gün | Adım |
 |---|---|
 | Pazartesi 08:30 | Chain 8 Issue'su: kaynak taramasından 10 aday (Atıflı Yorum için) |
 | Pazartesi 09:00 | Chain 7 Issue'su: 5 vaka/saha notu önerisi (Cumartesi için) |
-| Pazartesi | Sahip iki Issue'dan seçimlerini işaretler; seçilenler Notion İçerik Takvimi'ne "Onaylı" düşer |
-| Salı | Atıflı Yorum taslağı (CON) + kaynak link envanteri → EDT → PR (preview linkiyle) |
-| Çarşamba | Sahip merge = yayın 1; yayın oturumunda Chain 5a slug ile tetiklenir |
-| Perşembe | Kişisel LinkedIn postu 1 (Chain 5b); Cumartesi içeriği taslağı → EDT → PR |
-| Cumartesi | Sahip merge = yayın 2; Chain 5a ikinci tetik |
-| Pazar/Pazartesi | Kişisel post 2; şirket sayfası varyantları kişisel posttan 24-48 saat sonra MANUEL |
+| Pazartesi | Sahip seçimi (İçerik Seçim Paneli artifact'ı veya Issue); Notion'a "Onaylı" düşer. Ayrıca: önceki Cumartesi yazısının LinkedIn postu (5b merge) |
+| Salı | Atıflı Yorum taslağı (CON) + kaynak link envanteri → EDT → PR (preview linkiyle). Ayrıca: önceki Cumartesi yazısının X threadi (4b merge) |
+| Çarşamba | Sahip merge = yayın 1; yayın oturumunda Chain 5a VE Chain 4a slug ile tetiklenir |
+| Perşembe | LinkedIn postu 1 (5b merge); Cumartesi içeriği taslağı → EDT → PR |
+| Cuma | X threadi 1 (4b merge) |
+| Cumartesi | Sahip merge = yayın 2; Chain 5a + 4a tetikleri |
+| Pazar | Boş (kanal dinlenir); şirket sayfası varyantları kişisel postlardan 24-48 saat sonra MANUEL |
 
 Format tanımları:
 - **Atıflı Yorum:** 600-1000 kelime. Sabit yapı: (1) Ne oldu: kısa özet + kaynak atıfı ve linki, (2) Neden önemli: Türkiye kurumsal bağlamı, (3) Saha yorumu: sahibin operasyon/eğitim tecrübesinden bağ, (4) Ne yapmalı: okuyucuya somut adım. Girdi kaynağı: Chain 8 Issue seçimi.
 - **Derin Vaka:** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
 - **Saha Notu:** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
+
+Görsel standardı: her yazı için Grok ile soyut set (hero/og/card), prompt şablonu brand.md → Yazı Görselleri. Frontmatter: heroImage/ogImage/cardImage/imageAlt; dosyalar `public/images/blog/<slug>-{hero,og,card}.jpg`.
 
 ### TELİF VE ATIF KURALI (KİRILMAZ, 2026-07-28)
 
@@ -71,7 +76,7 @@ Araç ve sorumluluklar:
 - Boru hattının tek durum kaynağı Notion **"İçerik Takvimi · hayrettinsendil.tr"** DB'sidir (Site Operations altı, id `6017db6a-5fa9-4eab-97ea-68bcf84803e1`). Durum akışı: Fikir → Onaylı → Taslak → EDT → PR → Yayında → Sosyal Çıktı.
 - Güvenilir kaynak listesi: `sources/kaynaklar.json` (makine) + `docs/kaynak-listesi.md` (insan, gerekçeli). Çeyreklik gözden geçirilir; Chain 8 Issue'larındaki başarısız feed raporları ayıklama girdisidir.
 - Chain 7 ve Chain 8 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
-- Chain 5a yalnız workflow_dispatch ile koşar (cron 28.07.2026'da kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir).
+- Chain 5a VE Chain 4a yalnız workflow_dispatch ile koşar (5a cron'u 28.07, 4a cron'u 29.07 kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir). Yayın oturumunda slug ile tetiklenir.
 - Şirket sayfası kanal rolü: kişisel profil erişim motoru, sayfa güven çapası; sıra hep kişisel → sayfa, repaylaşım değil öz metinli varyant.
 
 ## Frontmatter Standardı
