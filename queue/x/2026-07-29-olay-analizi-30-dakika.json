@@ -1,0 +1,17 @@
+{
+  "id": "2026-07-29-olay-analizi-30-dakika",
+  "platform": "x",
+  "source": "blog:olay-analizi-30-dakika",
+  "title": "Beş mühendisin üç günlük işi 30 dakikaya inince | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/olay-analizi-30-dakika?utm_source=x&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "createdAt": "2026-07-29T08:08:30.708Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "tweets": [
+    "Beş deneyimli mühendisin üç günde tamamladığı kritik sistem analizi, 30 dakikaya indi. Rakam OpenAI'ın yayımladığı NTT DATA vakasından. Ama asıl konu hız değil: insan dikkatinin yapısal sınırı.",
+    "Olay analizinde zamanın çoğu kod yazmakla geçmez. Log toplamak, sistemler arası zaman çizgisi kurmak, değişiklik kayıtlarıyla eşleştirmek. İnsan bunu sırayla yapar. Ajan mimarisi aynı anda okur, dener, eler ve bulguyu tek bağlamda tutar.",
+    "20+ yıl olay yönetiminde hep aynı şeyi gördüm: kanıt oradaydı, ama tek yerde değil. İzleme aracı bir şey söyler, servis kayıtları başka, değişiklik takvimi üçüncü. Örüntü ekranların arasındaki boşlukta durur.",
+    "İnsan gözü tek ekrana odaklanır. Üç ayrı sistemin zaman çizgisini yan yana tutamaz. Bu yetkinlik eksiği değil, dikkatin yapısal sınırı. Kendi ortamımda araçları MCP ile tek akla bağladım: izleme, kayıt, envanter, bildirim.",
+    "Envanter çıkar: son büyük olayda kaç ekrana baktın? Küçük başla: iki kaynağı tek bağlamda birleştir. Sınırı yaz: hangi veri girer, insan incelemesi nerede zorunlu.\n\nhttps://hayrettinsendil.tr/blog/olay-analizi-30-dakika?utm_source=x&utm_medium=social&utm_campaign=blog"
+  ]
+}
