@@ -7,7 +7,7 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 - `content/posts/<slug>.mdx` blog yazısı taslağı
 - Frontmatter standardı (aşağıda)
 - Başlık optimizasyonu (SEO + cazip)
-- Tag tutarlılığı (canonical tag listesi)
+- Tag tutarlılığı (canonical tag listesi + etiket eşiği)
 - İçerik takvimi (haftalık / aylık plan)
 - About metni güncellemesi (sertifika eklendikçe)
 - Hero / section copy (sahip onayı ile)
@@ -86,30 +86,70 @@ Araç ve sorumluluklar:
 title: "Yazı Başlığı (60 karakter altı)"
 date: "YYYY-MM-DD"
 summary: "150-160 karakter arası, anahtar kelime doğal geçen özet."
-tags: ["Tag1", "Tag2", "Tag3"]   # canonical listeden
+tags: ["Tag1", "Tag2", "Tag3"]   # canonical listeden; "AI" KULLANILMAZ
 published: false                  # default false — sahip true yapar
 ---
 ```
 
-## Canonical Tag Listesi
+## Canonical Tag Listesi (2026-07-30 revizyonu)
 
-| Tag | Kullanım |
-|---|---|
-| `AI` | Yapay zeka geneli |
-| `Claude` | Claude'a özel teknik yazı |
-| `Context Engineering` | CE / prompt mimarisi |
-| `MCP` | Model Context Protocol |
-| `Agent Skills` | Skill paketleme, plugin |
-| `Claude Code` | CLI ve plugin'ler |
-| `Claude Cowork` | Cowork tabanlı akışlar |
-| `ITIL` | ITSM, ITIL v4 |
-| `ITSM` | Service management |
-| `PMI` | PMP, PMBOK 7 |
-| `Next.js` | Site teknik yazısı |
-| `Vercel` | Deploy / hosting |
-| `AI Gündemi` | Atıflı Yorum yazıları (dış kaynak + yorum) |
+> **Bu liste artık bir sözleşme, fikir listesi değil.** Site PR #20 ile etikete göre filtreleme kuruldu: her etiket `/blog/etiket/<slug>` adresinde KALICI URL üretiyor. Yayına girmiş bir etiketin adını değiştirmek ölü link demektir.
 
-Yeni tag eklemek isteniyorsa — önce CON onaylaşır, listeye eklenir.
+**Dil kuralı (2026-07-30):** Yaygın Türkçe karşılığı olan terim Türkçe yazılır. Sektörde İngilizce yerleşmiş kısaltma ve ürün adı İngilizce kalır.
+
+| Tag | Slug | Kullanım |
+|---|---|---|
+| `Claude` | `claude` | Claude'a özel teknik yazı |
+| `Context Engineering` | `context-engineering` | CE / bağlam mimarisi |
+| `AI Gündemi` | `ai-gundemi` | YALNIZ Atıflı Yorum formatı (dış kaynak + sahip yorumu) |
+| `ITSM` | `itsm` | Servis yönetimi, ITIL v4 süreçleri |
+| `Gizlilik` | `gizlilik` | Veri gizliliği, KVKK, ifşa vakaları |
+| `Claude Code` | `claude-code` | CLI ve plugin'ler |
+| `Agent Skills` | `agent-skills` | Skill paketleme, plugin mimarisi |
+| `MCP` | `mcp` | Model Context Protocol |
+| `Claude Cowork` | `claude-cowork` | Cowork tabanlı akışlar |
+| `Next.js` | `next-js` | Site teknik yazısı |
+| `Vercel` | `vercel` | Deploy / hosting |
+| `PMI` | `pmi` | PMP, PMBOK 7 |
+
+Slug kolonu bilgi amaçlıdır, elle yazılmaz; site `src/lib/tags.ts` içinde üretir.
+
+### KALDIRILAN: `AI` (2026-07-30)
+
+`AI` etiketi listeden çıkarıldı ve dört yazının frontmatter'ından silindi.
+
+Gerekçe: dört yazının dördünde de vardı, yani hiçbir yazıyı diğerinden ayırmıyordu. Filtre değeri sıfırdı ve `/blog/etiket/ai` sayfası pratikte `/blog` sayfasının kopyası olacak, aynı sorguda kendisiyle yarışacaktı (keyword cannibalization). Sitenin tamamı AI hakkında; bu yüzden `AI` ayırt edici bir etiket değil.
+
+**Yeni yazıya `AI` etiketi EKLENMEZ.** Yazının hangi AI alt konusuna girdiğini söyleyen etiket seçilir.
+
+### KALDIRILAN: `ITIL` (2026-07-30)
+
+Eski listede `ITIL` ve `ITSM` ayrı iki satırdı ve ikisi de aynı alanı tarif ediyordu. `ITIL` çıkarıldı, alan `ITSM`e verildi; ITIL v4 süreçleri de `ITSM` altında etiketlenir.
+
+Gerekçe: ayrı tutulurlarsa aynı konudaki yazılar iki ince etikete bölünür ve hiçbiri 2 yazı eşiğini geçemez. Bu, `AI` sorununun aynası: biri fazla geniş olduğu için, diğeri fazla bölündüğü için işe yaramaz.
+
+Sahip `ITIL`i ayrı etiket olarak geri isterse, `ITSM` ile arasındaki sınır bu dosyaya YAZILMADAN geri eklenmez.
+
+### Etiket eşiği (site tarafı davranışı)
+
+`TAG_PAGE_MIN_POSTS = 2`, kaynak: site repo `src/lib/tags.ts`.
+
+| Yazı sayısı | Sayfa | Sitemap | Chip |
+|---|---|---|---|
+| 2 ve üzeri | Üretilir | Girer | Tıklanabilir `Link` |
+| 1 | Üretilmez (`dynamicParams = false` ile 404) | Girmez | Pasif `span` |
+
+Bir etiket ikinci yazısını aldığında sayfası KENDİLİĞİNDEN doğar; elle yapılacak bir iş yoktur.
+
+Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız uykuda bekler. Ama yeni etiket icat etmenin bedeli vardır: tek yazılık etiket hiçbir yere gitmez, yalnız soluk bir chip olarak durur.
+
+### Yeni etiket eklemek
+
+1. Mevcut listede karşılığı var mı diye bakılır. **Yakın anlamlı ikinci etiket açılmaz** (`ITIL`/`ITSM` dersi).
+2. Dil kuralına uyulur.
+3. Slug çakışması kontrol edilir: Türkçe karakter ASCII'ye indiği için iki farklı etiket aynı slug'a düşebilir.
+4. Sahip onayı alınır, sonra yukarıdaki tabloya eklenir.
+5. Etiket adı yayına girdikten sonra DEĞİŞTİRİLMEZ. Değişirse 301 yönlendirme borcu doğar.
 
 ## Yazı Yapı İskeleti
 
@@ -145,12 +185,16 @@ Yeni tag eklemek isteniyorsa — önce CON onaylaşır, listeye eklenir.
 ## Otonomi Sınırı
 - ✅ Otonom: yeni MDX dosyası commit (published: false)
 - ✅ Otonom: yazım hatası düzeltme, küçük düzenleme
+- ✅ Otonom: canonical listeden etiket seçmek
 - ❌ Sahip onayı: published: false → true (yayın)
 - ❌ Sahip onayı: about / ana sayfa copy değişikliği (pozisyonlama)
 - ❌ Sahip onayı: gelecek vaadi içeren cümle (kadans, kapasite, "her yazıda X")
+- ❌ Sahip onayı: canonical listeye YENİ etiket eklemek veya mevcut etiketin adını değiştirmek
 
 ## Pattern Notes
 - **Frontmatter ile fail-safe:** `published: false` default — yanlışlıkla yayın yok
 - **Konvansiyonel slug:** kebab-case, Türkçe karakter yok (URL güvenli)
 - **Author voice consistency:** her yazı aynı kullanıcının ağzından — brand.md ton kuralı
 - **Sources-open writing:** yazı kaynak dokümanlar context'teyken yazılır; "auditless trust = bug" prensibinin üretim tarafı karşılığı. 27.07.2026 EDT denetiminin kalıcı dersi.
+- **Etiket eşiği bir kalite kapısı:** etiket sayfası ancak 2 yazıyla doğar. Bu, ince içerik sayfası üretmeyi teknik olarak imkânsız kılar; disiplini kişinin hatırlamasına bırakmaz. 30.07.2026.
+- **OG convention alt rotaya taşınmaz:** Next.js `opengraph-image` dosya convention'ı üst segmentten alt rotaya İNMEZ. `/blog/opengraph-image` varken `/blog/etiket/<slug>` sayfasında `og:image` null geldi; ayrı OG dosyası gerekti. Yeni alt rota açılırken kontrol edilir.
