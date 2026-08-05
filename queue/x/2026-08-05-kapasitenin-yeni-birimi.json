@@ -1,0 +1,17 @@
+{
+  "id": "2026-08-05-kapasitenin-yeni-birimi",
+  "platform": "x",
+  "source": "blog:kapasitenin-yeni-birimi",
+  "title": "Kapasitenin yeni birimi ve onu öneren el | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/kapasitenin-yeni-birimi?utm_source=x&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "createdAt": "2026-08-05T15:25:50.510Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "tweets": [
+    "MIT Technology Review'da Intel kaynaklı bir yazı kurumsal ajan kapasitesini yeni bir birimle tanımladı: vCPU başına ajan yoğunluğu. Kaç ajan çalıştırdığın değil, hangi hizmet seviyesinde kaç ajan çalıştırabildiğin önemli.",
+    "20+ yıldır BT operasyonunda gördüğüm tablo: ajan projeleri dönüşüm bütçesinden çıkıyor, kapasite planına girmiyor. Sorun pilotta değil, ajanlar üretim yükünü paylaşmaya başladığı gün görünüyor.",
+    "Ortalama CPU kullanımı ajan yükü için zayıf bir sinyal. Ajan model yanıtını beklerken ortalama iyi görünür ama kuyruk büyür. P95 görev gecikmesi daha iyi bir öncü gösterge.",
+    "Satıcı kaynaklı mimari tavsiyesini reddetme, çerçevesini test et. Her belgede belgenin sormadığı soruların listesini çıkar. O liste senin gerçek değerlendirme kriterin.",
+    "Hazır olmak kalıcı bir durum değil. Bir kez kurduğun kapasite planı tutar ama ajanın çalıştığı varsayımlar aşınır. İkisine de bütçe ayır.\n\nhttps://hayrettinsendil.tr/blog/kapasitenin-yeni-birimi?utm_source=x&utm_medium=social&utm_campaign=blog"
+  ]
+}
