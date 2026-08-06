@@ -8,13 +8,14 @@
  * Secilenler Atifli Yorum formatina girer (bkz. CON.md).
  *
  * Gerekli env: ANTHROPIC_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY
- * Opsiyonel: GUN (varsayilan 7)
+ * Opsiyonel: GUN (varsayilan 7), CHAIN8_MAX_TOKENS (varsayilan 12000)
  */
 
 import fs from "node:fs";
 
 const MODEL = process.env.CHAIN8_MODEL ?? "claude-sonnet-5";
 const GUN = Number(process.env.GUN ?? "7");
+const MAX_TOKENS = Number(process.env.CHAIN8_MAX_TOKENS ?? "12000");
 const FEED_BASINA_TAVAN = 25;
 const TOPLAM_TAVAN = 140;
 
@@ -101,11 +102,13 @@ async function skorla(ogeler) {
       "anthropic-version": "2023-06-01",
       "content-type": "application/json",
     },
-    body: JSON.stringify({ model: MODEL, max_tokens: 4000, system, messages: [{ role: "user", content: user }] }),
+    body: JSON.stringify({ model: MODEL, max_tokens: MAX_TOKENS, system, messages: [{ role: "user", content: user }] }),
   });
   if (!res.ok) throw new Error(`Anthropic ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const json = await res.json();
-  if (json.stop_reason === "max_tokens") throw new Error("Yanit kesildi; max_tokens artir.");
+  if (json.stop_reason === "max_tokens") {
+    throw new Error(`Yanit kesildi (max_tokens=${MAX_TOKENS}); CHAIN8_MAX_TOKENS ile artir.`);
+  }
   const ham = (json.content ?? []).filter((b) => b.type === "text").map((b) => b.text).join("");
   const s = ham.indexOf("{");
   const e = ham.lastIndexOf("}");
