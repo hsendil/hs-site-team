@@ -1,0 +1,11 @@
+{
+  "id": "2026-08-05-kapasitenin-yeni-birimi",
+  "platform": "linkedin",
+  "source": "blog:kapasitenin-yeni-birimi",
+  "title": "Kapasitenin yeni birimi ve onu öneren el | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/kapasitenin-yeni-birimi?utm_source=linkedin&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "createdAt": "2026-08-05T15:25:10.425Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "text": "Geçen hafta MIT Technology Review'da kurumsal ajan mimarisi üzerine bir yazı çıktı. Üstte \"Sponsored - Provided by Intel\" etiketi var. İçindeki iki ölçüt doğrudan kapasite masasına oturuyor.\n\n20+ yıllık operasyon deneyiminde kapasite hep aynı birimlerle konuşuldu: CPU, bellek, IOPS, bağlantı havuzu. Ajan iş yükü bunlara temiz oturmuyor. Türkiye'de gördüğüm tablo: ajan projeleri genelde dönüşüm başlığı altında başlıyor, kapasite planına hiç girmiyor. Sorun pilot değil, üretim yükünü paylaşmaya başladığı gün görünüyor.\n\nYazıdan öne çıkan dört başlık:\n\n- Ajan kapasitesi vCPU başına yoğunlukla planlanır, ajan sayısıyla değil. 8 vCPU üzerinde 10 ajan ile 16 vCPU üzerinde 20 ajan benzer davranır, yoğunluk aynı olduğu için.\n\n- Ortalama CPU kullanımı zayıf sinyal. Ajan model yanıtı beklerken ve kısa hesap patlamaları arasında gidip geliyor. Ortalama iyi görünürken kuyruk büyüyor. P95 görev gecikmesi daha iyi öncü gösterge.\n\n- Yatayda ölçekle, dikey ölçeklemeyi istisnaya sakla. Ama bu tavsiyeyi bir işlemci üreticisi veriyor. Çerçeveyi test edin, sorulmayan soruyu siz sorun.\n\n- Hazır olmak kalıcı bir durum değil. Nature Machine Intelligence'ta aynı hafta çıkan bir yoruma göre ClinVar veri kümesinde 2015-2023 arasında 2 milyon klinik genetik varyantın yüzde 4,6'sı yeniden sınıflandırılmış. Model bozulmadı, altındaki gerçek değişti.\n\nSizde ajan tartışması hâlâ inovasyon masasında mı duruyor, yoksa kapasite ve hizmet seviyesi masasına oturdu mu?\n\nHayrettin Şendil, PMP\nAI / Context Engineering Eğitmeni\n\nhttps://hayrettinsendil.tr/blog/kapasitenin-yeni-birimi?utm_source=linkedin&utm_medium=social&utm_campaign=blog\n\n#KurumsalYapayZeka #ITOperasyon #KapasiteYönetimi #AjanMimarisi #DijitalDönüşüm"
+}
