@@ -176,6 +176,16 @@ function validate(item, file) {
 }
 
 async function main() {
+  // Token doğrulaması kuyruk kontrolünden ÖNCE yapılır.
+  // Gerekçe: ilk koşuda kuyruk boştu, script token'a hiç bakmadan çıktı ve
+  // yeşil döndü. Yeşil koşu hiçbir şey kanıtlamıyordu. Zincirin ayakta olduğu
+  // her koşuda kanıtlanmalı, kuyruk dolu olsun ya da olmasın.
+  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+  if (!token) throw new Error("INSTAGRAM_ACCESS_TOKEN tanımlı değil");
+
+  const account = await resolveAccount(token);
+  console.log(`✓ Token geçerli — hesap: @${account.username} (id ${account.id})`);
+
   if (!fs.existsSync(QUEUE_DIR)) {
     console.log("Kuyruk klasörü yok, yapılacak iş yok.");
     return;
@@ -185,12 +195,6 @@ async function main() {
     console.log("Kuyruk boş, yapılacak iş yok.");
     return;
   }
-
-  const token = process.env.INSTAGRAM_ACCESS_TOKEN;
-  if (!token) throw new Error("INSTAGRAM_ACCESS_TOKEN tanımlı değil");
-
-  const account = await resolveAccount(token);
-  console.log(`✓ Token geçerli — hesap: @${account.username}`);
 
   fs.mkdirSync(PUBLISHED_DIR, { recursive: true });
 
