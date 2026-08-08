@@ -1,0 +1,59 @@
+# Chain 9 — Instagram Yayın
+#
+# Tetik: main'e queue/instagram/** push edildiğinde (PR merge = onay).
+#
+# Gerekli secret:
+#   INSTAGRAM_ACCESS_TOKEN — uzun ömürlü token, süreli; süresi dolmadan yenilenmeli
+#
+# Not: timeout Chain 4 ve 5'ten uzun tutuldu. Instagram yayını iki adımlı;
+# medya kabı işlenene kadar dakikada bir sorulur, bu tek başına 5 dakika sürebilir.
+
+name: Chain 9 — Instagram Yayın
+
+on:
+  push:
+    branches: [main]
+    paths: ['queue/instagram/**']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Gerçek post atmadan doğrula'
+        required: false
+        default: true
+        type: boolean
+
+concurrency:
+  group: chain9-instagram-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Kuyruğu yayınla
+        env:
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+        run: node scripts/instagram-post.mjs
+
+      - name: Arşivi commit'le
+        if: github.event.inputs.dry_run != 'true'
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Değişiklik yok."
+            exit 0
+          fi
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git add -A queue published
+          git commit -m "chore(instagram): yayınlanan postlar arşive taşındı [skip ci]"
+          git push
