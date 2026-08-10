@@ -8,10 +8,12 @@
  * Haftalik kural (sahip onayi 28.07.2026): 1 Derin Vaka + 1 Saha Notu secilir.
  *
  * Gerekli env: ANTHROPIC_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY
+ * Opsiyonel: CHAIN7_MAX_TOKENS (varsayilan 12000)
  */
 
 const SITE = "https://hayrettinsendil.tr";
 const MODEL = process.env.CHAIN7_MODEL ?? "claude-sonnet-5";
+const MAX_TOKENS = Number(process.env.CHAIN7_MAX_TOKENS ?? "12000");
 
 async function mevcutYazilar() {
   const res = await fetch(`${SITE}/sitemap.xml`);
@@ -51,7 +53,7 @@ async function oneriUret(yazilar) {
     },
     body: JSON.stringify({
       model: MODEL,
-      max_tokens: 3000,
+      max_tokens: MAX_TOKENS,
       system,
       messages: [{ role: "user", content: user }],
     }),
@@ -59,7 +61,7 @@ async function oneriUret(yazilar) {
   if (!res.ok) throw new Error(`Anthropic ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const json = await res.json();
   if (json.stop_reason === "max_tokens") {
-    throw new Error("Yanit max_tokens sinirinda kesildi; siniri artir.");
+    throw new Error(`Yanit kesildi (max_tokens=${MAX_TOKENS}); CHAIN7_MAX_TOKENS ile artir.`);
   }
   const ham = (json.content ?? [])
     .filter((b) => b.type === "text")
