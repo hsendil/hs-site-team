@@ -7,13 +7,47 @@
  * Bu script yayin YAPMAZ, icerik YAZMAZ; yalniz oneri listeler.
  * Haftalik kural (sahip onayi 28.07.2026): 1 Derin Vaka + 1 Saha Notu secilir.
  *
+ * Idempotans (11.08.2026): ayni gun icin Issue zaten varsa yenisi ACILMAZ.
+ * Kontrol Anthropic cagrisindan once yapilir. FORCE=1 ile ezilebilir.
+ *
  * Gerekli env: ANTHROPIC_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY
- * Opsiyonel: CHAIN7_MAX_TOKENS (varsayilan 12000)
+ * Opsiyonel: CHAIN7_MAX_TOKENS (varsayilan 12000), FORCE
  */
 
 const SITE = "https://hayrettinsendil.tr";
 const MODEL = process.env.CHAIN7_MODEL ?? "claude-sonnet-5";
 const MAX_TOKENS = Number(process.env.CHAIN7_MAX_TOKENS ?? "12000");
+
+function bugun() {
+  return new Date().toLocaleDateString("tr-TR", { timeZone: "Europe/Istanbul" });
+}
+
+function ghBaslik() {
+  return {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    Accept: "application/vnd.github+json",
+    "content-type": "application/json",
+  };
+}
+
+/**
+ * Ayni baslikta bir Issue zaten acilmis mi?
+ * Kapali olanlari da sayar: kapatilmis bir Issue'nun yerine yenisini acmak
+ * mukerrer kayit uretir ve sahibin isaretledigi secim kaybolur.
+ */
+async function mevcutIssue(baslik) {
+  const res = await fetch(
+    `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues?state=all&per_page=50`,
+    { headers: ghBaslik() }
+  );
+  if (!res.ok) {
+    console.log(`  UYARI: mevcut Issue kontrolu yapilamadi (${res.status}); kontrol atlaniyor`);
+    return null;
+  }
+  const liste = await res.json();
+  const bulunan = liste.find((i) => i.title === baslik && !i.pull_request);
+  return bulunan ? bulunan.html_url : null;
+}
 
 async function mevcutYazilar() {
   const res = await fetch(`${SITE}/sitemap.xml`);
@@ -87,8 +121,7 @@ async function oneriUret(yazilar) {
   return data.oneriler;
 }
 
-async function issueAc(oneriler) {
-  const tarih = new Date().toLocaleDateString("tr-TR", { timeZone: "Europe/Istanbul" });
+async function issueAc(baslik, oneriler) {
   const satirlar = oneriler
     .map((o) =>
       [
@@ -111,12 +144,8 @@ async function issueAc(oneriler) {
 
   const res = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      Accept: "application/vnd.github+json",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ title: `Konu onerileri: ${tarih}`, body }),
+    headers: ghBaslik(),
+    body: JSON.stringify({ title: baslik, body }),
   });
   if (!res.ok) throw new Error(`Issue acilamadi ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const issue = await res.json();
@@ -124,11 +153,22 @@ async function issueAc(oneriler) {
 }
 
 async function main() {
+  const baslik = `Konu onerileri: ${bugun()}`;
+
+  if (process.env.FORCE !== "1") {
+    const varOlan = await mevcutIssue(baslik);
+    if (varOlan) {
+      console.log(`Bugun icin Issue zaten var, yenisi acilmadi: ${varOlan}`);
+      console.log("Bilincli olarak tekrar uretmek istersen FORCE=1 ile kos.");
+      return;
+    }
+  }
+
   const yazilar = await mevcutYazilar();
   console.log(`Mevcut yazi: ${yazilar.length}`);
   const oneriler = await oneriUret(yazilar);
   for (const o of oneriler) console.log(`- [${o.format}] ${o.baslik}`);
-  const url = await issueAc(oneriler);
+  const url = await issueAc(baslik, oneriler);
   console.log(`Issue: ${url}`);
 }
 
