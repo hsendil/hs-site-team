@@ -7,8 +7,12 @@
  * GitHub Issue olarak sahibe sunar. Icerik YAZMAZ, yayin YAPMAZ.
  * Secilenler Atifli Yorum formatina girer (bkz. CON.md).
  *
+ * Idempotans (11.08.2026): ayni gun icin Issue zaten varsa yenisi ACILMAZ.
+ * Kontrol feed cekiminden ve Anthropic cagrisindan once yapilir.
+ * FORCE=1 ile ezilebilir.
+ *
  * Gerekli env: ANTHROPIC_API_KEY, GITHUB_TOKEN, GITHUB_REPOSITORY
- * Opsiyonel: GUN (varsayilan 7), CHAIN8_MAX_TOKENS (varsayilan 12000)
+ * Opsiyonel: GUN (varsayilan 7), CHAIN8_MAX_TOKENS (varsayilan 12000), FORCE
  */
 
 import fs from "node:fs";
@@ -18,6 +22,37 @@ const GUN = Number(process.env.GUN ?? "7");
 const MAX_TOKENS = Number(process.env.CHAIN8_MAX_TOKENS ?? "12000");
 const FEED_BASINA_TAVAN = 25;
 const TOPLAM_TAVAN = 140;
+
+function bugun() {
+  return new Date().toLocaleDateString("tr-TR", { timeZone: "Europe/Istanbul" });
+}
+
+function ghBaslik() {
+  return {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    Accept: "application/vnd.github+json",
+    "content-type": "application/json",
+  };
+}
+
+/**
+ * Ayni baslikta bir Issue zaten acilmis mi?
+ * Kapali olanlari da sayar: kapatilmis bir Issue'nun yerine yenisini acmak
+ * mukerrer kayit uretir ve sahibin isaretledigi secim kaybolur.
+ */
+async function mevcutIssue(baslik) {
+  const res = await fetch(
+    `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues?state=all&per_page=50`,
+    { headers: ghBaslik() }
+  );
+  if (!res.ok) {
+    console.log(`  UYARI: mevcut Issue kontrolu yapilamadi (${res.status}); kontrol atlaniyor`);
+    return null;
+  }
+  const liste = await res.json();
+  const bulunan = liste.find((i) => i.title === baslik && !i.pull_request);
+  return bulunan ? bulunan.html_url : null;
+}
 
 function temizle(s) {
   return String(s ?? "")
@@ -118,8 +153,7 @@ async function skorla(ogeler) {
   return data.secimler.slice(0, 10);
 }
 
-async function issueAc(secimler, istatistik) {
-  const tarih = new Date().toLocaleDateString("tr-TR", { timeZone: "Europe/Istanbul" });
+async function issueAc(baslik, secimler, istatistik) {
   const satirlar = secimler
     .map((x) =>
       [
@@ -142,18 +176,25 @@ async function issueAc(secimler, istatistik) {
 
   const res = await fetch(`https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/issues`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      Accept: "application/vnd.github+json",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ title: `Kaynak taramasi: ${tarih}`, body }),
+    headers: ghBaslik(),
+    body: JSON.stringify({ title: baslik, body }),
   });
   if (!res.ok) throw new Error(`Issue acilamadi ${res.status}: ${(await res.text()).slice(0, 300)}`);
   return (await res.json()).html_url;
 }
 
 async function main() {
+  const baslik = `Kaynak taramasi: ${bugun()}`;
+
+  if (process.env.FORCE !== "1") {
+    const varOlan = await mevcutIssue(baslik);
+    if (varOlan) {
+      console.log(`Bugun icin Issue zaten var, yenisi acilmadi: ${varOlan}`);
+      console.log("Bilincli olarak tekrar taramak istersen FORCE=1 ile kos.");
+      return;
+    }
+  }
+
   const liste = JSON.parse(fs.readFileSync("sources/kaynaklar.json", "utf8")).kaynaklar.filter((k) => k.aktif && k.rss);
   console.log(`Aktif feed: ${liste.length} · pencere: son ${GUN} gun`);
   const hepsi = [];
@@ -181,7 +222,7 @@ async function main() {
   console.log(`Degerlendirmeye giden oge: ${ogeler.length}`);
   const secimler = await skorla(ogeler);
   for (const x of secimler) console.log(`- ${x.kaynak}: ${x.baslik}`);
-  const url = await issueAc(secimler, {
+  const url = await issueAc(baslik, secimler, {
     feedOk: liste.length - hatalar.length,
     feedHata: hatalar.length,
     toplamOge: ogeler.length,
