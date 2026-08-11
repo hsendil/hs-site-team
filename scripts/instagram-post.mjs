@@ -20,9 +20,15 @@
  *
  * Kısıtlar (Meta belgesinden, 08.08.2026):
  *   - Görsel YALNIZ JPEG. PNG reddedilir.
- *   - Görsel herkese açık bir URL'de olmalı; Meta cURL ile çeker.
+ *   - Görsel ve video herkese açık bir URL'de olmalı; Meta cURL ile çeker.
  *   - Hesap Instagram Professional (Business) olmalı.
  *   - 24 saatte en fazla 100 yayın.
+ *
+ * Video/Reels (11.08.2026 eklendi):
+ *   - Kuyruk kaydında imageUrl YERİNE videoUrl verilir; media_type=REELS
+ *     ile yayınlanır (feed'de de görünür, share_to_feed varsayılan açık).
+ *   - MP4 önerilir. Video işleme görselden uzun sürer; bekleme videoda
+ *     daha uzun tutulur. coverUrl (JPEG) opsiyonel kapak karesidir.
  */
 
 import fs from "node:fs";
@@ -38,10 +44,12 @@ const CAPTION_LIMIT = 2200;
 const HASHTAG_LIMIT = 30;
 const ALT_TEXT_LIMIT = 1000;
 
-// Container hazır olana kadar bekleme: dakikada bir, en fazla 5 kez.
-// Meta'nın önerdiği ritim bu; daha sık sormak kotayı boşuna yakar.
+// Container hazır olana kadar bekleme: dakikada bir.
+// Görselde 5 deneme yeter; video işleme uzun sürer, 15 denemeye çıkar.
+// Workflow timeout 20 dk; 15 x 1 dk bu sınırın içinde kalır.
 const POLL_INTERVAL_MS = 60_000;
-const POLL_MAX_ATTEMPTS = 5;
+const POLL_MAX_ATTEMPTS_IMAGE = 5;
+const POLL_MAX_ATTEMPTS_VIDEO = 15;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -68,14 +76,18 @@ async function resolveAccount(token) {
   return { id: json.id, username: json.username ?? "(kullanıcı adı yok)" };
 }
 
-/** Adım 1: medya kabı oluştur */
+/** Adım 1: medya kabı oluştur (görsel veya Reels) */
 async function createContainer(token, igId, item) {
-  const body = new URLSearchParams({
-    image_url: item.imageUrl,
-    caption: item.caption,
-    access_token: token,
-  });
-  if (item.altText) body.set("alt_text", item.altText);
+  const body = new URLSearchParams({ caption: item.caption, access_token: token });
+
+  if (item.videoUrl) {
+    body.set("media_type", "REELS");
+    body.set("video_url", item.videoUrl);
+    if (item.coverUrl) body.set("cover_url", item.coverUrl);
+  } else {
+    body.set("image_url", item.imageUrl);
+    if (item.altText) body.set("alt_text", item.altText);
+  }
 
   const res = await fetch(`${HOST}/${API_VERSION}/${igId}/media`, {
     method: "POST",
@@ -85,7 +97,7 @@ async function createContainer(token, igId, item) {
 
   if (!res.ok) {
     const detail = (await res.text()).slice(0, 500);
-    // En sık görülen hata: görsel URL'ine erişilemiyor ya da JPEG değil
+    // En sık görülen hata: medya URL'ine erişilemiyor ya da format reddedildi
     throw new Error(`container oluşturulamadı (${res.status}): ${detail}`);
   }
 
@@ -95,8 +107,8 @@ async function createContainer(token, igId, item) {
 }
 
 /** Adım 2: kap hazır mı diye bekle. FINISHED gelmeden yayınlanamaz. */
-async function waitForContainer(token, containerId) {
-  for (let attempt = 1; attempt <= POLL_MAX_ATTEMPTS; attempt++) {
+async function waitForContainer(token, containerId, maxAttempts) {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     const url = `${HOST}/${API_VERSION}/${containerId}?fields=status_code,status&access_token=${encodeURIComponent(token)}`;
     const res = await fetch(url);
     if (!res.ok) {
@@ -109,11 +121,11 @@ async function waitForContainer(token, containerId) {
     if (code === "ERROR") throw new Error(`container işlenemedi: ${status ?? "ayrıntı yok"}`);
     if (code === "EXPIRED") throw new Error("container 24 saat içinde yayınlanmadı ve düştü");
 
-    console.log(`   ... ${code} (${attempt}/${POLL_MAX_ATTEMPTS})`);
-    if (attempt < POLL_MAX_ATTEMPTS) await sleep(POLL_INTERVAL_MS);
+    console.log(`   ... ${code} (${attempt}/${maxAttempts})`);
+    if (attempt < maxAttempts) await sleep(POLL_INTERVAL_MS);
   }
   throw new Error(
-    `container ${POLL_MAX_ATTEMPTS} denemede hazır olmadı. ` +
+    `container ${maxAttempts} denemede hazır olmadı. ` +
       "Kuyruk dosyası duruyor, bir sonraki koşuda yeniden denenir."
   );
 }
@@ -154,8 +166,26 @@ function validate(item, file) {
     }
   }
 
-  if (typeof item.imageUrl !== "string" || !item.imageUrl.trim()) {
-    errors.push("imageUrl boş");
+  const hasImage = typeof item.imageUrl === "string" && item.imageUrl.trim();
+  const hasVideo = typeof item.videoUrl === "string" && item.videoUrl.trim();
+
+  if (!hasImage && !hasVideo) {
+    errors.push("imageUrl veya videoUrl zorunlu");
+  } else if (hasImage && hasVideo) {
+    errors.push("imageUrl ve videoUrl birlikte olamaz; tek medya seç");
+  } else if (hasVideo) {
+    if (!item.videoUrl.startsWith("https://")) {
+      errors.push("videoUrl https ile başlamalı (Meta videoyu dışarıdan çeker)");
+    }
+    if (!/\.(mp4|mov)(\?|$)/i.test(item.videoUrl)) {
+      errors.push("videoUrl .mp4 veya .mov olmalı");
+    }
+    if (item.coverUrl && !/\.jpe?g(\?|$)/i.test(item.coverUrl)) {
+      errors.push("coverUrl .jpg veya .jpeg olmalı");
+    }
+    if (item.altText) {
+      errors.push("altText yalnız görselde geçerli; video için caption yeterli");
+    }
   } else {
     if (!item.imageUrl.startsWith("https://")) {
       errors.push("imageUrl https ile başlamalı (Meta görseli dışarıdan çeker)");
@@ -164,10 +194,9 @@ function validate(item, file) {
     if (!/\.jpe?g(\?|$)/i.test(item.imageUrl)) {
       errors.push("imageUrl .jpg veya .jpeg olmalı (Instagram API PNG kabul etmiyor)");
     }
-  }
-
-  if (item.altText && item.altText.length > ALT_TEXT_LIMIT) {
-    errors.push(`altText ${item.altText.length} karakter (limit ${ALT_TEXT_LIMIT})`);
+    if (item.altText && item.altText.length > ALT_TEXT_LIMIT) {
+      errors.push(`altText ${item.altText.length} karakter (limit ${ALT_TEXT_LIMIT})`);
+    }
   }
 
   if (errors.length) {
@@ -208,21 +237,27 @@ async function main() {
     }
     validate(item, file);
 
+    const isVideo = Boolean(item.videoUrl);
+
     if (item.postedId) {
       // Idempotans: önceki koşuda yayınlanmış, yalnız arşive taşı
       console.log(`✓  ${file} zaten yayınlanmış (${item.postedId}), taşınıyor`);
     } else if (DRY_RUN) {
       console.log(`→  ${file} (${item.caption.length} karakter)`);
-      console.log(`   [DRY RUN] görsel: ${item.imageUrl}`);
+      console.log(`   [DRY RUN] medya: ${isVideo ? item.videoUrl : item.imageUrl}${isVideo ? " (REELS)" : ""}`);
       console.log("   [DRY RUN] container oluşturulmadı, yayın yapılmadı");
       continue;
     } else {
-      console.log(`→  ${file} (${item.caption.length} karakter)`);
+      console.log(`→  ${file} (${item.caption.length} karakter${isVideo ? ", REELS" : ""})`);
 
       const containerId = await createContainer(token, account.id, item);
       console.log(`   container: ${containerId}`);
 
-      await waitForContainer(token, containerId);
+      await waitForContainer(
+        token,
+        containerId,
+        isVideo ? POLL_MAX_ATTEMPTS_VIDEO : POLL_MAX_ATTEMPTS_IMAGE
+      );
 
       item.postedId = await publishContainer(token, account.id, containerId);
       console.log(`   ✓ ${item.postedId}`);
@@ -230,7 +265,9 @@ async function main() {
 
     item.status = "published";
     item.publishedAt = new Date().toISOString();
-    item.url = `https://www.instagram.com/p/${item.postedId}/`;
+    item.url = isVideo
+      ? `https://www.instagram.com/reel/${item.postedId}/`
+      : `https://www.instagram.com/p/${item.postedId}/`;
 
     fs.writeFileSync(path.join(PUBLISHED_DIR, file), JSON.stringify(item, null, 2) + "\n");
     fs.unlinkSync(full);
