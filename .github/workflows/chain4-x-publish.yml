@@ -52,6 +52,9 @@ jobs:
           MAX_TWEETS: '10'
         run: node scripts/x-post.mjs
 
+      # Arşiv push'u KRİTİK: buraya gelindiyse tweet'ler zaten gitmiştir.
+      # Push düşerse dosya kuyrukta kalır ve sonraki koşu aynı postu TEKRAR
+      # atar. Bu yüzden reddedilen push rebase edilip 5 kez denenir.
       - name: Arşivi commit'le
         if: github.event.inputs.dry_run != 'true'
         run: |
@@ -64,4 +67,14 @@ jobs:
           git config user.email "actions@github.com"
           git add -A queue published
           git commit -m "chore(x): yayınlanan postlar arşive taşındı [skip ci]"
-          git push
+          for deneme in 1 2 3 4 5; do
+            if git push; then
+              echo "Arşiv push edildi (deneme $deneme)."
+              exit 0
+            fi
+            echo "Push reddedildi, rebase ile yeniden deneniyor ($deneme/5)"
+            git pull --rebase --autostash origin main
+            sleep 3
+          done
+          echo "HATA: arşiv 5 denemede push edilemedi. Postlar GİTTİ, kuyruk temizlenmedi."
+          exit 1
