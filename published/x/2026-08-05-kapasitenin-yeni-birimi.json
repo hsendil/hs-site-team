@@ -4,7 +4,7 @@
   "source": "blog:kapasitenin-yeni-birimi",
   "title": "Kapasitenin yeni birimi ve onu öneren el | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/kapasitenin-yeni-birimi?utm_source=x&utm_medium=social&utm_campaign=blog",
-  "status": "pending",
+  "status": "published",
   "createdAt": "2026-08-05T15:25:50.510Z",
   "model": "claude-sonnet-4-5-20250929",
   "tweets": [
@@ -13,5 +13,14 @@
     "Ortalama CPU kullanımı ajan yükü için zayıf bir sinyal. Ajan model yanıtını beklerken ortalama iyi görünür ama kuyruk büyür. P95 görev gecikmesi daha iyi bir öncü gösterge.",
     "Satıcı kaynaklı mimari tavsiyesini reddetme, çerçevesini test et. Her belgede belgenin sormadığı soruların listesini çıkar. O liste senin gerçek değerlendirme kriterin.",
     "Hazır olmak kalıcı bir durum değil. Kapasite planı bir kez kurulur ve bir süre tutar; ajanın çalıştığı varsayımlar ise sürekli aşınır. İkisine de bütçe ayır.\n\nhttps://hayrettinsendil.tr/blog/kapasitenin-yeni-birimi?utm_source=x&utm_medium=social&utm_campaign=blog"
-  ]
+  ],
+  "postedIds": [
+    "2087574167440806133",
+    "2087574176940892227",
+    "2087574186768146540",
+    "2087574196452823442",
+    "2087574206192009444"
+  ],
+  "publishedAt": "2026-08-12T16:17:30.850Z",
+  "url": "https://x.com/HayrettinAi/status/2087574167440806133"
 }
