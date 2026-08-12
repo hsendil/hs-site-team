@@ -1,0 +1,17 @@
+{
+  "id": "2026-08-12-ai-butcesi-model-yonlendirme",
+  "platform": "x",
+  "source": "blog:ai-butcesi-model-yonlendirme",
+  "title": "Kimse ucuz modeli kendi isteğiyle seçmez | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/ai-butcesi-model-yonlendirme?utm_source=x&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "createdAt": "2026-08-12T08:38:00.591Z",
+  "model": "claude-sonnet-4-5-20250929",
+  "tweets": [
+    "Bir şirketin Ar-Ge biriminin maaş bütçesinin %40'ı kadar token harcaması yapıyormuş. Mart'ta 605 milyar token, Temmuz'da yine 600 milyar token. Kullanım kısılmadı ama maaş bütçesine oran yaklaşık %15'e indi. Nasıl?",
+    "Rippling çalışanların her iş için en pahalı modeli varsayılan olarak kullandığını görmüş. Çalışanların yaklaşık %10-15'i harcamanın yaklaşık %60'ını yapıyormuş. Tek bir mühendisin aylık token faturası 50.000 dolar. Kaynak: TechCrunch, 07.08.2026.",
+    "Çözüm iki adımlı: önce araç başına tavan pazarlığı, sonra bir ağ geçidi. Ağ geçidi istek akışının üzerine kurulu bir katman; basit işi ucuz modele, karmaşık işi pahalı modele yönlendiriyor. Kullanıcı seçmiyor, sistem seçiyor.",
+    "Bir kural, isteğin geçtiği yolda durmuyorsa o kural bir tavsiyedir. 20+ yıl operasyonda bu şekli defalarca gördüm: politika yazılır, sunum yapılır, hiçbir şey değişmez.",
+    "Asıl soru: kurumunda AI harcaması ikiye katlandığında bunu ay sonunda faturadan mı öğreneceksin, yoksa isteğin geçtiği yolda duran bir katman mı olacak?\n\nhttps://hayrettinsendil.tr/blog/ai-butcesi-model-yonlendirme?utm_source=x&utm_medium=social&utm_campaign=blog"
+  ]
+}
