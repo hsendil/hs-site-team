@@ -4,7 +4,7 @@
   "source": "blog:ai-butcesi-model-yonlendirme",
   "title": "Kimse ucuz modeli kendi isteğiyle seçmez | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/ai-butcesi-model-yonlendirme?utm_source=x&utm_medium=social&utm_campaign=blog",
-  "status": "pending",
+  "status": "published",
   "createdAt": "2026-08-12T08:38:00.591Z",
   "model": "claude-sonnet-4-5-20250929",
   "tweets": [
@@ -13,5 +13,14 @@
     "Çözüm iki adımlı: önce araç başına tavan pazarlığı, sonra bir ağ geçidi. Ağ geçidi istek akışının üzerine kurulu bir katman; basit işi ucuz modele, karmaşık işi pahalı modele yönlendiriyor. Kullanıcı seçmiyor, sistem seçiyor.",
     "Bir kural, isteğin geçtiği yolda durmuyorsa o kural bir tavsiyedir. 20+ yıl operasyonda bu şekli defalarca gördüm: politika yazılır, sunum yapılır, hiçbir şey değişmez.",
     "Asıl soru: kurumunda AI harcaması ikiye katlandığında bunu ay sonunda faturadan mı öğreneceksin, yoksa isteğin geçtiği yolda duran bir katman mı olacak?\n\nhttps://hayrettinsendil.tr/blog/ai-butcesi-model-yonlendirme?utm_source=x&utm_medium=social&utm_campaign=blog"
-  ]
+  ],
+  "postedIds": [
+    "2087574613341409546",
+    "2087574622921257118",
+    "2087574632534528454",
+    "2087574642802196921",
+    "2087574652390367279"
+  ],
+  "publishedAt": "2026-08-12T16:19:17.226Z",
+  "url": "https://x.com/HayrettinAi/status/2087574613341409546"
 }
