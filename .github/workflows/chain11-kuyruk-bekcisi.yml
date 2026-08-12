@@ -1,0 +1,60 @@
+# Chain 11 — Kuyruk Bekçisi
+#
+# Sosyal yayın hattı sessizce durabiliyor: PR merge edilmezse post çıkmaz,
+# yayın koşusu düşerse dosya kuyrukta kalır. Bu akış her sabah bakar ve
+# bulgu varsa TEK bir Issue açar. Temiz günlerde hiçbir şey yazmaz.
+#
+# Kapsam:
+#   1) 24 saatten uzun süredir açık post onayı PR'ları
+#   2) queue/x, queue/linkedin, queue/instagram altında takılı dosyalar
+#   3) son 24 saatte düşmüş 4b / 5b / 9 koşuları
+#
+# Elle koşturmak için: Actions > Chain 11 > Run workflow
+#   dry_run = true  → Issue açmaz, raporu koşu logunda gösterir
+
+name: Chain 11 — Kuyruk Bekçisi
+
+on:
+  schedule:
+    # 04:30 UTC = 07:30 Türkiye. Sabah ilk bakışta hazır olsun.
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Issue açmadan raporu göster'
+        required: false
+        default: true
+        type: boolean
+      force:
+        description: 'Aynı gün ikinci Issue açılsın'
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: chain11-kuyruk-bekcisi
+  cancel-in-progress: false
+
+jobs:
+  bekci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Kuyruğu denetle
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          FORCE: ${{ github.event.inputs.force == 'true' && '1' || '0' }}
+        run: node scripts/kuyruk-bekcisi.mjs
