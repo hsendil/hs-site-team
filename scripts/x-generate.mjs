@@ -21,6 +21,7 @@ const QUEUE_DIR = "queue/x";
 const MODEL = process.env.CLAUDE_MODEL ?? "claude-sonnet-4-5-20250929";
 const TWEET_LIMIT = 280;
 const MAX_ATTEMPTS = 3;
+const CAMPAIGN_SLUG_MAX = 24;
 
 // Marka kuralları — kaynak: skills/hs-site-po/shared/brand.md + sahip editoryal kararları
 const BRAND_RULES = `
@@ -34,10 +35,11 @@ TON VE DİL:
 
 BİÇİM VE UZUNLUK (en sık ihlal edilen kural — dikkat et):
 - Her tweet KESİNLİKLE en fazla ${TWEET_LIMIT} karakter.
-- HEDEF: her tweet 240-260 karakter aralığında kalsın. Böylece sınıra
+- HEDEF: linksiz tweet'ler 240-260 karakter aralığında kalsın. Böylece sınıra
   yaklaşmadan güvenli alan bırakırsın.
-- Link içeren tweet için linke 30 karakter rezerv ayır; kalan metin en fazla
-  230 karakter olmalı.
+- Link içeren tweet ayrı hesaplanır: linkin kaç karakter olduğu ve o tweet'e
+  kalan metin bütçesi aşağıdaki GÖREV bölümünde sayı olarak verilir. O sayıya
+  uy, tahmin yürütme.
 - Yazdıktan sonra HER tweet'in karakterlerini tek tek say ve kontrol et.
 - Em-dash (—) KULLANMA. Yerine nokta, virgül veya iki nokta kullan.
 - Emoji kullanma.
@@ -65,6 +67,16 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 60);
+}
+
+/**
+ * Kampanya adı = slug'ın kısaltılmış hali.
+ * X'te link son tweet'in 280 karakter bütçesine dahil ve audit ham karakter
+ * sayıyor; bu yüzden kampanya CAMPAIGN_SLUG_MAX ile sınırlı. Kesim sonrası
+ * kalan tire kırpılır.
+ */
+function campaignSlug(str) {
+  return slugify(str).slice(0, CAMPAIGN_SLUG_MAX).replace(/-+$/, "");
 }
 
 async function fetchBlogPost(slug) {
@@ -158,17 +170,22 @@ async function main() {
     if (!slug) throw new Error("MODE=blog için SLUG gerekli");
     const post = await fetchBlogPost(slug);
     title = post.title;
-    sourceUrl = `${post.url}?utm_source=x&utm_medium=social&utm_campaign=blog`;
+    sourceUrl = `${post.url}?utm_source=x&utm_medium=social&utm_campaign=blog-${campaignSlug(slug)}`;
     source = `blog:${slug}`;
     contextBlock = `Kaynak yazı başlığı: ${post.title}\n\nKaynak yazı metni:\n${post.text}`;
   } else {
     const topic = process.env.TOPIC;
     if (!topic) throw new Error("MODE=standalone için TOPIC gerekli");
     title = topic;
-    sourceUrl = `${SITE}/egitimler?utm_source=x&utm_medium=social&utm_campaign=standalone`;
+    sourceUrl = `${SITE}/egitimler?utm_source=x&utm_medium=social&utm_campaign=egitim-${campaignSlug(topic)}`;
     source = "standalone";
     contextBlock = `Konu: ${topic}\n\nBu konuda kendi deneyimimden hareketle özgün bir post üret. Kaynak metin yok, bu yüzden SOMUT VERİ UYDURMA. Prensip ve gözlem düzeyinde kal.`;
   }
+
+  // Son tweet'in metin bütçesi: 280 eksi linkin gerçek uzunluğu, eksi 1 boşluk.
+  // Sabit varsayım kullanma; kampanya adı slug taşıdığı için link uzunluğu
+  // yazıdan yazıya değişiyor.
+  const linkBudget = TWEET_LIMIT - sourceUrl.length - 1;
 
   const prompt = `Sen Hayrettin Şendil'in X hesabı (@HayrettinAi) için yazan sosyal medya editörüsün.
 Hayrettin: kurumsal yapay zeka eğitmeni, 20+ yıl BT operasyon deneyimi, PMP + 8 Anthropic Academy sertifikası.
@@ -182,12 +199,15 @@ GÖREV: Yukarıdaki içerikten X için bir thread üret.
 - İlk tweet dikkat çekmeli ve tek başına anlamlı olmalı (hook).
 - Ortadaki tweet'ler somut fikir/örnek taşımalı.
 - SON tweet'e şu linki AYNEN ekle: ${sourceUrl}
-- Link, son tweet'in karakter sayısına dahildir.
+- Bu link ${sourceUrl.length} karakter ve son tweet'in karakter sayısına dahildir.
+  Son tweet'in link dışındaki metni EN FAZLA ${linkBudget} karakter olabilir.
+  Hashtag de bu bütçeye dahildir.
 
 YALNIZCA bir JSON dizisi döndür, başka açıklama yazma. Örnek biçim:
 ["ilk tweet metni", "ikinci tweet metni", "son tweet metni + link"]`;
 
   console.log(`→ Üretiliyor (mode=${mode}, model=${MODEL})...`);
+  console.log(`  link ${sourceUrl.length} kr, son tweet metin bütçesi ${linkBudget} kr`);
 
   const messages = [{ role: "user", content: prompt }];
   let tweets = null;
@@ -220,7 +240,8 @@ YALNIZCA bir JSON dizisi döndür, başka açıklama yazma. Örnek biçim:
       content:
         `Çıktın şu kuralları ihlal etti:\n${errors.map((e) => `- ${e}`).join("\n")}\n\n` +
         `Bunları düzelt. Karakter sınırını aşan tweet'leri anlamını koruyarak kısalt; ` +
-        `gerekirse bir tweet'i ikiye böl. Hedef: her tweet 240-260 karakter.\n\n` +
+        `gerekirse bir tweet'i ikiye böl. Linksiz tweet'lerde hedef 240-260 karakter; ` +
+        `link taşıyan son tweet'te metin bütçesi ${linkBudget} karakter.\n\n` +
         `YALNIZCA düzeltilmiş JSON dizisini döndür, açıklama yazma.`,
     });
   }
