@@ -9,7 +9,7 @@
   "model": "claude-sonnet-4-5-20250929",
   "tweets": [
     "Aylık raporda ortalama yanıt süresi yeşil görünürken, kritik bir ekip o ay kesinti yaşamış olabilir. arXiv'e düşen bir çalışma, LLM servislerinde de aynı tuzağı gösteriyor: toplam eğri, model ve kullanıcı düzeyindeki yapıyı saklıyor.",
-    "Chutes'un bir yıllık izinde 6,12 milyar istek var. Bulgular: baskın modeller yıl içinde el değiştiriyor, çıktı medyanı birkaç yüz token'dan 100'ün altına iniyor, kullanıcı profili değişiyor. Yani aynı istek sayısı, aynı iş yükü demek değil.",
+    "Chutes'un bir yıllık izinde 6,12 milyar istek var. Tek sağlayıcının deseni, sektör ortalaması değil: baskın modeller yıl içinde el değiştiriyor, çıktı medyanı birkaç yüz token'dan 100'ün altına iniyor, kullanıcı profili değişiyor. Aynı istek sayısı, aynı iş yükü demek değil.",
     "20+ yıllık servis yönetimi tecrübem: ortalama, mağduru saklar. LLM panonda tek toplam eğri varsa yanına model bazlı kırılım, P90 ve P99 ekle. Pilot dönem ölçümünü yıllık plana çevirmeden önce çeyrek başlarında tazele.",
     "Asıl soru: panondaki o tek sağlıklı eğri, hangi ekibin kötü gününü saklıyor? Bir yıllık LLM servis izinden kapasite planlama dersleri:\n\nhttps://hayrettinsendil.tr/blog/ortalama-iyi-gorunuyordu?utm_source=x&utm_medium=social&utm_campaign=blog"
   ]
