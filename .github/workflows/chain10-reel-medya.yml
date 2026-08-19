@@ -1,0 +1,185 @@
+# Chain 10: Reel Medya Hattı
+#
+# HeyGen çıktısını alır, dikey Reel'e çevirir, alt bandı basar, sıkıştırır,
+# kapak karesini çıkarır ve site deposuna PR açar. Sahibin dosya taşıması
+# bu zincirle ortadan kalkar.
+#
+# Tetik: yalnız elle (workflow_dispatch). HeyGen'in imzalı adresi süreli
+# olduğu için zamanlanmış koşu anlamsız; adres üretildiği anda kullanılmalı.
+#
+# Gerekli secret:
+#   SITE_REPO_TOKEN, hsendil/hayrettinsendil deposuna yazma yetkisi olan PAT.
+#   Fine-grained token yeterli: Contents read/write, Pull requests
+#   read/write. Başka izin verme.
+#
+# Akış: HeyGen MCP get_video, adres, bu workflow, site deposunda PR,
+# sahip merge, Vercel deploy, adres canlı, Chain 9 kuyruk kaydı.
+
+name: "Chain 10: Reel Medya Hattı"
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: 'HeyGen mp4 adresi (get_video döner, süreli)'
+        required: true
+        type: string
+      slug:
+        description: 'Yazı slugı, örn. bu-site-neden-var'
+        required: true
+        type: string
+      crop:
+        description: 'Kırpım penceresi w:h:x:y. Ölçülmüş varsayılan bırakılabilir'
+        required: false
+        default: '608:1080:986:0'
+        type: string
+      band_line1:
+        description: 'Alt bant üst satır'
+        required: false
+        default: 'Hayrettin ŞENDİL, PMP'
+        type: string
+      band_line2:
+        description: 'Alt bant alt satır'
+        required: false
+        default: 'AI / Context Engineering Eğitmeni'
+        type: string
+      bitrate:
+        description: 'Hedef bit hızı'
+        required: false
+        default: '2600k'
+        type: string
+
+concurrency:
+  group: chain10-reel-medya
+  cancel-in-progress: false
+
+jobs:
+  medya:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Plugin deposunu al
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Outfit fontunu hazırla
+        # Marka fontu runner'da yok. @fontsource woff2 verir, TTF'e açılır.
+        # latin ve latin-ext ayrı dosyalar; Ş, İ, ğ latin-ext'te olduğu için
+        # birleştirme zorunlu, tek dosyayla Türkçe harfler kutu çıkar.
+        run: |
+          set -euo pipefail
+          npm install @fontsource/outfit --silent --no-audit --no-fund
+          pip install --quiet fonttools brotli
+          mkdir -p fonts && cd fonts
+          F=../node_modules/@fontsource/outfit/files
+          for w in latin-700 latin-ext-700 latin-400 latin-ext-400; do
+            cp "$F/outfit-$w-normal.woff2" "./$w.woff2"
+            python3 -m fontTools.ttLib.woff2 decompress "./$w.woff2"
+          done
+          pyftmerge latin-700.ttf latin-ext-700.ttf --output-file=Outfit-Bold.ttf
+          pyftmerge latin-400.ttf latin-ext-400.ttf --output-file=Outfit-Regular.ttf
+          python3 - <<'PY'
+          from fontTools.ttLib import TTFont
+          need = "Hayrettin ŞENDİL, PMPAI/ContextEngineringEğitmeni"
+          for f in ("Outfit-Bold.ttf", "Outfit-Regular.ttf"):
+              cm = set()
+              for t in TTFont(f)["cmap"].tables:
+                  cm |= set(t.cmap.keys())
+              missing = sorted({c for c in need if ord(c) not in cm})
+              if missing:
+                  raise SystemExit(f"{f}: eksik glif {missing}")
+              print(f"{f}: glif kapsaması tam")
+          PY
+
+      - name: Videoyu işle
+        id: medya
+        env:
+          VIDEO_URL: ${{ inputs.video_url }}
+          SLUG: ${{ inputs.slug }}
+          CROP: ${{ inputs.crop }}
+          BAND_LINE1: ${{ inputs.band_line1 }}
+          BAND_LINE2: ${{ inputs.band_line2 }}
+          BITRATE: ${{ inputs.bitrate }}
+          FONT_DIR: fonts
+          OUT_DIR: out
+        run: bash scripts/reel-medya.sh
+
+      - name: Denetim için çıktıyı sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: reel-${{ inputs.slug }}
+          path: out/
+          retention-days: 14
+
+      - name: Site deposunu al
+        uses: actions/checkout@v4
+        with:
+          repository: hsendil/hayrettinsendil
+          token: ${{ secrets.SITE_REPO_TOKEN }}
+          path: site
+
+      - name: Site deposunda PR aç
+        env:
+          GH_TOKEN: ${{ secrets.SITE_REPO_TOKEN }}
+          SLUG: ${{ inputs.slug }}
+        run: |
+          set -euo pipefail
+          cd site
+          BRANCH="reel/${SLUG}-$(date +%Y%m%d%H%M)"
+          mkdir -p public/video/ig
+          cp "../out/${SLUG}.mp4" "../out/${SLUG}-cover.jpg" public/video/ig/
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git checkout -b "$BRANCH"
+          git add public/video/ig
+          git commit -m "feat(video): ${SLUG} Reel medyası
+
+          Chain 10 tarafından üretildi. Kaynak HeyGen 16:9 çıktısı;
+          kırpım ${{ inputs.crop }}, ölçek 1080x1920, alt bant gömülü.
+          Süre ${{ steps.medya.outputs.duration }} sn,
+          boyut ${{ steps.medya.outputs.size_mb }} MB
+          (kaynak ${{ steps.medya.outputs.src_size_mb }} MB)."
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --title "Reel medyası: ${SLUG}" \
+            --body "Chain 10 çıktısı, koşu \`${{ github.run_id }}\`.
+
+          | Alan | Değer |
+          |---|---|
+          | Çözünürlük | 1080x1920 |
+          | Süre | ${{ steps.medya.outputs.duration }} sn |
+          | Boyut | ${{ steps.medya.outputs.size_mb }} MB (kaynak ${{ steps.medya.outputs.src_size_mb }} MB) |
+          | Kırpım | \`${{ inputs.crop }}\` |
+          | Alt bant | ${{ inputs.band_line1 }} / ${{ inputs.band_line2 }} |
+
+          Kırpım HeyGen'e bırakılmıyor: 9:16 istendiğinde kadrajı ortadan kesiyor ve yüz sağdan kırpılıyor.
+
+          Merge sonrası adresler:
+          \`\`\`
+          https://hayrettinsendil.tr/video/ig/${SLUG}.mp4
+          https://hayrettinsendil.tr/video/ig/${SLUG}-cover.jpg
+          \`\`\`
+          Deploy bitince Chain 9 kuyruk kaydı bu adreslerle yazılır." \
+            --base main --head "$BRANCH"
+
+      - name: Özet
+        run: |
+          {
+            echo "### Chain 10 tamam"
+            echo ""
+            echo "| Alan | Değer |"
+            echo "|---|---|"
+            echo "| Slug | \`${{ inputs.slug }}\` |"
+            echo "| Süre | ${{ steps.medya.outputs.duration }} sn |"
+            echo "| Boyut | ${{ steps.medya.outputs.size_mb }} MB |"
+            echo "| Kaynak | ${{ steps.medya.outputs.src_size_mb }} MB |"
+            echo ""
+            echo "Site deposunda PR açıldı, merge bekliyor."
+          } >> "$GITHUB_STEP_SUMMARY"
