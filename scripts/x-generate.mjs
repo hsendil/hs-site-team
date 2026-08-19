@@ -21,6 +21,7 @@ const QUEUE_DIR = "queue/x";
 const MODEL = process.env.CLAUDE_MODEL ?? "claude-sonnet-4-5-20250929";
 const TWEET_LIMIT = 280;
 const MAX_ATTEMPTS = 3;
+const CAMPAIGN_SLUG_MAX = 24;
 
 // Marka kuralları — kaynak: skills/hs-site-po/shared/brand.md + sahip editoryal kararları
 const BRAND_RULES = `
@@ -65,6 +66,16 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 60);
+}
+
+/**
+ * Kampanya adı = slug'ın kısaltılmış hali.
+ * X'te link son tweet'in 280 karakter bütçesine dahil ve audit ham karakter
+ * sayıyor; bu yüzden kampanya CAMPAIGN_SLUG_MAX ile sınırlı. Kesim sonrası
+ * kalan tire kırpılır.
+ */
+function campaignSlug(str) {
+  return slugify(str).slice(0, CAMPAIGN_SLUG_MAX).replace(/-+$/, "");
 }
 
 async function fetchBlogPost(slug) {
@@ -158,14 +169,14 @@ async function main() {
     if (!slug) throw new Error("MODE=blog için SLUG gerekli");
     const post = await fetchBlogPost(slug);
     title = post.title;
-    sourceUrl = `${post.url}?utm_source=x&utm_medium=social&utm_campaign=blog`;
+    sourceUrl = `${post.url}?utm_source=x&utm_medium=social&utm_campaign=blog-${campaignSlug(slug)}`;
     source = `blog:${slug}`;
     contextBlock = `Kaynak yazı başlığı: ${post.title}\n\nKaynak yazı metni:\n${post.text}`;
   } else {
     const topic = process.env.TOPIC;
     if (!topic) throw new Error("MODE=standalone için TOPIC gerekli");
     title = topic;
-    sourceUrl = `${SITE}/egitimler?utm_source=x&utm_medium=social&utm_campaign=standalone`;
+    sourceUrl = `${SITE}/egitimler?utm_source=x&utm_medium=social&utm_campaign=egitim-${campaignSlug(topic)}`;
     source = "standalone";
     contextBlock = `Konu: ${topic}\n\nBu konuda kendi deneyimimden hareketle özgün bir post üret. Kaynak metin yok, bu yüzden SOMUT VERİ UYDURMA. Prensip ve gözlem düzeyinde kal.`;
   }
