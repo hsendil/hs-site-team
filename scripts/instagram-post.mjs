@@ -29,6 +29,17 @@
  *     ile yayınlanır (feed'de de görünür, share_to_feed varsayılan açık).
  *   - MP4 önerilir. Video işleme görselden uzun sürer; bekleme videoda
  *     daha uzun tutulur. coverUrl (JPEG) opsiyonel kapak karesidir.
+ *
+ * Karusel (19.08.2026 eklendi):
+ *   - Kuyruk kaydında `images` dizisi verilir (2-10 görsel). Yayın ÜÇ adımlı:
+ *     her görsel için is_carousel_item=true bir alt container, sonra
+ *     media_type=CAROUSEL bir ana container (children + caption), sonra yayın.
+ *   - Caption yalnız ana container'a yazılır; alt container'lara caption
+ *     verilmez, Meta yok sayar ve karışıklık üretir.
+ *   - Meta tüm kartları İLK KARTIN oranına göre kırpar. Bu yüzden set
+ *     içindeki tüm görseller aynı ölçüde üretilmelidir (bizde 1080x1350).
+ *   - Karusel tek yayın sayılır (günlük kotada 1).
+ *   Kaynak: developers.facebook.com/docs/instagram-platform/content-publishing
  */
 
 import fs from "node:fs";
@@ -43,6 +54,8 @@ const DRY_RUN = process.env.DRY_RUN === "1";
 const CAPTION_LIMIT = 2200;
 const HASHTAG_LIMIT = 30;
 const ALT_TEXT_LIMIT = 1000;
+const CAROUSEL_MIN = 2;
+const CAROUSEL_MAX = 10;
 
 // Container hazır olana kadar bekleme: dakikada bir.
 // Görselde 5 deneme yeter; video işleme uzun sürer, 15 denemeye çıkar.
@@ -52,6 +65,20 @@ const POLL_MAX_ATTEMPTS_IMAGE = 5;
 const POLL_MAX_ATTEMPTS_VIDEO = 15;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Karusel görsellerini tek biçime indirger.
+ * İki yazım da kabul edilir, çünkü elle düzenlenen kuyruk dosyasında
+ * düz URL listesi daha okunaklı, alt metin gerektiğinde nesne şart:
+ *   "images": ["https://.../01.jpg", "https://.../02.jpg"]
+ *   "images": [{ "url": "https://.../01.jpg", "altText": "..." }]
+ */
+function normalizeImages(item) {
+  if (!Array.isArray(item.images)) return null;
+  return item.images.map((entry) =>
+    typeof entry === "string" ? { url: entry } : { url: entry?.url, altText: entry?.altText }
+  );
+}
 
 /** Token sahibinin Instagram hesabını keşfet — sabit ID saklamak yerine her koşuda sor */
 async function resolveAccount(token) {
@@ -76,6 +103,25 @@ async function resolveAccount(token) {
   return { id: json.id, username: json.username ?? "(kullanıcı adı yok)" };
 }
 
+/** /media çağrısının ortak sarmalayıcısı; hata mesajını olduğu gibi yukarı taşır */
+async function postMedia(token, igId, body, label) {
+  const res = await fetch(`${HOST}/${API_VERSION}/${igId}/media`, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  });
+
+  if (!res.ok) {
+    const detail = (await res.text()).slice(0, 500);
+    // En sık görülen hata: medya URL'ine erişilemiyor ya da format reddedildi
+    throw new Error(`${label} oluşturulamadı (${res.status}): ${detail}`);
+  }
+
+  const json = await res.json();
+  if (!json.id) throw new Error(`${label} yanıtında 'id' yok: ${JSON.stringify(json).slice(0, 200)}`);
+  return json.id;
+}
+
 /** Adım 1: medya kabı oluştur (görsel veya Reels) */
 async function createContainer(token, igId, item) {
   const body = new URLSearchParams({ caption: item.caption, access_token: token });
@@ -89,21 +135,40 @@ async function createContainer(token, igId, item) {
     if (item.altText) body.set("alt_text", item.altText);
   }
 
-  const res = await fetch(`${HOST}/${API_VERSION}/${igId}/media`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
-  });
+  return postMedia(token, igId, body, "container");
+}
 
-  if (!res.ok) {
-    const detail = (await res.text()).slice(0, 500);
-    // En sık görülen hata: medya URL'ine erişilemiyor ya da format reddedildi
-    throw new Error(`container oluşturulamadı (${res.status}): ${detail}`);
+/**
+ * Karusel adım 1: her kart için alt container.
+ * Sıra korunur; Instagram kartları children dizisindeki sırayla gösterir,
+ * bu yüzden dosya adlarındaki sıralama kuyruk kaydında da korunmalıdır.
+ */
+async function createCarouselChildren(token, igId, images) {
+  const ids = [];
+  for (const [index, image] of images.entries()) {
+    const body = new URLSearchParams({
+      image_url: image.url,
+      is_carousel_item: "true",
+      access_token: token,
+    });
+    if (image.altText) body.set("alt_text", image.altText);
+
+    const id = await postMedia(token, igId, body, `kart ${index + 1} container'ı`);
+    console.log(`   kart ${index + 1}/${images.length}: ${id}`);
+    ids.push(id);
   }
+  return ids;
+}
 
-  const json = await res.json();
-  if (!json.id) throw new Error(`container yanıtında 'id' yok: ${JSON.stringify(json).slice(0, 200)}`);
-  return json.id;
+/** Karusel adım 2: kartları tek gönderide toplayan ana container. Caption burada verilir. */
+async function createCarouselContainer(token, igId, item, childIds) {
+  const body = new URLSearchParams({
+    media_type: "CAROUSEL",
+    children: childIds.join(","),
+    caption: item.caption,
+    access_token: token,
+  });
+  return postMedia(token, igId, body, "karusel container'ı");
 }
 
 /** Adım 2: kap hazır mı diye bekle. FINISHED gelmeden yayınlanamaz. */
@@ -168,11 +233,39 @@ function validate(item, file) {
 
   const hasImage = typeof item.imageUrl === "string" && item.imageUrl.trim();
   const hasVideo = typeof item.videoUrl === "string" && item.videoUrl.trim();
+  const hasCarousel = Array.isArray(item.images) && item.images.length > 0;
 
-  if (!hasImage && !hasVideo) {
-    errors.push("imageUrl veya videoUrl zorunlu");
-  } else if (hasImage && hasVideo) {
-    errors.push("imageUrl ve videoUrl birlikte olamaz; tek medya seç");
+  const mediaKinds = [hasImage, hasVideo, hasCarousel].filter(Boolean).length;
+
+  if (mediaKinds === 0) {
+    errors.push("imageUrl, videoUrl veya images zorunlu");
+  } else if (mediaKinds > 1) {
+    errors.push("imageUrl, videoUrl ve images birlikte olamaz; tek medya türü seç");
+  } else if (hasCarousel) {
+    const images = normalizeImages(item);
+    if (images.length < CAROUSEL_MIN || images.length > CAROUSEL_MAX) {
+      errors.push(`images ${images.length} adet (Instagram sınırı ${CAROUSEL_MIN}-${CAROUSEL_MAX})`);
+    }
+    images.forEach((image, i) => {
+      const label = `images[${i}]`;
+      if (typeof image.url !== "string" || !image.url.trim()) {
+        errors.push(`${label} url boş`);
+        return;
+      }
+      if (!image.url.startsWith("https://")) {
+        errors.push(`${label} https ile başlamalı (Meta görseli dışarıdan çeker)`);
+      }
+      // Meta yalnız JPEG kabul ediyor; PNG sessizce değil, hata ile döner
+      if (!/\.jpe?g(\?|$)/i.test(image.url)) {
+        errors.push(`${label} .jpg veya .jpeg olmalı (Instagram API PNG kabul etmiyor)`);
+      }
+      if (image.altText && image.altText.length > ALT_TEXT_LIMIT) {
+        errors.push(`${label} altText ${image.altText.length} karakter (limit ${ALT_TEXT_LIMIT})`);
+      }
+    });
+    if (item.altText) {
+      errors.push("karusel kaydında üst düzey altText geçersiz; alt metin her görselin kendi içinde verilir");
+    }
   } else if (hasVideo) {
     if (!item.videoUrl.startsWith("https://")) {
       errors.push("videoUrl https ile başlamalı (Meta videoyu dışarıdan çeker)");
@@ -238,26 +331,49 @@ async function main() {
     validate(item, file);
 
     const isVideo = Boolean(item.videoUrl);
+    const isCarousel = Array.isArray(item.images) && item.images.length > 0;
+    const images = isCarousel ? normalizeImages(item) : null;
 
     if (item.postedId) {
       // Idempotans: önceki koşuda yayınlanmış, yalnız arşive taşı
       console.log(`✓  ${file} zaten yayınlanmış (${item.postedId}), taşınıyor`);
     } else if (DRY_RUN) {
       console.log(`→  ${file} (${item.caption.length} karakter)`);
-      console.log(`   [DRY RUN] medya: ${isVideo ? item.videoUrl : item.imageUrl}${isVideo ? " (REELS)" : ""}`);
+      if (isCarousel) {
+        console.log(`   [DRY RUN] karusel, ${images.length} kart:`);
+        images.forEach((image, i) => console.log(`     ${i + 1}. ${image.url}`));
+      } else {
+        console.log(`   [DRY RUN] medya: ${isVideo ? item.videoUrl : item.imageUrl}${isVideo ? " (REELS)" : ""}`);
+      }
       console.log("   [DRY RUN] container oluşturulmadı, yayın yapılmadı");
       continue;
     } else {
-      console.log(`→  ${file} (${item.caption.length} karakter${isVideo ? ", REELS" : ""})`);
+      const kind = isCarousel ? `, KARUSEL ${images.length} kart` : isVideo ? ", REELS" : "";
+      console.log(`→  ${file} (${item.caption.length} karakter${kind})`);
 
-      const containerId = await createContainer(token, account.id, item);
-      console.log(`   container: ${containerId}`);
+      let containerId;
 
-      await waitForContainer(
-        token,
-        containerId,
-        isVideo ? POLL_MAX_ATTEMPTS_VIDEO : POLL_MAX_ATTEMPTS_IMAGE
-      );
+      if (isCarousel) {
+        // Alt container'lar önce hazır olmalı; ana container children'ı
+        // doğrulayamazsa hata mesajı hangi kartın sorunlu olduğunu söylemez,
+        // o yüzden her kart tek tek beklenir.
+        const childIds = await createCarouselChildren(token, account.id, images);
+        for (const [index, childId] of childIds.entries()) {
+          await waitForContainer(token, childId, POLL_MAX_ATTEMPTS_IMAGE);
+          console.log(`   kart ${index + 1} hazır`);
+        }
+        containerId = await createCarouselContainer(token, account.id, item, childIds);
+        console.log(`   karusel container: ${containerId}`);
+        await waitForContainer(token, containerId, POLL_MAX_ATTEMPTS_IMAGE);
+      } else {
+        containerId = await createContainer(token, account.id, item);
+        console.log(`   container: ${containerId}`);
+        await waitForContainer(
+          token,
+          containerId,
+          isVideo ? POLL_MAX_ATTEMPTS_VIDEO : POLL_MAX_ATTEMPTS_IMAGE
+        );
+      }
 
       item.postedId = await publishContainer(token, account.id, containerId);
       console.log(`   ✓ ${item.postedId}`);
