@@ -3,7 +3,8 @@
   "platform": "instagram",
   "source": "blog:kisisel-siteyi-6-ajanli-takim-nasil-yonetir",
   "title": "Kişisel siteyi 7 ajanlı Claude Code takımı nasıl yönetir?",
-  "sourceUrl": "https://hayrettinsendil.tr/blog/kisisel-siteyi-6-ajanli-takim-nasil-yonetir?utm_source=instagram&utm_medium=social&utm_campaign=blog",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/kisisel-siteyi-6-ajanli-takim-nasil-yonetir?utm_source=instagram&utm_medium=social&utm_campaign=karusel-kisisel-siteyi",
+  "bioUrl": "https://hayrettinsendil.tr/blog/kisisel-siteyi-6-ajanli-takim-nasil-yonetir?utm_source=instagram&utm_medium=social&utm_campaign=karusel-kisisel-siteyi",
   "status": "published",
   "caption": "Bu siteyi ben yönetmiyorum. 1 Product Owner ve 6 uzman ajandan kurulu bir Claude Code takımı yönetiyor.\n\nİlk denetim gecesi sitede 0 JSON-LD bloku çıktı; Lighthouse yeşilken Google kırmızıydı. 3 P0 bulgu 4 dosyalık tek commit'le kapandı, Vercel deploy 31 saniye sürdü.\n\nKartlarda: üç sorun, mimari, vaka ve \"auditless trust = bug\" kalıbı. Takım açık kaynak: github.com/hsendil/hs-site-team\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #KurumsalYapayZeka #AIEğitimi #ClaudeCode #AgentSkills",
   "images": [
