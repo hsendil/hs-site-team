@@ -35,10 +35,11 @@ TON VE DİL:
 
 BİÇİM VE UZUNLUK (en sık ihlal edilen kural — dikkat et):
 - Her tweet KESİNLİKLE en fazla ${TWEET_LIMIT} karakter.
-- HEDEF: her tweet 240-260 karakter aralığında kalsın. Böylece sınıra
+- HEDEF: linksiz tweet'ler 240-260 karakter aralığında kalsın. Böylece sınıra
   yaklaşmadan güvenli alan bırakırsın.
-- Link içeren tweet için linke 30 karakter rezerv ayır; kalan metin en fazla
-  230 karakter olmalı.
+- Link içeren tweet ayrı hesaplanır: linkin kaç karakter olduğu ve o tweet'e
+  kalan metin bütçesi aşağıdaki GÖREV bölümünde sayı olarak verilir. O sayıya
+  uy, tahmin yürütme.
 - Yazdıktan sonra HER tweet'in karakterlerini tek tek say ve kontrol et.
 - Em-dash (—) KULLANMA. Yerine nokta, virgül veya iki nokta kullan.
 - Emoji kullanma.
@@ -181,6 +182,11 @@ async function main() {
     contextBlock = `Konu: ${topic}\n\nBu konuda kendi deneyimimden hareketle özgün bir post üret. Kaynak metin yok, bu yüzden SOMUT VERİ UYDURMA. Prensip ve gözlem düzeyinde kal.`;
   }
 
+  // Son tweet'in metin bütçesi: 280 eksi linkin gerçek uzunluğu, eksi 1 boşluk.
+  // Sabit varsayım kullanma; kampanya adı slug taşıdığı için link uzunluğu
+  // yazıdan yazıya değişiyor.
+  const linkBudget = TWEET_LIMIT - sourceUrl.length - 1;
+
   const prompt = `Sen Hayrettin Şendil'in X hesabı (@HayrettinAi) için yazan sosyal medya editörüsün.
 Hayrettin: kurumsal yapay zeka eğitmeni, 20+ yıl BT operasyon deneyimi, PMP + 8 Anthropic Academy sertifikası.
 Hedef kitle: Türkçe konuşan kurumsal BT liderleri ve teknik profesyoneller.
@@ -193,12 +199,15 @@ GÖREV: Yukarıdaki içerikten X için bir thread üret.
 - İlk tweet dikkat çekmeli ve tek başına anlamlı olmalı (hook).
 - Ortadaki tweet'ler somut fikir/örnek taşımalı.
 - SON tweet'e şu linki AYNEN ekle: ${sourceUrl}
-- Link, son tweet'in karakter sayısına dahildir.
+- Bu link ${sourceUrl.length} karakter ve son tweet'in karakter sayısına dahildir.
+  Son tweet'in link dışındaki metni EN FAZLA ${linkBudget} karakter olabilir.
+  Hashtag de bu bütçeye dahildir.
 
 YALNIZCA bir JSON dizisi döndür, başka açıklama yazma. Örnek biçim:
 ["ilk tweet metni", "ikinci tweet metni", "son tweet metni + link"]`;
 
   console.log(`→ Üretiliyor (mode=${mode}, model=${MODEL})...`);
+  console.log(`  link ${sourceUrl.length} kr, son tweet metin bütçesi ${linkBudget} kr`);
 
   const messages = [{ role: "user", content: prompt }];
   let tweets = null;
@@ -231,7 +240,8 @@ YALNIZCA bir JSON dizisi döndür, başka açıklama yazma. Örnek biçim:
       content:
         `Çıktın şu kuralları ihlal etti:\n${errors.map((e) => `- ${e}`).join("\n")}\n\n` +
         `Bunları düzelt. Karakter sınırını aşan tweet'leri anlamını koruyarak kısalt; ` +
-        `gerekirse bir tweet'i ikiye böl. Hedef: her tweet 240-260 karakter.\n\n` +
+        `gerekirse bir tweet'i ikiye böl. Linksiz tweet'lerde hedef 240-260 karakter; ` +
+        `link taşıyan son tweet'te metin bütçesi ${linkBudget} karakter.\n\n` +
         `YALNIZCA düzeltilmiş JSON dizisini döndür, açıklama yazma.`,
     });
   }
