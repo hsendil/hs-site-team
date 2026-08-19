@@ -1,0 +1,18 @@
+{
+  "id": "2026-08-22-kisisel-siteyi",
+  "platform": "instagram",
+  "source": "blog:kisisel-siteyi-6-ajanli-takim-nasil-yonetir",
+  "title": "Kişisel siteyi 7 ajanlı Claude Code takımı nasıl yönetir?",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/kisisel-siteyi-6-ajanli-takim-nasil-yonetir?utm_source=instagram&utm_medium=social&utm_campaign=blog",
+  "status": "pending",
+  "caption": "Bu siteyi ben yönetmiyorum. 1 Product Owner ve 6 uzman ajandan kurulu bir Claude Code takımı yönetiyor.\n\nİlk denetim gecesi sitede 0 JSON-LD bloku çıktı; Lighthouse yeşilken Google kırmızıydı. 3 P0 bulgu 4 dosyalık tek commit'le kapandı, Vercel deploy 31 saniye sürdü.\n\nKartlarda: üç sorun, mimari, vaka ve \"auditless trust = bug\" kalıbı. Takım açık kaynak: github.com/hsendil/hs-site-team\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #KurumsalYapayZeka #AIEğitimi #ClaudeCode #AgentSkills",
+  "images": [
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/01-kapak.jpg", "altText": "Kapak kartı: Bu siteyi ben yönetmiyorum, takım yönetiyor" },
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/02-sorun.jpg", "altText": "Tek ajan modunda üç sorun: token israfı, domain karmaşası, denetim açığı" },
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/03-mimari.jpg", "altText": "Mimari: 1 Product Owner ve 6 uzman ajan, brief PO üzerinden dağıtılır" },
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/04-vaka.jpg", "altText": "Vaka: ilk denetim gecesi sitede sıfır JSON-LD bloku çıktı" },
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/05-sonuc.jpg", "altText": "Sonuç: üç P0 bulgu tek commit ile kapandı, deploy 31 saniye" },
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/06-kalip.jpg", "altText": "Kalıp: denetimsiz güven hatadır, yazan ile denetleyen ajan ayrılır" },
+    { "url": "https://hayrettinsendil.tr/images/ig/kisisel-siteyi/07-cta.jpg", "altText": "Kapanış kartı: yazının tamamı hayrettinsendil.tr, sunum değil çalışan sistem" }
+  ]
+}
