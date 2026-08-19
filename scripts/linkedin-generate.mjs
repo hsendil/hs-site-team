@@ -24,6 +24,7 @@ const MIN_CHARS = 900;
 const TARGET_MAX = 2200;
 const HARD_LIMIT = 3000;
 const MAX_ATTEMPTS = 3;
+const CAMPAIGN_SLUG_MAX = 24;
 
 const SIGNATURE = "Hayrettin Şendil, PMP\nAI / Context Engineering Eğitmeni";
 
@@ -72,6 +73,15 @@ function slugify(str) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 60);
+}
+
+/**
+ * Kampanya adı = slug'ın kısaltılmış hali.
+ * GA4 raporunda tek satırda okunsun, X tarafında 280 karakter bütçesini
+ * yemesin diye CAMPAIGN_SLUG_MAX ile sınırlı. Kesim sonrası kalan tire kırpılır.
+ */
+function campaignSlug(str) {
+  return slugify(str).slice(0, CAMPAIGN_SLUG_MAX).replace(/-+$/, "");
 }
 
 async function fetchBlogPost(slug) {
@@ -156,14 +166,14 @@ async function main() {
     if (!slug) throw new Error("MODE=blog için SLUG gerekli");
     const post = await fetchBlogPost(slug);
     title = post.title;
-    sourceUrl = `${post.url}?utm_source=linkedin&utm_medium=social&utm_campaign=blog`;
+    sourceUrl = `${post.url}?utm_source=linkedin&utm_medium=social&utm_campaign=blog-${campaignSlug(slug)}`;
     source = `blog:${slug}`;
     contextBlock = `Kaynak yazı başlığı: ${post.title}\n\nKaynak yazı metni:\n${post.text}`;
   } else {
     const topic = process.env.TOPIC;
     if (!topic) throw new Error("MODE=standalone için TOPIC gerekli");
     title = topic;
-    sourceUrl = `${SITE}/egitimler?utm_source=linkedin&utm_medium=social&utm_campaign=standalone`;
+    sourceUrl = `${SITE}/egitimler?utm_source=linkedin&utm_medium=social&utm_campaign=egitim-${campaignSlug(topic)}`;
     source = "standalone";
     contextBlock = `Konu: ${topic}\n\nKendi deneyiminden hareketle özgün bir post üret. Kaynak metin yok, SOMUT VERİ UYDURMA.`;
   }
