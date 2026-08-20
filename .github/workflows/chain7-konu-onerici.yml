@@ -1,19 +1,28 @@
-# Chain 7: Konu Onerici
+# Chain 7: Konu Onerici — UYKUDA (20.08.2026)
 #
-# Pazartesi 09:00 TR: canli sitenin sitemap'inden mevcut yazilari okur,
-# Claude ile 5 konu onerisi uretir (2 derin vaka + 3 saha notu), Issue acar.
-# Yayin karari YOKTUR. Sahip Issue'da haftanin 2 konusunu isaretler
-# (1 Derin Vaka + 1 Saha Notu); secilenler Pazartesi oturumunda
-# Notion Icerik Takvimi'ne islenir.
+# DURUM: cron kaldirildi, zincir uykuda. Yalniz workflow_dispatch ile kosar.
+#
+# Gerekce: bu zincir Cumartesi slotu icin konu onerirdi (2 derin vaka +
+# 3 saha notu). Cumartesi slotu 20.08.2026'da sahip karariyla kaldirildi.
+# Kadans haftada tek Atifli Yorum'a indi. Zincir acik kalsaydi her
+# Pazartesi karsiligi olmayan oneri uretip Issue listesini kirletecekti.
+#
+# Saha deneyimi ve PoC malzemesi kaybolmuyor, yeri degisiyor: artik ayri
+# bir yazi slotu degil, Carsamba Atifli Yorum'unun "saha yorumu" katmani.
+# Kural: CON.md -> Format tanimlari -> Atifli Yorum, saha yorumu katmani.
+#
+# GERI ACMAK: cron satirlarindaki yorumu kaldir. Cumartesi slotu geri
+# gelmeden acma; uretilen oneri gidecek yer bulamaz.
 #
 # Gerekli secret: ANTHROPIC_API_KEY
 
-name: 'Chain 7: Konu Onerici'
+name: 'Chain 7: Konu Onerici (uykuda)'
 
 on:
-  schedule:
-    # Pazartesi 09:00 Europe/Istanbul (06:00 UTC)
-    - cron: '0 6 * * 1'
+  # Cumartesi slotu kaldirildigi icin cron 20.08.2026'da devre disi birakildi.
+  # schedule:
+  #   # Pazartesi 09:00 Europe/Istanbul (06:00 UTC)
+  #   - cron: '0 6 * * 1'
   workflow_dispatch: {}
 
 concurrency:
