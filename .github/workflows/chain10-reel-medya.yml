@@ -1,4 +1,4 @@
-# Chain 10: Reel Medya Hattı
+'ve# Chain 10: Reel Medya Hattı
 #
 # HeyGen çıktısını alır, dikey Reel'e çevirir, alt bandı basar, sıkıştırır,
 # kapak karesini çıkarır ve site deposuna PR açar. Sahibin dosya taşıması
@@ -68,6 +68,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: ffmpeg kur
+        # ubuntu-latest imajında ffmpeg yok. İlk koşu bu yüzden exit 127
+        # verdi. Sürümü loga bas, bir dahaki sefere tahmin etmeyelim.
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -1
+          ffprobe -version | head -1
 
       - name: Outfit fontunu hazırla
         # Marka fontu runner'da yok. @fontsource woff2 verir, TTF'e açılır.
