@@ -4,7 +4,7 @@
   "source": "blog:ortalama-iyi-gorunuyordu",
   "title": "Ortalama iyi görünüyordu: bir yıllık LLM servis izi | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/ortalama-iyi-gorunuyordu?utm_source=x&utm_medium=social&utm_campaign=ortalama-iyi-gorunuyordu",
-  "status": "pending",
+  "status": "published",
   "createdAt": "2026-08-19T18:49:00.825Z",
   "model": "claude-sonnet-4-5-20250929",
   "tweets": [
@@ -12,5 +12,13 @@
     "Chutes'un bir yıllık izinde 6,12 milyar istek var. Tek sağlayıcının deseni, sektör ortalaması değil: baskın modeller yıl içinde el değiştiriyor, aylık çıktı medyanı birkaç yüz token'dan 100 token'ın altına iniyor. Aynı istek sayısı, aynı iş yükü demek değil.",
     "20+ yıllık servis yönetimi tecrübem: ortalama, mağduru saklar. LLM panonda tek toplam eğri varsa yanına model bazlı kırılım, P90 ve P99 ekle. Pilot dönem ölçümünü yıllık plana çevirmeden önce çeyrek başlarında tazele.",
     "Asıl soru: panondaki o tek sağlıklı eğri, hangi ekibin kötü gününü saklıyor? Bir yıllık LLM servis izinden kapasite planlama dersleri:\n\nhttps://hayrettinsendil.tr/blog/ortalama-iyi-gorunuyordu?utm_source=x&utm_medium=social&utm_campaign=ortalama-iyi-gorunuyordu"
-  ]
+  ],
+  "postedIds": [
+    "2090371152854352320",
+    "2090371162639610082",
+    "2090371172039008399",
+    "2090371181425877367"
+  ],
+  "publishedAt": "2026-08-20T09:31:41.692Z",
+  "url": "https://x.com/HayrettinAi/status/2090371152854352320"
 }
