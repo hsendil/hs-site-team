@@ -40,6 +40,15 @@
  *     içindeki tüm görseller aynı ölçüde üretilmelidir (bizde 1080x1350).
  *   - Karusel tek yayın sayılır (günlük kotada 1).
  *   Kaynak: developers.facebook.com/docs/instagram-platform/content-publishing
+ *
+ * Kalıcı adres (20.08.2026 düzeltmesi):
+ *   - Yayın adresi ARTIK medya kimliğinden kurulmuyor. Kimlikle kurulan
+ *     https://www.instagram.com/p/<media-id>/ adresi 404 verir; Instagram
+ *     kalıcı adresi kısa koddan üretiyor ve yalnız `permalink` alanında
+ *     döndürüyor. Yayından sonra bu alan ayrıca sorulur.
+ *   - Kök neden kaydı: üç arşiv kaydı bozuk adres taşıdı ve hiçbiri
+ *     açılmadı. Kayıt "published" diyordu, adres 404 veriyordu. Yayın
+ *     kaydının doğru görünmesi, adresin çalıştığını kanıtlamaz.
  */
 
 import fs from "node:fs";
@@ -63,6 +72,10 @@ const CAROUSEL_MAX = 10;
 const POLL_INTERVAL_MS = 60_000;
 const POLL_MAX_ATTEMPTS_IMAGE = 5;
 const POLL_MAX_ATTEMPTS_VIDEO = 15;
+
+// Kalıcı adres yayından hemen sonra bazen boş dönüyor; kısa aralıkla denenir.
+const PERMALINK_ATTEMPTS = 3;
+const PERMALINK_RETRY_MS = 5_000;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -101,6 +114,73 @@ async function resolveAccount(token) {
     throw new Error(`me yanıtında 'id' yok: ${JSON.stringify(json).slice(0, 200)}`);
   }
   return { id: json.id, username: json.username ?? "(kullanıcı adı yok)" };
+}
+
+/**
+ * Kalıcı adresi Meta'dan sorar.
+ *
+ * Medya kimliği ile adres KURULMAZ. Instagram kalıcı adresi kısa koddan
+ * üretiyor; kimlikten kurulan adres 404 verir. Tek doğru kaynak permalink
+ * alanıdır.
+ *
+ * Alınamazsa null döner ve çağıran tarafta url boş bırakılır. Yanlış adres,
+ * adres yokluğundan daha zararlı: kayıt doğru görünür, bağlantı ölüdür.
+ */
+async function fetchPermalink(token, mediaId) {
+  for (let attempt = 1; attempt <= PERMALINK_ATTEMPTS; attempt++) {
+    const url = `${HOST}/${API_VERSION}/${mediaId}?fields=permalink&access_token=${encodeURIComponent(token)}`;
+    const res = await fetch(url);
+
+    if (res.ok) {
+      const json = await res.json();
+      if (json.permalink) return json.permalink;
+    } else if (attempt === PERMALINK_ATTEMPTS) {
+      console.warn(`   ! permalink sorgusu ${res.status}: ${(await res.text()).slice(0, 200)}`);
+    }
+
+    if (attempt < PERMALINK_ATTEMPTS) await sleep(PERMALINK_RETRY_MS);
+  }
+  return null;
+}
+
+/**
+ * Arşivdeki bozuk adresleri onarır.
+ *
+ * Kimlikten kurulmuş eski kayıtları (url içinde postedId geçiyorsa) gerçek
+ * permalink ile değiştirir. Her koşuda çalışır; geçmiş kayıtlar kendiliğinden
+ * düzelir, elle müdahale gerekmez. Zaten doğru olan kayda dokunmaz.
+ */
+async function repairPermalinks(token) {
+  if (!fs.existsSync(PUBLISHED_DIR)) return;
+
+  const files = fs.readdirSync(PUBLISHED_DIR).filter((f) => f.endsWith(".json")).sort();
+  let repaired = 0;
+
+  for (const file of files) {
+    const full = path.join(PUBLISHED_DIR, file);
+    const item = JSON.parse(fs.readFileSync(full, "utf8"));
+    if (!item.postedId) continue;
+
+    // Onarım yalnız kimlikten kurulmuş ya da hiç olmayan adres için.
+    const kimliktenKurulmus = typeof item.url === "string" && item.url.includes(`/${item.postedId}/`);
+    if (item.url && !kimliktenKurulmus) continue;
+
+    const permalink = await fetchPermalink(token, item.postedId);
+    if (!permalink) {
+      console.warn(`   ! ${file} onarılamadı, adres alınamadı`);
+      continue;
+    }
+    if (permalink === item.url) continue;
+
+    console.log(`   onarıldı: ${file}`);
+    console.log(`     eski: ${item.url ?? "(yok)"}`);
+    console.log(`     yeni: ${permalink}`);
+    item.url = permalink;
+    fs.writeFileSync(full, JSON.stringify(item, null, 2) + "\n");
+    repaired++;
+  }
+
+  if (repaired) console.log(`✓ ${repaired} arşiv kaydının adresi onarıldı`);
 }
 
 /** /media çağrısının ortak sarmalayıcısı; hata mesajını olduğu gibi yukarı taşır */
@@ -308,6 +388,9 @@ async function main() {
   const account = await resolveAccount(token);
   console.log(`✓ Token geçerli — hesap: @${account.username} (id ${account.id})`);
 
+  // Arşiv onarımı kuyruktan önce: bozuk adres taşıyan kayıt varsa düzelt.
+  await repairPermalinks(token);
+
   if (!fs.existsSync(QUEUE_DIR)) {
     console.log("Kuyruk klasörü yok, yapılacak iş yok.");
     return;
@@ -381,13 +464,19 @@ async function main() {
 
     item.status = "published";
     item.publishedAt = new Date().toISOString();
-    item.url = isVideo
-      ? `https://www.instagram.com/reel/${item.postedId}/`
-      : `https://www.instagram.com/p/${item.postedId}/`;
+
+    // Kalıcı adres Meta'dan sorulur. Kimlikten adres KURULMAZ; o adres 404 verir.
+    item.url = await fetchPermalink(token, item.postedId);
+    if (!item.url) {
+      console.warn(
+        "   ! kalıcı adres alınamadı, url boş bırakıldı. " +
+          "Bir sonraki koşuda onarım adımı yeniden dener."
+      );
+    }
 
     fs.writeFileSync(path.join(PUBLISHED_DIR, file), JSON.stringify(item, null, 2) + "\n");
     fs.unlinkSync(full);
-    console.log(`   → yayınlandı: ${item.url}`);
+    console.log(`   → yayınlandı: ${item.url ?? "(adres alınamadı)"}`);
   }
 
   console.log("\nBitti.");
