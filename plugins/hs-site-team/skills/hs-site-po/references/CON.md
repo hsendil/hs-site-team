@@ -45,6 +45,8 @@ Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel 
 
 **2. Kanal ilkesi yürürlükten kalktı.** Eski kural şuydu: "Her yazı üç ayrı günde üç kanala yayılır; aynı içerik aynı gün iki kanalda çıkmaz, kanallar birbirinin erişimini yemez." Bu kural kaldırıldı. LinkedIn ve X **aynı gün, Perşembe** yayınlanır. Bilinen bedel: iki kanal aynı gün aynı içeriği taşıdığı için erişim bir miktar bölünür. Sahip bu bedeli bilerek kabul etti; takip yükünün azalması önceliklendi.
 
+Instagram arşiv serisi de aynı gün toplandı: her Perşembe bir karusel ve bir Reel. Takvim ve ölçüm kuralı sahip arşivinde, `HS-WWW/instagram/ig-icerik-plani.md` ve `utm-standardi.md`.
+
 ### Kadans
 
 Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: sosyal gün** (LinkedIn + X, aynı gün). Kalite kapıları hiçbir formatta gevşemez; kadans düştü, standart düşmedi.
@@ -59,9 +61,25 @@ Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: 
 | Cuma · Cumartesi · Pazar | Boş; şirket sayfası varyantları kişisel postlardan 24-48 saat sonra MANUEL |
 
 Format tanımları:
-- **Atıflı Yorum:** 600-1000 kelime. Sabit yapı: (1) Ne oldu: kısa özet + kaynak atıfı ve linki, (2) Neden önemli: Türkiye kurumsal bağlamı, (3) Saha yorumu: sahibin operasyon/eğitim tecrübesinden bağ, (4) Ne yapmalı: okuyucuya somut adım. Girdi kaynağı: Chain 8 Issue seçimi.
+- **Atıflı Yorum:** 600-1000 kelime. Sabit yapı: (1) Ne oldu: kısa özet + kaynak atıfı ve linki, (2) Neden önemli: Türkiye kurumsal bağlamı, (3) Saha yorumu: sahibin kendi operasyon veya PoC tecrübesinden bağ (aşağıdaki katman kuralı), (4) Ne yapmalı: okuyucuya somut adım. Girdi kaynağı: Chain 8 Issue seçimi.
 - **Derin Vaka (UYKUDA, 2026-08-20):** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
 - **Saha Notu (UYKUDA, 2026-08-20):** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
+
+### SAHA YORUMU KATMANI (sahip kararı 2026-08-20 — KİRILMAZ)
+
+Cumartesi slotu kalkınca saha deneyimi ve PoC malzemesi kaybolmadı, yeri değişti. Artık ayrı bir yazı slotu değil, **her Çarşamba Atıflı Yorum'unun zorunlu katmanı**.
+
+Sahip beyanı: "Sadece Çarşamba yazısı için, benim yaptığım ve yazıya uygun saha deneyimlerimle veya yaptığım PoC'lerle atıflanacak."
+
+Kurallar:
+
+1. **Malzeme sahibe ait olur.** Yürüttüğü operasyon, kurduğu düzenek, koşturduğu PoC, ölçtüğü koşu. Genel sektör yorumu veya başkasının vakası bu katmanın yerine geçmez. Dış kaynağın özeti tek başına yazıyı ayakta tutmaz; ayırt edici katman budur.
+2. **Katman açıkça etiketlenir ve atıflanır.** Kendi deposundan doğrulanabilir bir omurga varsa verilir: commit hash, koşu numarası, dosya yolu, PR numarası. Doğrulanabilir omurga yoksa, okurun doğrulayamayacağı bir saha gözlemi olduğu metinde açıkça yazılır.
+3. **İç katman ile dış kaynak aynı terazide tartılmaz.** Tek makinelik bir PoC gözlemi, bir yıllık üretim iziyle eşit ağırlıkta sunulmaz. Bu fark cümlede geçer. Örnek uygulama: `ortalama-iyi-gorunuyordu` yazısındaki LocalLLM paragrafı.
+4. **Kurumsal işveren anılmaz.** Kurumsal malzeme yalnız sıfır tanımlayıcıyla ve desen düzeyinde geçer; süreler tanımlayıcı sayılmaz. Doğrulanabilir omurga her zaman sahibin kendi deposundan gelir.
+5. **Saha malzemesi yoksa konu değişir.** Uydurma vaka, "olabilirdi" senaryosu veya hatırlanan ama doğrulanmayan olay yazılmaz. Aday seçilirken sahip malzemesiyle bağ kurulabiliyor mu diye bakılır; kurulamıyorsa aday elenir.
+
+Chain 7 (konu önerici) bu katmanı beslemek için ayrı konu ÖNERMEZ; zincir 20.08.2026'da uykuya alındı, cron kaldırıldı, yalnız workflow_dispatch ile koşar.
 
 Görsel standardı: her yazı için Grok ile soyut set (hero/og/card), prompt şablonu brand.md → Yazı Görselleri. Frontmatter: heroImage/ogImage/cardImage/imageAlt; dosyalar `public/images/blog/<slug>-{hero,og,card}.jpg`.
 
@@ -82,7 +100,7 @@ Araç ve sorumluluklar:
 - Boru hattının tek durum kaynağı Notion **"İçerik Takvimi · hayrettinsendil.tr"** DB'sidir (Site Operations altı, id `6017db6a-5fa9-4eab-97ea-68bcf84803e1`). Durum akışı: Fikir → Onaylı → Taslak → EDT → PR → Yayında → Sosyal Çıktı.
 - Güvenilir kaynak listesi: `sources/kaynaklar.json` (makine) + `docs/kaynak-listesi.md` (insan, gerekçeli). Çeyreklik gözden geçirilir; Chain 8 Issue'larındaki başarısız feed raporları ayıklama girdisidir.
 - Chain 8 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
-- **Chain 7 (konu önerici) UYKUDA, 2026-08-20.** Beslediği Cumartesi slotu kaldırıldı; Pazartesi 09:00 Issue'su artık karşılığı olmayan öneri üretir. Workflow devre dışı bırakılsın mı, karar sahipte.
+- **Chain 7 UYKUDA, 2026-08-20.** Cron kaldırıldı; beslediği Cumartesi slotu yok. Geri açmak için workflow dosyasındaki cron yorumu kaldırılır, ama Cumartesi slotu geri gelmeden açılmaz.
 - Chain 5a VE Chain 4a yalnız workflow_dispatch ile koşar (5a cron'u 28.07, 4a cron'u 29.07 kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir). Yayın oturumunda slug ile tetiklenir.
 - UTM kampanya adı gönderi başına ayrılır (`utm_campaign=<slug>`), `blog` gibi jenerik ad kullanılmaz. Kaynak: Chain 4 + Chain 5 revizyonu, 19.08.2026.
 - Şirket sayfası kanal rolü: kişisel profil erişim motoru, sayfa güven çapası; sıra hep kişisel → sayfa, repaylaşım değil öz metinli varyant.
@@ -178,7 +196,7 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 
 ## Deliverable
 - **MDX dosyası commit:** `content/posts/<slug>.mdx` (published: false)
-- **İddia Envanteri:** yazıdaki her sayısal/teknik iddia + tür + kaynak (EDT'ye handoff'un parçası); Atıflı Yorum'da kaynak link envanteri
+- **İddia Envanteri:** yazıdaki her sayısal/teknik iddia + tür + kaynak (EDT'ye handoff'un parçası); Atıflı Yorum'da kaynak link envanteri + saha yorumu katmanının omurgası
 - **PR/commit açıklaması:** ana mesaj + hedef kitle + tahmini okuma süresi
 - **Handoff notu:** SEO için title/summary/tags + BRD için OG image ihtiyacı + SOC için social hook'lar
 
@@ -198,6 +216,7 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 - ❌ Sahip onayı: about / ana sayfa copy değişikliği (pozisyonlama)
 - ❌ Sahip onayı: gelecek vaadi içeren cümle (kadans, kapasite, "her yazıda X")
 - ❌ Sahip onayı: canonical listeye YENİ etiket eklemek veya mevcut etiketin adını değiştirmek
+- ❌ Sahip malzemesi: saha yorumu katmanı sahipten gelir; CON bu katmanı kendi başına üretemez
 
 ## Pattern Notes
 - **Frontmatter ile fail-safe:** `published: false` default — yanlışlıkla yayın yok
@@ -207,3 +226,4 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 - **Etiket eşiği bir kalite kapısı:** etiket sayfası ancak 2 yazıyla doğar. Bu, ince içerik sayfası üretmeyi teknik olarak imkânsız kılar; disiplini kişinin hatırlamasına bırakmaz. 30.07.2026.
 - **OG convention alt rotaya taşınmaz:** Next.js `opengraph-image` dosya convention'ı üst segmentten alt rotaya İNMEZ. `/blog/opengraph-image` varken `/blog/etiket/<slug>` sayfasında `og:image` null geldi; ayrı OG dosyası gerekti. Yeni alt rota açılırken kontrol edilir.
 - **Kadans standardı düşürmez:** 20.08.2026'da haftada iki içerik sürdürülemediği için Cumartesi kaldırıldı. Doğru hamle formatı gevşetmek değil, slotu kapatmaktı. Tutulamayan kadans, kalitesi düşen içerikten daha ucuza kapatılır.
+- **Slot kapanır, malzeme kalır:** Cumartesi gidince saha deneyimi ve PoC malzemesi çöpe gitmedi, Atıflı Yorum'un içine katman olarak taşındı. Bir formatı emekliye ayırırken önce o formatın taşıdığı değerin nereye gideceği yazılır; yazılmazsa değer sessizce kaybolur.
