@@ -1,0 +1,40 @@
+{
+  "id": "2026-08-20-olay-analizi",
+  "platform": "instagram",
+  "source": "blog:olay-analizi-30-dakika",
+  "title": "Beş mühendisin üç günlük işi 30 dakikaya inince",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/olay-analizi-30-dakika?utm_source=instagram&utm_medium=social&utm_campaign=karusel-olay-analizi",
+  "bioUrl": "https://hayrettinsendil.tr/ig",
+  "status": "pending",
+  "caption": "Beş deneyimli mühendisin üç günde bitirdiği bir olay analizini, Codex 30 dakikada bitirdi. NTT DATA vakası, 22 Temmuz 2026.\n\nŞerh önce: bu bir tedarikçi vaka sayfası ve 30 dakika tek bir olayın ölçümü. Rakamı o çerçeveyle oku.\n\nAsıl ders rakamda değil sebebinde. Olay analizinde zaman kod yazmakla geçmez; log toplamak, sistemler arası zaman çizgisi kurmak, değişiklik kayıtlarını eşleştirmekle geçer. 20+ yıllık saha gözlemim: kanıt hep oradaydı, ama tek yerde değildi. Örüntü ekranların arasındaki boşlukta yaşıyor.\n\nSınır da net: analiz hızlanır, karar insanda kalır.\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #KurumsalYapayZeka #AIEğitimi #ITSM #OlayYönetimi",
+  "images": [
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/01-kapak.jpg",
+      "altText": "Kapak kartı: Beş mühendisin üç günlük işi 30 dakikaya indi. Altında NTT DATA ve Codex notu, asıl dersin rakamda değil sebebinde olduğu yazılı"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/02-vaka.jpg",
+      "altText": "Vaka kartı: OpenAI 22 Temmuz 2026'da NTT DATA vakasını yayımladı, Codex yaklaşık 9.000 çalışana açılmış; aynı analizi beş mühendis üç günde bitiriyordu"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/03-serh.jpg",
+      "altText": "Şerh kartı: Rakamı çerçevesiyle oku. Tedarikçi vaka sayfası, 30 dakika tek bir olayın ölçümü, yüzdeler öz bildirim anketinden"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/04-neden.jpg",
+      "altText": "Neden kartı: Kazanç kodda değil, bağlam birleştirmede. Olay analizinde zaman log toplamak ve sistemler arası zaman çizgisi kurmakla geçer"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/05-saha.jpg",
+      "altText": "Saha yorumu kartı: Örüntü, insan dikkatinin dışında yaşar. Kanıt hep oradaydı ama tek yerde değildi; bu bir yetkinlik eksiği değil, dikkatin yapısal sınırı"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/06-sinir.jpg",
+      "altText": "Sınır kartı: Analiz hızlanır, karar insanda kalır. Öneri ile onay arasındaki çizgi silinirse kazanılan hız yanlış yöne daha hızlı gitmek demektir"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/olay-analizi/07-cta.jpg",
+      "altText": "Kapanış kartı: Üç adım, envanter çıkar, küçük başla, sınırı yaz. Altında hayrettinsendil.tr ve Sunum değil, çalışan sistem"
+    }
+  ]
+}
