@@ -1,4 +1,4 @@
-'ve# Chain 10: Reel Medya Hattı
+# Chain 10: Reel Medya Hattı
 #
 # HeyGen çıktısını alır, dikey Reel'e çevirir, alt bandı basar, sıkıştırır,
 # kapak karesini çıkarır ve site deposuna PR açar. Sahibin dosya taşıması
