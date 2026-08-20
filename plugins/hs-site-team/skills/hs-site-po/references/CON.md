@@ -33,30 +33,35 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 | "Vercel deploy READY 31 sn" | ölçüm | CHANGELOG 1.0.1 |
 | "%40-60 token tasarrufu" | tahmin | ADR-002 |
 
-## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28 · kanal takvimi revizyonu 2026-07-29)
+## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28 · kanal takvimi 2026-07-29 · **kadans ve sosyal gün revizyonu 2026-08-20**)
 
-Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel makaleleri sahibin yorumu ve düzgün atıfla Türk kurumsal okuyucusuna taşımak (brand.md → Misyon). Vaka yazıları bu iddianın kanıt katmanıdır.
+Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel makaleleri sahibin yorumu ve düzgün atıfla Türk kurumsal okuyucusuna taşımak (brand.md → Misyon).
 
-Kadans: haftada 2 içerik. **Çarşamba: Atıflı Yorum** (ana slot). **Cumartesi: dönüşümlü Derin Vaka veya Saha Notu.** Kalite kapıları hiçbir formatta gevşemez.
+### Revizyon 2026-08-20 (sahip kararı)
 
-**Kanal ilkesi (2026-07-29):** Her yazı üç ayrı günde üç kanala yayılır: site → ertesi gün LinkedIn → ondan sonraki gün X. Aynı içerik aynı gün iki kanalda çıkmaz; kanallar birbirinin erişimini yemez.
+İki kural değişti. Gerekçeleri kayda geçiyor, çünkü ikisi de daha önce yazılı kuraldı.
+
+**1. Kadans haftada 2 içerikten 1'e indi.** Cumartesi slotu kaldırıldı. Sahip beyanı: "Cumartesi maratonunu kaldırıyorum, bu düzeni takip etmem şimdilik zor." Haftada tek içerik kalır: Çarşamba Atıflı Yorum. Derin Vaka ve Saha Notu formatları **silinmedi, uykuya alındı**; tanımları ve kalite kapıları aşağıda duruyor. Cumartesi geri gelirse kural takımı hazır.
+
+**2. Kanal ilkesi yürürlükten kalktı.** Eski kural şuydu: "Her yazı üç ayrı günde üç kanala yayılır; aynı içerik aynı gün iki kanalda çıkmaz, kanallar birbirinin erişimini yemez." Bu kural kaldırıldı. LinkedIn ve X **aynı gün, Perşembe** yayınlanır. Bilinen bedel: iki kanal aynı gün aynı içeriği taşıdığı için erişim bir miktar bölünür. Sahip bu bedeli bilerek kabul etti; takip yükünün azalması önceliklendi.
+
+### Kadans
+
+Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: sosyal gün** (LinkedIn + X, aynı gün). Kalite kapıları hiçbir formatta gevşemez; kadans düştü, standart düşmedi.
 
 | Gün | Adım |
 |---|---|
-| Pazartesi 08:30 | Chain 8 Issue'su: kaynak taramasından 10 aday (Atıflı Yorum için) |
-| Pazartesi 09:00 | Chain 7 Issue'su: 5 vaka/saha notu önerisi (Cumartesi için) |
-| Pazartesi | Sahip seçimi (İçerik Seçim Paneli artifact'ı veya Issue); Notion'a "Onaylı" düşer. Ayrıca: önceki Cumartesi yazısının LinkedIn postu (5b merge) |
-| Salı | Atıflı Yorum taslağı (CON) + kaynak link envanteri → EDT → PR (preview linkiyle). Ayrıca: önceki Cumartesi yazısının X threadi (4b merge) |
-| Çarşamba | Sahip merge = yayın 1; yayın oturumunda Chain 5a VE Chain 4a slug ile tetiklenir |
-| Perşembe | LinkedIn postu 1 (5b merge); Cumartesi içeriği taslağı → EDT → PR |
-| Cuma | X threadi 1 (4b merge) |
-| Cumartesi | Sahip merge = yayın 2; Chain 5a + 4a tetikleri |
-| Pazar | Boş (kanal dinlenir); şirket sayfası varyantları kişisel postlardan 24-48 saat sonra MANUEL |
+| Pazartesi 08:30 | Chain 8 Issue'su: kaynak taramasından 10 aday |
+| Pazartesi | Sahip seçimi (İçerik Seçim Paneli artifact'ı veya Issue); Notion'a "Onaylı" düşer |
+| Salı | Atıflı Yorum taslağı (CON) + kaynak link envanteri → EDT → PR (preview linkiyle) |
+| Çarşamba | Sahip merge = yayın; yayın oturumunda Chain 5a VE Chain 4a slug ile tetiklenir |
+| **Perşembe** | **Sosyal gün: LinkedIn postu (5b merge) + X threadi (4b merge), aynı gün** |
+| Cuma · Cumartesi · Pazar | Boş; şirket sayfası varyantları kişisel postlardan 24-48 saat sonra MANUEL |
 
 Format tanımları:
 - **Atıflı Yorum:** 600-1000 kelime. Sabit yapı: (1) Ne oldu: kısa özet + kaynak atıfı ve linki, (2) Neden önemli: Türkiye kurumsal bağlamı, (3) Saha yorumu: sahibin operasyon/eğitim tecrübesinden bağ, (4) Ne yapmalı: okuyucuya somut adım. Girdi kaynağı: Chain 8 Issue seçimi.
-- **Derin Vaka:** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
-- **Saha Notu:** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
+- **Derin Vaka (UYKUDA, 2026-08-20):** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
+- **Saha Notu (UYKUDA, 2026-08-20):** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
 
 Görsel standardı: her yazı için Grok ile soyut set (hero/og/card), prompt şablonu brand.md → Yazı Görselleri. Frontmatter: heroImage/ogImage/cardImage/imageAlt; dosyalar `public/images/blog/<slug>-{hero,og,card}.jpg`.
 
@@ -66,17 +71,20 @@ Atıflı Yorum ve dış kaynağa dayanan her içerik için:
 
 1. **Birebir çeviri yasak.** Kaynağın metni paragraf paragraf Türkçeleştirilmez; kısmi çeviri de yazının omurgası olamaz. Yazının omurgası sahibin yorumudur, özet ikincildir.
 2. **Doğrudan alıntı en fazla iki kısa cümle;** tırnak içinde, kaynak adı ve linkiyle birlikte.
-3. **Her sayı, bulgu ve iddia orijinal kaynağa linklenir.** Kaynak link envanteri İddia Envanteri'nin karşılığıdır ve EDT'ye taslakla birlikte teslim edilir.
+3. **Her sayı, bulgu ve iddia orijinal kaynağa linklenir.** Kaynak link envanteri İddia Envanteri'nin karşılığıdır ve EDT'ye taslakla birlikte teslim edilir. Sosyal gönderide ayrı link erişimi böldüğü için kaynak künyesi (örn. `arXiv:2608.13573`) metne yazılır; link yazıya verilir, yazı kaynağa linkler.
 4. **Başlık özgün olur;** kaynak başlığının çevirisi kullanılmaz.
 5. **Görsel ve grafik kopyalanmaz.** Gerekirse veriden yeniden çizilir ve "veri kaynağı: ..." atıfı verilir.
 6. **Paywall içerik yalnız herkese açık kısmıyla işlenir;** abonelik arkasındaki metin özetlenmez.
 7. İkincil aktarım yerine **birincil kaynak** tercih edilir: haber bir makaleyi aktarıyorsa link makaleye de verilir.
+8. **Şerh taşınır (2026-08-20):** kaynakta preprint, tek sağlayıcı izi, hakem denetiminden geçmemiş gibi bir sınır varsa, o şerh sosyal gönderiye de taşınır. Yazıda yazıp postta düşürmek kapsam genişletmedir.
 
 Araç ve sorumluluklar:
 - Boru hattının tek durum kaynağı Notion **"İçerik Takvimi · hayrettinsendil.tr"** DB'sidir (Site Operations altı, id `6017db6a-5fa9-4eab-97ea-68bcf84803e1`). Durum akışı: Fikir → Onaylı → Taslak → EDT → PR → Yayında → Sosyal Çıktı.
 - Güvenilir kaynak listesi: `sources/kaynaklar.json` (makine) + `docs/kaynak-listesi.md` (insan, gerekçeli). Çeyreklik gözden geçirilir; Chain 8 Issue'larındaki başarısız feed raporları ayıklama girdisidir.
-- Chain 7 ve Chain 8 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
+- Chain 8 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
+- **Chain 7 (konu önerici) UYKUDA, 2026-08-20.** Beslediği Cumartesi slotu kaldırıldı; Pazartesi 09:00 Issue'su artık karşılığı olmayan öneri üretir. Workflow devre dışı bırakılsın mı, karar sahipte.
 - Chain 5a VE Chain 4a yalnız workflow_dispatch ile koşar (5a cron'u 28.07, 4a cron'u 29.07 kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir). Yayın oturumunda slug ile tetiklenir.
+- UTM kampanya adı gönderi başına ayrılır (`utm_campaign=<slug>`), `blog` gibi jenerik ad kullanılmaz. Kaynak: Chain 4 + Chain 5 revizyonu, 19.08.2026.
 - Şirket sayfası kanal rolü: kişisel profil erişim motoru, sayfa güven çapası; sıra hep kişisel → sayfa, repaylaşım değil öz metinli varyant.
 
 ## Frontmatter Standardı
@@ -198,3 +206,4 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 - **Sources-open writing:** yazı kaynak dokümanlar context'teyken yazılır; "auditless trust = bug" prensibinin üretim tarafı karşılığı. 27.07.2026 EDT denetiminin kalıcı dersi.
 - **Etiket eşiği bir kalite kapısı:** etiket sayfası ancak 2 yazıyla doğar. Bu, ince içerik sayfası üretmeyi teknik olarak imkânsız kılar; disiplini kişinin hatırlamasına bırakmaz. 30.07.2026.
 - **OG convention alt rotaya taşınmaz:** Next.js `opengraph-image` dosya convention'ı üst segmentten alt rotaya İNMEZ. `/blog/opengraph-image` varken `/blog/etiket/<slug>` sayfasında `og:image` null geldi; ayrı OG dosyası gerekti. Yeni alt rota açılırken kontrol edilir.
+- **Kadans standardı düşürmez:** 20.08.2026'da haftada iki içerik sürdürülemediği için Cumartesi kaldırıldı. Doğru hamle formatı gevşetmek değil, slotu kapatmaktı. Tutulamayan kadans, kalitesi düşen içerikten daha ucuza kapatılır.
