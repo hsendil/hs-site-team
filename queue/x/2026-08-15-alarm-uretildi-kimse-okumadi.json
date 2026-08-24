@@ -1,0 +1,16 @@
+{
+  "id": "2026-08-15-alarm-uretildi-kimse-okumadi",
+  "platform": "x",
+  "source": "blog:alarm-uretildi-kimse-okumadi",
+  "title": "Alarm üretildi, kimse okumadı | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/alarm-uretildi-kimse-okumadi?utm_source=x&utm_medium=social&utm_campaign=blog-alarm-uretildi-kimse-oku",
+  "status": "pending",
+  "createdAt": "2026-08-24T11:57:28.350Z",
+  "model": "manual-backfill",
+  "tweets": [
+    "Kendi yayın hattım iki hafta yarı yarıya durmuştu ve bunu bana başkası sordu. Otomatik kayıt \"yayın koşusu düştü\" dedi. Post aslında gitmişti, düşen tek şey arşiv adımıydı. Kuyrukta duran dosya \"yayınlanmadı\" demek değildir.",
+    "İki zincir ayrı eşzamanlılık gruplarında çalışıyor. Aynı anda ana dala yazınca yenilen taraf geri çevriliyor: post yayında, dosya kuyrukta, sonraki koşuda ikinci kez gidecek. Tuzak teknik değil yorumsal. Kuyruğa değil, hesabın akışına bak.",
+    "Asıl açık başkaydı. Bir onay isteği 14 gün, bir diğeri 7 gün açık kalmış. İçerik üretiliyor ama çıkmıyordu ve hiçbir yere haber gitmiyordu. Bir sistemin bozulduğunu sahibinin sorması gerekiyorsa o sistem izlenmiyordur.",
+    "Kurduğun her otomatik akış için tek soru: bu düşerse kim öğrenir. Cevap \"birinin dikkati\" ise o akış izlenmiyor, yalnızca çalışıyor.\n\nhttps://hayrettinsendil.tr/blog/alarm-uretildi-kimse-okumadi?utm_source=x&utm_medium=social&utm_campaign=blog-alarm-uretildi-kimse-oku"
+  ]
+}
