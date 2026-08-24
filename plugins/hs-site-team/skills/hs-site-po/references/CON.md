@@ -33,7 +33,7 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 | "Vercel deploy READY 31 sn" | ölçüm | CHANGELOG 1.0.1 |
 | "%40-60 token tasarrufu" | tahmin | ADR-002 |
 
-## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28 · kanal takvimi 2026-07-29 · **kadans ve sosyal gün revizyonu 2026-08-20** · **kanal-format revizyonu 2026-08-20**)
+## HAFTALIK İÇERİK BORU HATTI (sahip onayı 2026-07-28 · kanal takvimi 2026-07-29 · **kadans ve sosyal gün revizyonu 2026-08-20** · **format serbestliği 2026-08-24**)
 
 Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel makaleleri sahibin yorumu ve düzgün atıfla Türk kurumsal okuyucusuna taşımak (brand.md → Misyon).
 
@@ -45,13 +45,27 @@ Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel 
 
 **2. Kanal ilkesi yürürlükten kalktı.** Eski kural şuydu: "Her yazı üç ayrı günde üç kanala yayılır; aynı içerik aynı gün iki kanalda çıkmaz, kanallar birbirinin erişimini yemez." Bu kural kaldırıldı. LinkedIn ve X **aynı gün, Perşembe** yayınlanır. Bilinen bedel: iki kanal aynı gün aynı içeriği taşıdığı için erişim bir miktar bölünür. Sahip bu bedeli bilerek kabul etti; takip yükünün azalması önceliklendi.
 
-### KANAL-FORMAT EŞLEMESİ (sahip kararı 2026-08-20, aynı gün ikinci revizyon)
+### FORMAT SERBESTLİĞİ (sahip kararı 2026-08-24, KİRILMAZ)
 
-Kanal başına tek format. **X metinsel, Instagram video tabanlı.** LinkedIn metinsel kalır.
+**Format kanala göre kısıtlanmaz.** Hiçbir kanal tek formata kilitlenmez ve hiçbir format "uykuda" diye kapatılmaz. Format içeriğe göre seçilir: fikir anlatım istiyorsa video, tek güçlü kanıt varsa görsel, adım adım kırılan bir yapı varsa karusel, tez metinle taşınıyorsa metin.
 
-**Instagram karuseli uykuya alındı.** Perşembe akışında karusel üretilmez ve beklenmez. Şema, klasör yapısı ve `public/images/ig/` düzeni silinmedi; geri açma kararı sahiptedir.
+Sahip beyanı: "sosyal medya yayınlarım sadece belli bir formatta olmayacak, her formatı destekleyici nitelikte çalışacak. Instagram vb sosyal hesaplarıma sadece video gibi sınırlayıcılar olamaz."
 
-Dayanak (ölçüm, tahmin değil). 20.08.2026'da Instagram hesabının tamamı tarandı, o tarihte dört gönderi vardı:
+Bu karar 2026-08-20 tarihli "kanal başına tek format, Instagram video tabanlı, karusel uykuda" kuralının yerine geçer.
+
+**Politika sınırı ile teknik kapasite ayrıdır ve karıştırılmaz.** Bugünkü kapasite betiklerden doğrulandı (2026-08-24):
+
+| Kanal | Hattın yayınladığı | Eksik olan | Kaynak |
+|---|---|---|---|
+| Instagram | Reel (`videoUrl`), tek görsel (`imageUrl`), karusel (`images`, 2-10 kart) | Story dalı yok | `scripts/instagram-post.mjs` |
+| X | Metin, tek gönderi veya zincir | Medya alanı yok, gövde `{ text }` | `scripts/x-post.mjs` |
+| LinkedIn | Metin, en fazla 3000 karakter | `content` alanı yok, görsel ve belge gönderilemiyor | `scripts/linkedin-post.mjs` |
+
+Eksik olan bir yasak değil, açılmamış iş kalemidir. Talep gelirse betik genişletme PR'ı açılır; "yapamam" denmez.
+
+### 2026-08-20 erişim ölçümü (veri noktası, kural değil)
+
+20.08.2026'da Instagram hesabının tamamı tarandı, o tarihte dört gönderi vardı:
 
 | Gönderi | Tip | İzlenme | Erişim | Etkileşim |
 |---|---|---|---|---|
@@ -60,19 +74,19 @@ Dayanak (ölçüm, tahmin değil). 20.08.2026'da Instagram hesabının tamamı t
 | 19.08 ajan takımı | Feed | 142 | 63 | 9 |
 | 20.08 Codex olay analizi | Feed | 121 | 43 | 5 |
 
-Kararın dayanağı en yüksek izlenme değildir; 11.08 Reel'i dokuz günlük yaş avantajı taşır ve adil karşılaştırma sayılmaz. Dayanak **aynı gün çıkan 20.08 çiftidir**: Reel 429 erişim, Feed 43 erişim. Karusel gönderisi 43-63 kişiye ulaşıyor, yani üretim maliyetini geri ödemiyor. Format kararı bu erişim tabanına dayanır.
+Adil karşılaştırma aynı gün çıkan 20.08 çiftidir: Reel 429 erişim, Feed 43 erişim. 11.08 Reel'i dokuz günlük yaş avantajı taşır ve karşılaştırmaya girmez. Örneklem dört gönderi, adil karşılaştırma tek çift.
 
-Ölçüm sınırı açıkça yazılır: örneklem dört gönderidir ve adil karşılaştırma tek çifttir. Karar bu zeminde alındı; erişim eğrisi tersine dönerse karusel geri açılır.
+**Bu tablo format seçerken bilgi verir, format kapatmaz.** 2026-08-20'de bu ölçümden kalıcı bir yasak türetilmişti; 2026-08-24'te geri alındı. Tek ölçüm bir eğilime işaret eder, kural kurmaz.
 
 Takvim ve ölçüm kuralı sahip arşivinde: `HS-WWW/instagram/ig-icerik-plani.md` ve `utm-standardi.md`.
 
-**Bio linki kuralı sadeleşti.** Haftada tek Instagram gönderisi olduğu için bio doğrudan o Reel'in konu aldığı yazıya çevrilir, kampanya adı `reel-<slug>`. Story link etiketi artık ayrı bir gönderiyi ölçmüyor; atılırsa bio ile aynı adresi taşır ve ölçüm bölünmesin diye kampanya adı değiştirilmez. Eski "bio karusele, Story Reel'e" ayrımı yürürlükte DEĞİL.
+**Bio linki kuralı.** Haftada tek Instagram gönderisi olduğu için bio doğrudan o gönderinin konu aldığı yazıya çevrilir. Kampanya adı gönderinin formatını taşır: `reel-<slug>`, `gorsel-<slug>`, `karusel-<slug>`. Story link etiketi ayrı bir gönderiyi ölçmüyor; atılırsa bio ile aynı adresi taşır ve ölçüm bölünmesin diye kampanya adı değiştirilmez. Eski "bio karusele, Story Reel'e" ayrımı yürürlükte DEĞİL.
 
-**Motor seçimi ölçüldü (19.08.2026):** HeyGen `avatar_iii` gönderi başına 1 kredi, Video Agent 30 kredi harcıyor. Reel hattı `avatar_iii` ile üretilir. Video Chain 10 ile taşınır; HeyGen adresi ve slug verilir, site deposunda PR açılır, elle dosya taşınmaz.
+**Motor seçimi ölçüldü (19.08.2026):** HeyGen `avatar_iii` gönderi başına 1 kredi, Video Agent 30 kredi harcıyor. Video üretilecekse `avatar_iii` ile üretilir. Video Chain 10 ile taşınır; HeyGen adresi ve slug verilir, site deposunda PR açılır, elle dosya taşınmaz. Görsel ve karusel kartları kredi harcamaz.
 
 ### Kadans
 
-Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: sosyal gün** (LinkedIn + X + Instagram Reel, aynı gün). Kalite kapıları hiçbir formatta gevşemez; kadans düştü, standart düşmedi.
+Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: sosyal gün** (LinkedIn + X + Instagram gönderisi, aynı gün). Kalite kapıları hiçbir formatta gevşemez; kadans düştü, standart düşmedi.
 
 | Gün | Adım |
 |---|---|
@@ -80,15 +94,19 @@ Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: 
 | Pazartesi | Sahip seçimi (İçerik Seçim Paneli artifact'ı veya Issue); Notion'a "Onaylı" düşer |
 | Salı | Atıflı Yorum taslağı (CON) + kaynak link envanteri → EDT → PR (preview linkiyle) |
 | Çarşamba | Sahip merge = yayın; yayın oturumunda Chain 5a VE Chain 4a slug ile tetiklenir |
-| **Perşembe** | **Sosyal gün: LinkedIn postu (5b merge) + X threadi (4b merge) + Instagram Reel (Chain 9), aynı gün** |
+| **Perşembe** | **Sosyal gün: LinkedIn postu (5b merge) + X threadi (4b merge) + Instagram gönderisi (Chain 9), aynı gün** |
 | Cuma · Cumartesi · Pazar | Boş; şirket sayfası varyantları kişisel postlardan 24-48 saat sonra MANUEL |
 
 Format tanımları:
 - **Atıflı Yorum:** 600-1000 kelime. Sabit yapı: (1) Ne oldu: kısa özet + kaynak atıfı ve linki, (2) Neden önemli: Türkiye kurumsal bağlamı, (3) Saha yorumu: sahibin kendi operasyon veya PoC tecrübesinden bağ (aşağıdaki katman kuralı), (4) Ne yapmalı: okuyucuya somut adım. Girdi kaynağı: Chain 8 Issue seçimi.
-- **Instagram Reel:** Çarşamba yazısının video karşılığı, dikey. Senaryo yazının omurgasından çıkar, yeni iddia eklemez; İddia Envanteri'nden geçmemiş sayı videoya girmez. Motor `avatar_iii`.
+- **Instagram gönderisi:** Çarşamba yazısının sosyal karşılığı. Format içeriğe göre seçilir, üçü de açıktır. Hangi formatta olursa olsun omurga yazıdan çıkar, yeni iddia eklemez; İddia Envanteri'nden geçmemiş sayı gönderiye girmez.
+  - **Reel:** dikey video, senaryo yazının omurgasından çıkar. Motor `avatar_iii`.
+  - **Tek görsel:** 1080x1350 JPEG, tek güçlü kanıt veya tez cümlesi taşır.
+  - **Karusel:** 6-8 kart, 1080x1350 JPEG. Meta tüm kartları ilk kartın oranına göre kırpar, set aynı ölçüde üretilir.
 - **Derin Vaka (UYKUDA, 2026-08-20):** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
 - **Saha Notu (UYKUDA, 2026-08-20):** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
-- **Instagram Karusel (UYKUDA, 2026-08-20):** 6-8 kart. Erişim tabanı yetersiz kaldığı için akıştan çıkarıldı, şema korundu.
+
+Uykuda olan iki format yazı slotudur, sosyal format değildir. Sosyal formatların hepsi açıktır.
 
 ### SAHA YORUMU KATMANI (sahip kararı 2026-08-20 — KİRILMAZ)
 
@@ -119,7 +137,7 @@ Atıflı Yorum ve dış kaynağa dayanan her içerik için:
 5. **Görsel ve grafik kopyalanmaz.** Gerekirse veriden yeniden çizilir ve "veri kaynağı: ..." atıfı verilir.
 6. **Paywall içerik yalnız herkese açık kısmıyla işlenir;** abonelik arkasındaki metin özetlenmez.
 7. İkincil aktarım yerine **birincil kaynak** tercih edilir: haber bir makaleyi aktarıyorsa link makaleye de verilir.
-8. **Şerh taşınır (2026-08-20):** kaynakta preprint, tek sağlayıcı izi, hakem denetiminden geçmemiş gibi bir sınır varsa, o şerh sosyal gönderiye de taşınır. Yazıda yazıp postta düşürmek kapsam genişletmedir. Kural videoyu da kapsar: Reel senaryosunda şerh düşürülmez.
+8. **Şerh taşınır (2026-08-20):** kaynakta preprint, tek sağlayıcı izi, hakem denetiminden geçmemiş gibi bir sınır varsa, o şerh sosyal gönderiye de taşınır. Yazıda yazıp postta düşürmek kapsam genişletmedir. Kural her formatı kapsar: Reel senaryosunda, karusel kartında ve tek görselde de şerh düşürülmez.
 
 Araç ve sorumluluklar:
 - Boru hattının tek durum kaynağı Notion **"İçerik Takvimi · hayrettinsendil.tr"** DB'sidir (Site Operations altı, id `6017db6a-5fa9-4eab-97ea-68bcf84803e1`). Durum akışı: Fikir → Onaylı → Taslak → EDT → PR → Yayında → Sosyal Çıktı.
@@ -127,8 +145,8 @@ Araç ve sorumluluklar:
 - Chain 8 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
 - **Chain 7 UYKUDA, 2026-08-20.** Cron kaldırıldı; beslediği Cumartesi slotu yok. Geri açmak için workflow dosyasındaki cron yorumu kaldırılır, ama Cumartesi slotu geri gelmeden açılmaz.
 - Chain 5a VE Chain 4a yalnız workflow_dispatch ile koşar (5a cron'u 28.07, 4a cron'u 29.07 kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir). Yayın oturumunda slug ile tetiklenir.
-- Chain 9 Instagram yayınını yapar, Chain 10 Reel medyasını site deposuna taşır. Karusel uykuda olduğu için Chain 9'a haftada tek gönderi gider.
-- UTM kampanya adı gönderi başına ayrılır (`utm_campaign=<slug>`), `blog` gibi jenerik ad kullanılmaz. Kaynak: Chain 4 + Chain 5 revizyonu, 19.08.2026.
+- Chain 9 Instagram yayınını yapar ve üç formatı da (Reel, tek görsel, karusel) taşır. Chain 10 video medyasını site deposuna taşır. Haftada tek gönderi çıktığı için Chain 9'a haftada tek kuyruk dosyası gider.
+- UTM kampanya adı gönderi başına ayrılır ve formatı taşır (`utm_campaign=<format>-<slug>`), `blog` gibi jenerik ad kullanılmaz. Kaynak: Chain 4 + Chain 5 revizyonu, 19.08.2026.
 - Şirket sayfası kanal rolü: kişisel profil erişim motoru, sayfa güven çapası; sıra hep kişisel → sayfa, repaylaşım değil öz metinli varyant.
 
 ## Frontmatter Standardı
@@ -232,17 +250,18 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 - Yazı yayınlandıktan sonra:
   - **SEO** — sitemap zaten dinamik (otomatik) + GSC submit
   - **BRD** — OG image opengraph-image.tsx convention'ı ile otomatik (küçük stil ihtiyacı olabilir)
-  - **SOC** — LinkedIn ve X metin draft'ları + Instagram Reel senaryosu üret (draft'lar yalnız İddia Envanteri'nden geçmiş sayıları kullanabilir; karusel uykuda, istenmeden üretilmez)
+  - **SOC** — LinkedIn ve X metin draft'ları + Instagram gönderisi (format seçilerek: Reel senaryosu, tek görsel ya da karusel kart seti). Draft'lar yalnız İddia Envanteri'nden geçmiş sayıları kullanabilir
 
 ## Otonomi Sınırı
 - ✅ Otonom: yeni MDX dosyası commit (published: false)
 - ✅ Otonom: yazım hatası düzeltme, küçük düzenleme
 - ✅ Otonom: canonical listeden etiket seçmek
+- ✅ Otonom: sosyal gönderi formatını içeriğe göre önermek (Reel, tek görsel, karusel)
 - ❌ Sahip onayı: published: false → true (yayın)
 - ❌ Sahip onayı: about / ana sayfa copy değişikliği (pozisyonlama)
 - ❌ Sahip onayı: gelecek vaadi içeren cümle (kadans, kapasite, "her yazıda X")
 - ❌ Sahip onayı: canonical listeye YENİ etiket eklemek veya mevcut etiketin adını değiştirmek
-- ❌ Sahip onayı: uykuya alınmış formatı (Derin Vaka, Saha Notu, Instagram Karusel) geri açmak
+- ❌ Sahip onayı: uykuya alınmış YAZI formatını (Derin Vaka, Saha Notu) geri açmak
 - ❌ Sahip malzemesi: saha yorumu katmanı sahipten gelir; CON bu katmanı kendi başına üretemez
 
 ## Pattern Notes
@@ -254,4 +273,5 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 - **OG convention alt rotaya taşınmaz:** Next.js `opengraph-image` dosya convention'ı üst segmentten alt rotaya İNMEZ. `/blog/opengraph-image` varken `/blog/etiket/<slug>` sayfasında `og:image` null geldi; ayrı OG dosyası gerekti. Yeni alt rota açılırken kontrol edilir.
 - **Kadans standardı düşürmez:** 20.08.2026'da haftada iki içerik sürdürülemediği için Cumartesi kaldırıldı. Doğru hamle formatı gevşetmek değil, slotu kapatmaktı. Tutulamayan kadans, kalitesi düşen içerikten daha ucuza kapatılır.
 - **Slot kapanır, malzeme kalır:** Cumartesi gidince saha deneyimi ve PoC malzemesi çöpe gitmedi, Atıflı Yorum'un içine katman olarak taşındı. Bir formatı emekliye ayırırken önce o formatın taşıdığı değerin nereye gideceği yazılır; yazılmazsa değer sessizce kaybolur.
-- **Format kararı erişim tabanından verilir, zirveden değil:** 20.08.2026'da karusel elenirken en yüksek izlenmeye değil, aynı gün çıkan çiftin erişim farkına bakıldı (429'a 43). En iyi gönderiyi karşılaştırmak yaş avantajını ölçer, formatı değil. Karar verirken aynı koşulda çıkmış iki gönderi aranır.
+- **Karşılaştırma aynı koşulda yapılır:** 20.08.2026 ölçümünde en yüksek izlenmeye değil, aynı gün çıkan çiftin erişim farkına bakıldı (429'a 43). En iyi gönderiyi karşılaştırmak yaş avantajını ölçer, formatı değil.
+- **Tek ölçümden kalıcı yasak türetilmez (2026-08-24):** dört gönderilik örneklem ve tek adil karşılaştırma, bir formatı kapatmaya yeter gerekçe değildi. Ölçüm bilgi verir, kararı sahip verir. Bir kural yazılırken "bu bir gözlem mi yoksa politika mı" ayrımı metne yazılır; yazılmazsa gözlem sessizce kurala dönüşür ve sonra o kural çıktıyla çelişir.
