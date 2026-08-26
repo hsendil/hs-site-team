@@ -1,0 +1,39 @@
+# Yazım denetimi — kuyruk kapısı
+#
+# Tetik: queue/** veya denetim betiği değişen her PR.
+#
+# Neden PR aşaması? Yayın betiklerindeki em-dash kontrolü ancak dosya main'e
+# düştükten sonra çalışır ve main'e düşmek yayınlamaktır. Bu iş kuralı merge
+# öncesine taşır; sahip kapıya temiz metinle gelir.
+#
+# Secret gerekmez, ağ erişimi yoktur, yalnız dosya okur.
+
+name: Yazım denetimi
+
+on:
+  pull_request:
+    paths:
+      - 'queue/**'
+      - 'scripts/yazim-denetim.mjs'
+      - 'scripts/yazim-denetim.test.mjs'
+      - '.github/workflows/yazim-denetim.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  denetle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Birim testleri
+        run: node --test scripts/yazim-denetim.test.mjs
+
+      - name: Kuyruk denetimi
+        run: node scripts/yazim-denetim.mjs
