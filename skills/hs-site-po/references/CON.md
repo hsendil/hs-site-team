@@ -37,6 +37,21 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 
 Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel makaleleri sahibin yorumu ve düzgün atıfla Türk kurumsal okuyucusuna taşımak (brand.md → Misyon). Vaka yazıları bu iddianın kanıt katmanıdır.
 
+### KAYNAK YAZI KURALI (sahip kararı 2026-08-27, KİRILMAZ)
+
+**Her sosyal medya gönderisi, sitede yayınlanan yazıya göre kurulur.** LinkedIn, X ve Instagram; üçü de o haftanın Çarşamba yazısını taşır. Gönderinin omurgası, sayıları, şerhleri ve kaynak künyesi o yazıdan çıkar.
+
+Sahip beyanı: "Tüm sosyal medya hesaplarımda yapacağım postları web sitesinde publish ettiğim yazıya göre düzenleyeceksin."
+
+Uygulama kuralları:
+
+1. **Kaynak yazı siteden okunur, takvimden değil.** Sosyal içerik üretmeden önce `content/posts/` altındaki en güncel `published: true` yazının slug'ı ve `date` alanı doğrulanır. Herhangi bir takvim, plan dosyası veya birikmiş iş listesi bununla çelişirse **site kazanır**.
+2. **Üç kanal aynı konudadır.** LinkedIn, X ve Instagram farklı yazılara ayrılmaz. Format kanala göre değişir, konu değişmez.
+3. **Yeni yazı yoksa sosyal gönderi de yoktur.** O hafta yayın çıkmadıysa slot boş geçer ya da sahip açıkça bir arşiv yazısı seçer. Claude kendi başına arşivden konu seçmez.
+4. **Yazıda olmayan iddia gönderiye girmez.** İddia Envanteri'nden geçmemiş sayı hiçbir kanalda kullanılmaz.
+
+> **Kök neden kaydı, 27.08.2026.** Perşembe sosyal gününde LinkedIn ve X doğru yazıyla (`siniri-model-secmez-kapi-uygular`, 26.08 yayını) hazırlandı, ancak Instagram Reel'i `HS-WWW/instagram/ig-icerik-plani.md` içindeki eski arşiv takvimine bakılarak `paylas-butonu-bir-yayin-karari` yazısına göre çekildi. 31 HeyGen kredisi boşa gitti ve hafta iki ayrı konuya bölündü. Sebep: iki kaynak çelişiyordu ve zayıf olan seçildi. Bu kural o çelişkiyi kapatır; kaynak sıralaması artık tektir, site en üsttedir.
+
 Kadans: haftada 2 içerik. **Çarşamba: Atıflı Yorum** (ana slot). **Cumartesi: dönüşümlü Derin Vaka veya Saha Notu.** Kalite kapıları hiçbir formatta gevşemez.
 
 **Kanal ilkesi (2026-07-29):** Her yazı üç ayrı günde üç kanala yayılır: site → ertesi gün LinkedIn → ondan sonraki gün X. Aynı içerik aynı gün iki kanalda çıkmaz; kanallar birbirinin erişimini yemez.
