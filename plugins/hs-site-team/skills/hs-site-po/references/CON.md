@@ -37,6 +37,21 @@ Türkçe teknik içerik editörü. AI, Context Engineering, ITSM, proje yönetim
 
 Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel makaleleri sahibin yorumu ve düzgün atıfla Türk kurumsal okuyucusuna taşımak (brand.md → Misyon).
 
+### KAYNAK YAZI KURALI (sahip kararı 2026-08-27, KİRILMAZ)
+
+**Her sosyal medya gönderisi, sitede yayınlanan yazıya göre kurulur.** LinkedIn, X ve Instagram; üçü de o haftanın Çarşamba yazısını taşır. Gönderinin omurgası, sayıları, şerhleri ve kaynak künyesi o yazıdan çıkar.
+
+Sahip beyanı: "Tüm sosyal medya hesaplarımda yapacağım postları web sitesinde publish ettiğim yazıya göre düzenleyeceksin."
+
+Uygulama kuralları:
+
+1. **Kaynak yazı siteden okunur, takvimden değil.** Sosyal içerik üretmeden önce `content/posts/` altındaki en güncel `published: true` yazının slug'ı ve `date` alanı doğrulanır. Herhangi bir takvim, plan dosyası veya birikmiş iş listesi bununla çelişirse **site kazanır**.
+2. **Üç kanal aynı konudadır.** LinkedIn, X ve Instagram farklı yazılara ayrılmaz. Format kanala göre değişir, konu değişmez.
+3. **Yeni yazı yoksa sosyal gönderi de yoktur.** O hafta yayın çıkmadıysa slot boş geçer ya da sahip açıkça bir arşiv yazısı seçer. Claude kendi başına arşivden konu seçmez.
+4. **Yazıda olmayan iddia gönderiye girmez.** İddia Envanteri'nden geçmemiş sayı hiçbir kanalda kullanılmaz.
+
+> **Kök neden kaydı, 27.08.2026.** Perşembe sosyal gününde LinkedIn ve X doğru yazıyla (`siniri-model-secmez-kapi-uygular`, 26.08 yayını) hazırlandı, ancak Instagram Reel'i `HS-WWW/instagram/ig-icerik-plani.md` içindeki eski arşiv takvimine bakılarak `paylas-butonu-bir-yayin-karari` yazısına göre çekildi. 31 HeyGen kredisi boşa gitti ve hafta iki ayrı konuya bölündü. Sebep: iki kaynak çelişiyordu ve zayıf olan seçildi. Bu kural o çelişkiyi kapatır; kaynak sıralaması artık tektir, site en üsttedir.
+
 ### Revizyon 2026-08-20 (sahip kararı)
 
 İki kural değişti. Gerekçeleri kayda geçiyor, çünkü ikisi de daha önce yazılı kuraldı.
@@ -45,19 +60,26 @@ Misyon bağı: birinci hedef, yabancı basındaki AI gelişmelerini ve bilimsel 
 
 **2. Kanal ilkesi yürürlükten kalktı.** Eski kural şuydu: "Her yazı üç ayrı günde üç kanala yayılır; aynı içerik aynı gün iki kanalda çıkmaz, kanallar birbirinin erişimini yemez." Bu kural kaldırıldı. LinkedIn ve X **aynı gün, Perşembe** yayınlanır. Bilinen bedel: iki kanal aynı gün aynı içeriği taşıdığı için erişim bir miktar bölünür. Sahip bu bedeli bilerek kabul etti; takip yükünün azalması önceliklendi.
 
-### FORMAT SERBESTLİĞİ (sahip kararı 2026-08-24, KİRILMAZ)
+### INSTAGRAM FORMATINI SAHİP SEÇER (sahip kararı 2026-08-27, KİRILMAZ)
 
-**Format kanala göre kısıtlanmaz.** Hiçbir kanal tek formata kilitlenmez ve hiçbir format "uykuda" diye kapatılmaz. Format içeriğe göre seçilir: fikir anlatım istiyorsa video, tek güçlü kanıt varsa görsel, adım adım kırılan bir yapı varsa karusel, tez metinle taşınıyorsa metin.
+**Instagram formatını sahip seçer.** Claude format önermez, içerikten türetmez, erişim ölçümünden çıkarmaz. Sahibe sorar, cevabı bekler, sonra üretir. İki seçenek vardır, üçüncüsü yoktur:
 
-Sahip beyanı: "sosyal medya yayınlarım sadece belli bir formatta olmayacak, her formatı destekleyici nitelikte çalışacak. Instagram vb sosyal hesaplarıma sadece video gibi sınırlayıcılar olamaz."
+| Sahip ne derse | Çıkan format | Kuyruk alanı | Üretim |
+|---|---|---|---|
+| **"Reel"** | Video, 9:16 | `videoUrl` (+ opsiyonel `coverUrl`) | `hs-heygen` talimatıyla eşgüdümlü; avatar, ses, motor ve oran oradan okunur |
+| **"gönderi"** | Karusel, 2 ile 10 kart | `images` dizisi | Kart seti 1080x1350 JPEG |
 
-Bu karar 2026-08-20 tarihli "kanal başına tek format, Instagram video tabanlı, karusel uykuda" kuralının yerine geçer.
+**Tek görsel formatı 2026-08-27'de kaldırıldı.** `imageUrl` alanı `instagram-post.mjs` içinde çalışmaya devam ediyor; bu betik kapasitesidir, politika değil. Kuyruk kaydına yazılmaz.
+
+Sahip seçmeden kuyruk kaydı yazılmaz ve PR açılmaz. Zamanlanmış koşuda sahip masada değilse gönderi üretilmez; raporda "format kararı bekliyor" yazılır ve iki seçenek sunulur.
+
+Bu karar 2026-08-24 tarihli "format içeriğe göre seçilir, Claude önerir" kuralının yerine geçer.
 
 **Politika sınırı ile teknik kapasite ayrıdır ve karıştırılmaz.** Bugünkü kapasite betiklerden doğrulandı (2026-08-24):
 
 | Kanal | Hattın yayınladığı | Eksik olan | Kaynak |
 |---|---|---|---|
-| Instagram | Reel (`videoUrl`), tek görsel (`imageUrl`), karusel (`images`, 2-10 kart) | Story dalı yok | `scripts/instagram-post.mjs` |
+| Instagram | Reel (`videoUrl`) ve karusel (`images`, 2-10 kart); `imageUrl` betikte var ama politika gereği kullanılmıyor | Story dalı yok | `scripts/instagram-post.mjs` |
 | X | Metin, tek gönderi veya zincir | Medya alanı yok, gövde `{ text }` | `scripts/x-post.mjs` |
 | LinkedIn | Metin, en fazla 3000 karakter | `content` alanı yok, görsel ve belge gönderilemiyor | `scripts/linkedin-post.mjs` |
 
@@ -80,9 +102,9 @@ Adil karşılaştırma aynı gün çıkan 20.08 çiftidir: Reel 429 erişim, Fee
 
 Takvim ve ölçüm kuralı sahip arşivinde: `HS-WWW/instagram/ig-icerik-plani.md` ve `utm-standardi.md`.
 
-**Bio linki kuralı.** Haftada tek Instagram gönderisi olduğu için bio doğrudan o gönderinin konu aldığı yazıya çevrilir. Kampanya adı gönderinin formatını taşır: `reel-<slug>`, `gorsel-<slug>`, `karusel-<slug>`. Story link etiketi ayrı bir gönderiyi ölçmüyor; atılırsa bio ile aynı adresi taşır ve ölçüm bölünmesin diye kampanya adı değiştirilmez. Eski "bio karusele, Story Reel'e" ayrımı yürürlükte DEĞİL.
+**Bio linki kuralı.** Haftada tek Instagram gönderisi olduğu için bio doğrudan o gönderinin konu aldığı yazıya çevrilir. Kampanya adı gönderinin formatını taşır: `reel-<slug>` veya `karusel-<slug>`. `gorsel-` öneki tek görselle birlikte kaldırıldı. Story link etiketi ayrı bir gönderiyi ölçmüyor; atılırsa bio ile aynı adresi taşır ve ölçüm bölünmesin diye kampanya adı değiştirilmez. Eski "bio karusele, Story Reel'e" ayrımı yürürlükte DEĞİL.
 
-**Motor seçimi ölçüldü (19.08.2026):** HeyGen `avatar_iii` gönderi başına 1 kredi, Video Agent 30 kredi harcıyor. Video üretilecekse `avatar_iii` ile üretilir. Video Chain 10 ile taşınır; HeyGen adresi ve slug verilir, site deposunda PR açılır, elle dosya taşınmaz. Görsel ve karusel kartları kredi harcamaz.
+**Video üretim parametreleri burada tutulmaz**, tek kaynak `hs-heygen` skill'idir; avatar, ses ve motor oradan okunur. Ölçülen kredi oranı 27.08.2026 koşusunda 37,1 saniyelik video için 31 kredi, yani ~50 kredi/dakika. Video Agent kullanılmaz, tek koşu 30 kredi yakar. Video Chain 10 ile taşınır; HeyGen adresi ve slug verilir, site deposunda PR açılır, elle dosya taşınmaz. Görsel ve karusel kartları kredi harcamaz.
 
 ### Kadans
 
@@ -99,10 +121,9 @@ Haftada 1 içerik. **Çarşamba: Atıflı Yorum** (yayın günü). **Perşembe: 
 
 Format tanımları:
 - **Atıflı Yorum:** 600-1000 kelime. Sabit yapı: (1) Ne oldu: kısa özet + kaynak atıfı ve linki, (2) Neden önemli: Türkiye kurumsal bağlamı, (3) Saha yorumu: sahibin kendi operasyon veya PoC tecrübesinden bağ (aşağıdaki katman kuralı), (4) Ne yapmalı: okuyucuya somut adım. Girdi kaynağı: Chain 8 Issue seçimi.
-- **Instagram gönderisi:** Çarşamba yazısının sosyal karşılığı. Format içeriğe göre seçilir, üçü de açıktır. Hangi formatta olursa olsun omurga yazıdan çıkar, yeni iddia eklemez; İddia Envanteri'nden geçmemiş sayı gönderiye girmez.
-  - **Reel:** dikey video, senaryo yazının omurgasından çıkar. Motor `avatar_iii`.
-  - **Tek görsel:** 1080x1350 JPEG, tek güçlü kanıt veya tez cümlesi taşır.
-  - **Karusel:** 6-8 kart, 1080x1350 JPEG. Meta tüm kartları ilk kartın oranına göre kırpar, set aynı ölçüde üretilir.
+- **Instagram gönderisi:** Çarşamba yazısının sosyal karşılığı. Formatı SAHİP seçer, iki seçenek vardır. Hangi formatta olursa olsun omurga yazıdan çıkar, yeni iddia eklemez; İddia Envanteri'nden geçmemiş sayı gönderiye girmez.
+  - **Reel:** dikey video, senaryo yazının omurgasından çıkar. Üretim parametreleri `hs-heygen` skill'inde.
+  - **Karusel:** 2 ile 10 kart, 1080x1350 JPEG. Meta tüm kartları ilk kartın oranına göre kırpar, set aynı ölçüde üretilir.
 - **Derin Vaka (UYKUDA, 2026-08-20):** 1000-2000 kelime; commit hash, tarih, repo linki, ölçüm zorunlu; İddia Envanteri tam teslim.
 - **Saha Notu (UYKUDA, 2026-08-20):** 400-600 kelime; TEK pratik ders; Kaynak Zorunluluğu aynen geçerli, envanter tipik 1-3 satır.
 
@@ -145,7 +166,7 @@ Araç ve sorumluluklar:
 - Chain 8 yalnız ÖNERİR; konu seçimi ve tüm yayın kapıları sahiptedir.
 - **Chain 7 UYKUDA, 2026-08-20.** Cron kaldırıldı; beslediği Cumartesi slotu yok. Geri açmak için workflow dosyasındaki cron yorumu kaldırılır, ama Cumartesi slotu geri gelmeden açılmaz.
 - Chain 5a VE Chain 4a yalnız workflow_dispatch ile koşar (5a cron'u 28.07, 4a cron'u 29.07 kaldırıldı: slug bilinemez, jenerik post kuyruğu kirletir). Yayın oturumunda slug ile tetiklenir.
-- Chain 9 Instagram yayınını yapar ve üç formatı da (Reel, tek görsel, karusel) taşır. Chain 10 video medyasını site deposuna taşır. Haftada tek gönderi çıktığı için Chain 9'a haftada tek kuyruk dosyası gider.
+- Chain 9 Instagram yayınını yapar; politika gereği Reel ve karusel taşır (betik `imageUrl` alanını hâlâ destekler ama kullanılmaz). Chain 10 video medyasını site deposuna taşır. Haftada tek gönderi çıktığı için Chain 9'a haftada tek kuyruk dosyası gider.
 - UTM kampanya adı gönderi başına ayrılır ve formatı taşır (`utm_campaign=<format>-<slug>`), `blog` gibi jenerik ad kullanılmaz. Kaynak: Chain 4 + Chain 5 revizyonu, 19.08.2026.
 - Şirket sayfası kanal rolü: kişisel profil erişim motoru, sayfa güven çapası; sıra hep kişisel → sayfa, repaylaşım değil öz metinli varyant.
 
@@ -256,7 +277,7 @@ Sonuç olarak listede olup henüz kullanılmayan etiket zararsızdır, yalnız u
 - ✅ Otonom: yeni MDX dosyası commit (published: false)
 - ✅ Otonom: yazım hatası düzeltme, küçük düzenleme
 - ✅ Otonom: canonical listeden etiket seçmek
-- ✅ Otonom: sosyal gönderi formatını içeriğe göre önermek (Reel, tek görsel, karusel)
+- ❌ Sahip kararı: Instagram gönderi formatı (Reel veya karusel). Claude önermez, sorar
 - ❌ Sahip onayı: published: false → true (yayın)
 - ❌ Sahip onayı: about / ana sayfa copy değişikliği (pozisyonlama)
 - ❌ Sahip onayı: gelecek vaadi içeren cümle (kadans, kapasite, "her yazıda X")
