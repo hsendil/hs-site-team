@@ -1,0 +1,13 @@
+{
+  "id": "2026-08-27-paylas-butonu-bir-yayin-karari",
+  "platform": "instagram",
+  "source": "blog:paylas-butonu-bir-yayin-karari",
+  "format": "gorsel",
+  "status": "ready",
+  "createdAt": "2026-08-27T07:30:00.000Z",
+  "model": "claude-opus-5",
+  "caption": "Paylaş butonuna basmak bir yayın kararıdır. 25 Temmuz 2026'da Google'a site:claude.ai/share yazan biri, başkalarının Claude sohbetlerini sonuç listesinde buldu.\n\nKök neden teknik ve öğretici: robots.txt tarayıcıya \"bu sayfayı ziyaret etme\" der, taramayı engeller ama indekslemeyi engellemez. noindex etiketi sayfanın içindedir ve indekslemeyi engeller, ama Google onu görebilmek için sayfayı açabilmelidir. Share sayfalarında noindex eksikti, robots.txt taramayı engelliyordu. Linkler dışarıda paylaşılınca dizine girdiler.\n\nSınır net: etkilenenler yalnızca bilinçli olarak Share ile link üretilmiş sohbetlerdi.\n\nBu ilk değil. Temmuz 2025'te ChatGPT'de yaklaşık 4.500 sohbet aynı yere düştü, orada sebep eksik etiket değil yanlış anlaşılan bir onay kutusuydu.\n\nEn kalıcı kısım şu: deindex edilmek silinmek değildir. İfşa penceresinde bir GitHub deposu 453 Claude ve 519 Grok sohbetini, toplam 11.241 mesajı düz metin olarak arşivledi. Sen linki iptal etsen de o kopya geri gelmez. Sohbette bir anahtar geçtiyse doğru refleks linki iptal etmek değil, anahtarı değiştirmektir.\n\nBugün on dakika ayır: aktif paylaşımlarını listele, hassas olanın linkini kaldır, sızan anahtarı döndür, paylaşmadan önce redakte et, linki yayın say.\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #KurumsalYapayZeka #AIEğitimi #VeriGizliliği #Claude",
+  "imageUrl": "https://hayrettinsendil.tr/images/ig/paylas-butonu/gorsel.jpg",
+  "altText": "Karanlık bir odada aralık duran kapıdan sızan mor ışığın satırlar halinde dağılması",
+  "bioUrl": "https://hayrettinsendil.tr/blog/paylas-butonu-bir-yayin-karari?utm_source=instagram&utm_medium=social&utm_campaign=gorsel-paylas-butonu"
+}
