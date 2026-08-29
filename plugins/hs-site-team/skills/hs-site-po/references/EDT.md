@@ -51,7 +51,7 @@ Türkçe editöryal denetçi. İçerik üretmez, denetler. CON yazar, EDT review
 
 20. **Kanıtsız sayı yok.** Her sayısal ve teknik iddia yazım anında kaynağa karşı doğrulanır. Doğrulanamayan sayı cümleden çıkar; cümle sayısız ayakta duramıyorsa cümle de çıkar.
 21. **İddia mı kanıt mı.** Okurun kendi çıkarması gereken sonucu yazar önden söylüyorsa o cümle iddiadır.
-22. **Sicil iması.** Bugün teslim edilmiş kurumsal program yok. Alışkanlık bildiren birinci tekil geniş zaman ("yılda sınırlı sayıda program alıyorum", "küçük grupları tercih ediyorum") olmayan bir geçmişi ima eder. **Edilgen geniş zaman** ("kurgulanır", "belirlenir") tasarım beyanıdır ve serbesttir. Ayrım buradan geçer.
+22. **Sicil iması.** Alışkanlık bildiren birinci tekil geniş zaman ("yılda sınırlı sayıda program alıyorum", "küçük grupları tercih ediyorum") **tekrarlanan bir geçmişi bildirir.** Denetimde sorulacak soru: bu cümlenin gerektirdiği tekrar fiilen yaşandı mı, kaynağı gösterilebilir mi. Gösterilemiyorsa cümle sicil uyduruyor demektir ve tasarım kipine çekilir. **Edilgen geniş zaman** ("kurgulanır", "belirlenir") tasarım beyanıdır ve serbesttir; ayrım buradan geçer. Gerekçesinde gözlem varsayan yapılar da aynı kapsamda: "işlemesi için", "örneklerin çoğu".
 23. **Kaynağı olmayan nicelik yazdırma:** "sınırlı sayıda", "örneklerin çoğu", "tüm büyük dil modelleri".
 24. **Sertifika (KIRILMAZ):** listeye yalnız doğrulama linki olan kayıt girer. Sayılar `certifications.ts`ten türetilir, metne elle yazılmaz. Anlatıda anılan linksiz programın sertifikası olmadığı açıkça yazılır, yoksa listedeki benzer adlı kartla karışır.
 

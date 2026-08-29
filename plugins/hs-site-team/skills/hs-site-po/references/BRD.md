@@ -29,7 +29,18 @@ Bak: `shared/brand.md`, renk paleti, font, ton. Tek otorite orada.
 - **next/og `fontFamily`:** `sans-serif` default (Outfit için custom font fetch gerekiyor, sonraki sprint)
 - **`<Image>` zorunlu**, hero ve asset için (WEB ile birlikte)
 - **Asset boyutları** optimize: hero 200KB altı, OG image dinamik
-- **Binary dosya GitHub aracıyla push edilmez.** Araç içeriği bir kez daha base64 kodluyor, depoda görsel değil metin oluşuyor. İki kez kanıtlandı (27.07.2026 ve 29.08.2026). Görsel, video ve font sahibin GitHub web arayüzünden yüklemesiyle girer
+
+## BİNARY PUSH YASAĞI (KIRILMAZ, 2026-08-29)
+
+**Görsel, video ve font GitHub aracıyla push edilmez.**
+
+Araç verilen içeriği bir kez daha base64 kodluyor. Sonuç: depoda görsel değil, base64 metni içeren bozuk bir dosya oluşuyor. Dosya adı ve uzantısı doğru göründüğü için fark edilmesi zor; boyut kontrol edilmezse sessizce geçer.
+
+İki kez kanıtlandı: 27.07.2026 ve 29.08.2026. İkincisinde 8,4 KB'lık PNG depoya 11,2 KB'lık metin olarak düştü.
+
+**Doğru yol:** BRD dosyayı hazırlar, adını ve hedef dizini verir; sahip GitHub web arayüzünden yükler.
+
+**Doğrulama:** yükleme sonrası dosya boyutu beklenen değerle karşılaştırılır. Base64 kodlanmış hali orijinalin yaklaşık üçte bir fazlasıdır; boyut o oranda büyükse dosya bozuktur.
 
 ## TÜRKÇE BÜYÜK HARF (KIRILMAZ, 2026-08-29)
 
@@ -53,18 +64,20 @@ Tarayıcı tarafında tuzak ters yönde çalışır: `lang="tr"` varken CSS `upp
 
 ## OG Image Template
 
-> **Sayı elle yazılmaz.** Sertifika sayıları `src/lib/certifications.ts` içindeki `anthropicCertCount` ve `totalCertCount` üzerinden gelir. 29.08.2026'ya kadar sayı sekiz ayrı yerde elle yazılıydı ve hepsi 8'de kalmıştı; gerçek sayı 20 idi.
+> **Yer tutucular karta yazılmaz.** Aşağıda `<...>` içinde görünen ifadeler, kartta duracak metnin tarifidir; kod değişkeni değildir, şablona olduğu gibi kopyalanmaz.
+
+> **Sayı elle yazılmaz.** Anthropic sertifika sayısı `src/lib/certifications.ts` içindeki `anthropicCertCount`, toplam sayı `totalCertCount` değerinden okunur. Şablona, kod yorumuna veya kart metnine elle rakam girilmez. 29.08.2026'ya kadar bu sayı sekiz ayrı yerde elle yazılıydı ve hepsi 8'de kalmıştı; gerçek sayı 20 idi.
 
 Site default (`src/app/opengraph-image.tsx`):
 - Eyebrow: `HAYRETTİNSENDİL.TR` (#A78BFA, **elle büyük harf**, transform yok)
 - Ana başlık: `Hayrettin Şendil`
 - Alt başlık: `AI / Context Engineering Eğitmeni`
-- Alt şerit: `PMP®` rozet + `+ {anthropicCertCount} Anthropic Academy sertifikası · 20+ yıl BT operasyonu`
+- Alt şerit: `PMP®` rozet + `+ <Anthropic sertifika sayısı> Anthropic Academy sertifikası · 20+ yıl BT operasyonu`
 
 Hakkımda (`src/app/about/opengraph-image.tsx`):
 - Eyebrow: `HAYRETTİNSENDİL.TR · HAKKIMDA`
 - Alt başlık: `AI / Context Engineering Eğitmeni · 20+ yıl BT operasyonu`
-- Alt şerit: `PMP®` rozet + `+ {anthropicCertCount} Anthropic Academy sertifikası · {totalCertCount} sertifika toplam`
+- Alt şerit: `PMP®` rozet + `+ <Anthropic sertifika sayısı> Anthropic Academy sertifikası · <toplam sertifika sayısı> sertifika toplam`
 
 Blog dinamik (`src/app/blog/[slug]/opengraph-image.tsx`):
 - Eyebrow: `BLOG · HAYRETTİNSENDİL.TR`
