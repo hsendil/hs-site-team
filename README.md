@@ -11,19 +11,19 @@
 
 ## Ne işe yarar?
 
-Kişisel sitenizi tek başınıza yönetmek yerine **uzmanlaşmış ajan takımının** yönetmesini sağlar. Claude Code'da bir komutla webmaster, SEO uzmanı, içerik editörü, marka tasarımcısı, sosyal medya stratejisti ve editöryal denetçi çağırırsınız; her biri kendi alanında çalışır, doğrudan site repo'suna commit + deploy eder.
+Kişisel sitenizi tek başınıza yönetmek yerine **uzmanlaşmış ajan takımının** yönetmesini sağlar. Claude Code'da bir komutla webmaster, SEO uzmanı, içerik editörü, marka tasarımcısı, sosyal medya stratejisti ve editöryal denetçi çağırırsınız; her biri kendi alanında çalışır, doğrudan site repo'suna commit ve deploy eder.
 
 ### Mimari
 
 | Ajan | Sorumluluk |
 |---|---|
-| **hs-site-po** | Orchestrator — talebi parçalar, doğru ajana yönlendirir, çıktıları birleştirir |
-| **WEB** (Webmaster) | Next.js sayfa/component, performans, Lighthouse, deploy doğrulaması |
-| **SEO** | Meta + JSON-LD + sitemap + GA4 event + GSC kontrol + keyword |
-| **CON** (Content) | MDX blog taslak, başlık optimizasyonu, tag tutarlılığı, içerik takvimi |
-| **BRD** (Brand) | Renk/tipografi tutarlılığı, OG image üretimi, ikon, görsel sistem |
-| **SOC** (Social) | LinkedIn/X/Instagram için ayrı taslaklar (draft-only model) |
-| **EDT** (Editor) | Editöryal denetim — üretmez, denetler; P0/P1/P2 bulgu raporu + fix brief |
+| **hs-site-po** | Orchestrator: talebi parçalar, doğru ajana yönlendirir, çıktıları birleştirir |
+| **WEB** (Webmaster) | Next.js sayfa ve component, performans, Lighthouse, deploy doğrulaması |
+| **SEO** | Meta, JSON-LD, sitemap, GA4 event, GSC kontrol, keyword |
+| **CON** (Content) | MDX blog taslak, başlık optimizasyonu, etiket tutarlılığı, içerik takvimi |
+| **BRD** (Brand) | Renk ve tipografi tutarlılığı, OG image üretimi, ikon, görsel sistem |
+| **SOC** (Social) | LinkedIn, X ve Instagram için ayrı taslaklar (draft-only model) |
+| **EDT** (Editor) | Editöryal denetim: üretmez, denetler; P0, P1, P2 bulgu raporu ve fix brief |
 
 ---
 
@@ -45,22 +45,22 @@ Kurulum sonrası Claude Code yeniden başlatılır; trigger kelimesi (`hs-site`,
 
 ```
 # Orchestrator'ı çağır, plan yap
-hs-site-po — site için Sprint 4 planı çıkar
+hs-site-po: site için Sprint 4 planı çıkar
 
 # Webmaster'a doğrudan görev ver
-webmaster — Lighthouse skoru ölç, 90 altı kategorileri düzelt
+webmaster: Lighthouse skoru ölç, 90 altı kategorileri düzelt
 
 # İçerik üret
-content — "Agent Skills nasıl çalışır" yazısı için MDX taslağı hazırla
+content: "Agent Skills nasıl çalışır" yazısı için MDX taslağı hazırla
 
 # Editöryal denetim
-editor — son yazıyı ve site metinlerini stil + olgu tutarlılığı için denetle
+editor: son yazıyı ve site metinlerini stil ve olgu tutarlılığı için denetle
 
 # OG image yenile
-brand — yeni blog yazısı için opengraph-image güncelle
+brand: yeni blog yazısı için opengraph-image güncelle
 
 # Sosyal medya taslakları
-social — son blog yazısı için LinkedIn + X + Instagram taslakları üret
+social: son blog yazısı için LinkedIn, X ve Instagram taslakları üret
 ```
 
 ---
@@ -70,7 +70,7 @@ social — son blog yazısı için LinkedIn + X + Instagram taslakları üret
 İki amacı var:
 
 1. **Pratik:** hayrettinsendil.tr'yi günlük yönetmek (kod, içerik, SEO, marka).
-2. **Vitrin:** Claude Code'da multi-agent orchestration pattern'inin canlı örneği — danışmanlık ve eğitim referansı.
+2. **Vitrin:** Claude Code'da multi-agent orchestration deseninin canlı örneği; danışmanlık ve eğitim referansı.
 
 > **Not:** Site kodu bu repo'da **değil**. Site repo'su (`hsendil/hayrettinsendil`) private; bu plugin GitHub MCP ile o repo'ya commit yapar.
 
@@ -78,16 +78,20 @@ social — son blog yazısı için LinkedIn + X + Instagram taslakları üret
 
 ## Dokümantasyon
 
-- [Architecture Decision Log](docs/architecture.md) — Ajan sayısı, references/ lazy load, Claude Code (vs Cowork) — her kararın gerekçesi
-- [Pattern Notes](docs/patterns.md) — Sub-agent isolation, lazy loading, context engineering, orchestrator-worker — kendi projende uygulanabilir öğretici notlar
+- [Architecture Decision Log](docs/architecture.md): ajan sayısı, `references/` lazy load, Claude Code ile Cowork karşılaştırması; her kararın gerekçesi
+- [Pattern Notes](docs/patterns.md): sub-agent isolation, lazy loading, context engineering, orchestrator-worker; kendi projenizde uygulanabilir notlar
 - [CHANGELOG](CHANGELOG.md)
 
 ---
 
 ## Yazan
 
-Hayrettin Şendil, PMP — AI / Context Engineering Eğitmeni
-PMP + 8 Anthropic sertifikası · 20+ yıl BT operasyon deneyimi
+Hayrettin Şendil, PMP®
+AI / Context Engineering Eğitmeni
+
+20+ yıl BT operasyon deneyimi. Doğrulanabilir sertifika listesi:
+[hayrettinsendil.tr/about#sertifikalar](https://hayrettinsendil.tr/about#sertifikalar)
+
 [hayrettinsendil.tr](https://hayrettinsendil.tr) · [LinkedIn](https://www.linkedin.com/in/eniac)
 
 MIT lisanslı. Pull request açın, fork'layın, kendi projenize uyarlayın.
