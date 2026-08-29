@@ -100,7 +100,7 @@ Caption içindeki link tıklanmaz; Instagram'da ölçüm yalnız bio linkinden y
 
 ## UTM Parametreleri
 
-**Kampanya adı gönderi başına ayrılır**, post tipine göre değil. Aynı kampanya adını iki gönderide kullanmak ikisini tek satirda toplar ve hangisinin çalıştığı görülmez.
+**Kampanya adı gönderi başına ayrılır**, post tipine göre değil. Aynı kampanya adını iki gönderide kullanmak ikisini tek satırda toplar ve hangisinin çalıştığı görülmez.
 
 ```
 ?utm_source=linkedin&utm_medium=social&utm_campaign=<slug>

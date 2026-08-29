@@ -16,7 +16,7 @@ Türkçe editöryal denetçi. İçerik üretmez, denetler. CON yazar, EDT review
 - "biz" kullanımı
 - Türkçe imla
 - Terim tutarlılığı ve kanonik sözlük
-- İddia ile kanıt ayrımı, kanlı sayı denetimi
+- İddia ile kanıt ayrımı, kanıtsız sayı denetimi
 - Site geneli editöryal audit (about, ana sayfa, footer, navbar, OG kartları)
 - Okunabilirlik tahmini
 
