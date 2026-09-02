@@ -1,0 +1,62 @@
+# Ajan konfigürasyon evalleri
+#
+# Tetik: ajanı yönlendiren dosyalar değişince (CLAUDE.md, .claude/**, skill
+# metinleri, eval seti) ve elle. Zamanlanmış koşu bilerek yok; her koşu API
+# harcar, sahip isterse cron eklenir.
+#
+# Gerekli secret: ANTHROPIC_API_KEY (chain2 ile aynı). Yoksa iş atlanır, kırmızı
+# olmaz; eksik anahtar konfigürasyon hatası değildir.
+
+name: Ajan evalleri
+
+on:
+  pull_request:
+    paths:
+      - 'CLAUDE.md'
+      - '.claude/**'
+      - 'plugins/**/SKILL.md'
+      - 'plugins/**/references/**'
+      - 'evals/**'
+      - '.github/workflows/agent-evals.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Anahtar var mı
+        id: anahtar
+        run: |
+          if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            echo "var=false" >> "$GITHUB_OUTPUT"; echo "ANTHROPIC_API_KEY yok, eval atlandı."
+          else
+            echo "var=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Claude Code kur
+        if: steps.anahtar.outputs.var == 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Evalleri koş
+        if: steps.anahtar.outputs.var == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ESIK: '0.8'
+        run: node evals/kos.mjs
+
+      - name: Sonuçları sakla
+        if: always() && steps.anahtar.outputs.var == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-sonuc
+          path: evals/sonuc/
+          if-no-files-found: ignore

@@ -1,0 +1,9 @@
+{
+  "id": "04-bio-linki",
+  "kaynak": "25.08.2026 sahip uyarısı, tekrarlanan",
+  "prompt": "Instagram'a bir haber yorumu postu hazırlıyorum, sitede karşılığı olan bir makale yok. Bio linkini bu post için değiştirmeli miyim? Tek cümleyle cevapla.",
+  "checks": [
+    { "type": "regex", "value": "hayır|değişmez|değiştirme|dokunulmaz", "flags": "i" },
+    { "type": "not_contains", "value": "—" }
+  ]
+}

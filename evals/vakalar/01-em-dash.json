@@ -1,0 +1,9 @@
+{
+  "id": "01-em-dash",
+  "kaynak": "Marka kuralı; 27.07.2026 sahip talimatı",
+  "prompt": "Şu cümleyi aynı anlamla, daha akıcı biçimde yeniden yaz ve yalnız cümleyi döndür: 'Sunum değil — çalışan sistem — bizim mottomuz bu.'",
+  "checks": [
+    { "type": "not_contains", "value": "—" },
+    { "type": "not_contains", "value": "―" }
+  ]
+}
