@@ -1,4 +1,4 @@
-# Brand Standard — hayrettinsendil.tr
+# Brand Standard · hayrettinsendil.tr
 
 > Tek otorite. Renk, tipografi, ton ve editöryal stil burada tanımlıdır. Tüm ajanlar bu dosyayı kaynak alır.
 
@@ -70,7 +70,7 @@ Referans: ADR-009 (SSR inline JSON-LD) + 2026-05-26 prose contrast + inline code
 - **Hitap (sahip kararı 2026-07-27):** Blog ve kişisel anlatı **"sen"** (samimi). Dönüşüm yüzeyleri, yani iletişim formu, CTA metinleri, başarı ve hata mesajları, SSS ve /egitimler program metni **"siz"** (kurumsal alıcı muhatap). İki mod aynı cümlede karışmaz; sayfa içinde blok bazında ayrışır.
 - **Sicil iması (2026-08-29):** Bugün teslim edilmiş kurumsal program yok. Alışkanlık bildiren birinci tekil geniş zaman ("yılda sınırlı sayıda program alıyorum", "küçük grupları tercih ediyorum") olmayan bir geçmişi ima eder. Edilgen geniş zaman ("kurgulanır", "belirlenir") tasarım beyanıdır ve serbesttir. İlki tasarım kipine çekilir.
 
-### Kural 1 — Em-dash (—) yasak
+### Kural 1 · Em-dash (—) yasak
 Em-dash hiçbir çıktıda kullanılmaz. Bu kural sahip talimatıdır ve istisnası yoktur.
 
 **Em-dash yerine kullan:**
@@ -84,7 +84,9 @@ Em-dash hiçbir çıktıda kullanılmaz. Bu kural sahip talimatıdır ve istisna
 
 **Kapsam:** yayına giden her metin. `aria-label`, `alt`, `title` ve JSON-LD alanları da buna dahildir; gözle görünmese de üretilen HTML'e girer ve ekran okuyucuya gider. Kod yorumları render edilmediği için kapsam dışıdır.
 
-### Kural 2 — Üçüncü tekil şahıs sızıntısı YASAK
+**Bu dosya da kapsamdadır (2026-08-29).** Standart dosyaları örnekle öğretir; sonraki oturum biçimi kaynaktan kopyalar. Başlık ve ayraç konumunda orta nokta kullanılır. Karakterin kuralın konusu olduğu yerler (yukarıdaki başlık ve tanım) istisna değil zorunluluktur; bir karakteri yasaklayan kural onu adlandırmak zorundadır.
+
+### Kural 2 · Üçüncü tekil şahıs sızıntısı YASAK
 
 Birinci tekil yazılıyor, sahip kendinden "Hayrettin Şendil yazdı" gibi 3. tekil bahsetmiyor.
 
@@ -99,7 +101,7 @@ Birinci tekil yazılıyor, sahip kendinden "Hayrettin Şendil yazdı" gibi 3. te
 
 **İstisna:** h1 başlığı, portre `alt` metni, OG ve Twitter metadata'sı, JSON-LD `Person` ve `VideoObject` alanları. Bunlar yapılandırılmış künye alanlarıdır, prose değildir.
 
-### Kural 3 — AuthorBio Template (kalıcı)
+### Kural 3 · AuthorBio Template (kalıcı)
 
 Blog detay sayfası yazı sonu imza bloku **bu şablonu** kullanır:
 
@@ -119,7 +121,7 @@ Blog detay sayfası yazı sonu imza bloku **bu şablonu** kullanır:
 - Bio cümlesi YOK
 - Sertifika/yetenek/yıl YASAK
 
-### Kural 4 — İmla ve Açıklama Netliği
+### Kural 4 · İmla ve Açıklama Netliği
 
 **Yapma:**
 - Uzun cümle (40+ kelime), böl
@@ -134,7 +136,7 @@ Blog detay sayfası yazı sonu imza bloku **bu şablonu** kullanır:
 - Türkçe imla: ek ayırma (`'de`, `'da`), kesme işaretleri doğru, noktalı virgül uygun yerde
 - Doğal Türkçe açıklama, Anglo-Sakson parantez çevirisi değil
 
-### Kural 5 — Madde listeleri kontrollü
+### Kural 5 · Madde listeleri kontrollü
 
 Madde-itis hastalığından kaç. Liste sadece:
 - 3+ paralel öğe
@@ -143,13 +145,13 @@ Madde-itis hastalığından kaç. Liste sadece:
 
 Yoksa doğal cümle akışı: "Üç şey değişti: kontrast, link rengi, yazar kartı."
 
-### Kural 6 — "biz" yasak
+### Kural 6 · "biz" yasak
 
 Tek geliştirici, tek yazar. "Biz" denmez. Yazılarda **"ben"** veya **7 ajanlı takım** referansı.
 
 Sahip ile müşteriyi birlikte anlatan cümlelerde de "belirliyoruz" yerine edilgen kalıp kullanılır: "birlikte tanımlanır", "birlikte planlanır".
 
-### Kural 7 — Kaynak açık olmadan sayı yazılmaz (2026-07-27)
+### Kural 7 · Kaynak açık olmadan sayı yazılmaz (2026-07-27)
 
 > Kök neden kaydı: 26.05.2026 tarihli iki yazı ADR log ve CHANGELOG yanda olmadan hafızadan yazıldı. Sonuç: uydurma metrik ("RAG 380ms"), yanlış tarih ("21 Mayıs"), elenen çözümün reçete diye öğretilmesi. İki ay canlıda kaldı, sosyal medya postlarına sızdı. Yazan ve denetleyen aynı modeldi; fark bağlamdı.
 
@@ -163,7 +165,7 @@ Sahip ile müşteriyi birlikte anlatan cümlelerde de "belirliyoruz" yerine edil
 - Dış kaynaklı içerikte ek çerçeve: `references/CON.md` → Telif ve Atıf Kuralı.
 - Prosedürün tamamı: `references/CON.md` → Kaynak Zorunluluğu bölümü. Denetim: her yazı yayın öncesi EDT'den geçer.
 
-### Kural 8 — Türkçe büyük harf (2026-08-29)
+### Kural 8 · Türkçe büyük harf (2026-08-29)
 
 `upper()`, CSS `text-transform: uppercase` ve `textTransform` Latin kuralı uygular: küçük **i** harfini **İ** yerine **I** yapar, ya da tersi bozulmalar üretir.
 
@@ -172,19 +174,32 @@ Sahip ile müşteriyi birlikte anlatan cümlelerde de "belirliyoruz" yerine edil
 - İçinde küçük i olmayan Türkçe kelimelerde (örn. "Hakkımda") `uppercase` güvenlidir.
 - Üretilen her görselde ve başlıkta gözle doğrulanır.
 
-### Kural 9 — Tek kaynak, elle yazılan sayı yok (2026-08-29)
+### Kural 9 · Tek kaynak, elle yazılan sayı yok (2026-08-29)
 
 Aynı olgu iki yerde elle yazılıysa er geç ayrışır.
 
-- Sertifika sayıları `src/lib/certifications.ts` içindeki `anthropicCertCount` ve `totalCertCount` üzerinden türetilir. Hero, sayfa başlığı, OG kartları, ana sayfa rozeti ve JSON-LD `hasCredential` hepsi aynı kaynaktan okur.
-- **Kök neden:** 29.08.2026'ya kadar sayı sekiz ayrı yerde elle yazılıydı ve hepsi 8'de kalmıştı; gerçek sayı 20 idi.
+- Sertifika sayıları `src/lib/certifications.ts` içindeki `anthropicCertCount` ve `totalCertCount` üzerinden türetilir. Hero, sayfa başlığı, OG kartları, ana sayfa rozeti, `/egitimler` SSS'i ve JSON-LD `hasCredential` hepsi aynı kaynaktan okur.
+- **Kök neden:** 29.08.2026'ya kadar sayı sekiz ayrı yerde elle yazılıydı ve hepsi 8'de kalmıştı. O tarihte arşivdeki gerçek Anthropic kaydı 20 idi; yani sapma 12 sertifikaydı.
+- **Bu iki sayı bugünkü değer değildir, tarihli olgudur.** Güncel değerler yalnız veri dosyasından okunur; aynı gün devreye giren gösterim süzgeci (aşağıdaki KIRILMAZ bölüm) türetilen sayıları arşiv sayısından ayırdı. Bu paragraftaki rakamı güncel sanıp metne taşıma.
 - Aynı ilke listeler için de geçerli: JSON-LD kredensiyal listesi elle yazılmaz, veri dosyasından üretilir.
 
-### KIRILMAZ — Sertifikada yalnız doğrulanabilir olan gösterilir (sahip talimatı 2026-08-29)
+### KIRILMAZ · Sertifika gösteriminde iki süzgeç (sahip talimatı 2026-08-29)
 
-Sertifika listesine **yalnız çalışan doğrulama linki olan kayıt girer.** Linki olmayan kayıt kart açmaz; anlatı metninde anılabilir, ama anılırken sertifikası olmadığı açıkça yazılır, yoksa listedeki benzer adlı kartla karışır.
+Bir sertifikanın sitede görünmesi için **iki ayrı şartı birden** geçmesi gerekir. Biri diğerinin yerine geçmez.
+
+**Süzgeç 1, taban şart.** Sertifika listesine yalnız çalışan doğrulama linki olan kayıt girer. Linki olmayan kayıt kart açmaz; anlatı metninde anılabilir, ama anılırken sertifikası olmadığı açıkça yazılır, yoksa listedeki benzer adlı kartla karışır.
 
 Kaynaklar: Anthropic Academy `verify.skilljar.com/c/<hash>`, PMI için Credly rozeti.
+
+**Süzgeç 2, gösterim kararı.** Linki olması gösterilmesi için YETMEZ. Kayıt ancak sahibin işine ve konumlandırmasına katkı veriyorsa gösterilir. Karar veri dosyasındaki `showcase` bayrağıyla verilir ve bayrak **opt-in**'dir: yazmayan gösterilmez. Yeni bir sertifika veri dosyasına eklenmekle yayına girmez; göstermek ayrı ve bilinçli bir editöryal karardır ve sahibindir.
+
+> **İkinci süzgeç neden var.** 29.08.2026'da birinci şart tam filtre sanılıp linki olan yirmi bir kaydın hepsi yayınlandı. Yedisi aynı kursun hedef kitle varyantıydı: educators, students, pK-12, nonprofits, Small Businesses, Creative Work, Builders. Kurumsal BT alıcısına sinyal vermiyor, listeyi seyreltiyor ve güçlü kayıtları gölgeliyorlardı. Sahip düzeltmesi: "Görmemiş gibi her sertifikayı da yayımlamak istemiyorum. İşime odaklı ve bana kazanç ve olgunluk sağlayacak olanlar önemli."
+
+Dosya **tam arşivi tutar, hiçbir kayıt silinmez.** Gösterimden çıkan kayıt dosyada durur; fikir değişirse tek satır.
+
+**`showcase` ile `featured` karıştırılmaz.** `showcase` süzgeçtir, `featured` ana sayfa önizlemesindeki küratörlü seçkidir. Önce süzgeç, sonra seçki: showcase taşımayan kayıt featured olsa bile hiçbir yerde görünmez.
+
+Türetilen her sayı showcase kümesinden okunur (Kural 9). **JSON-LD `hasCredential` de arşivden değil showcase kümesinden üretilir**; sitede göstermediğini şemaya bildirmek iki yüzey arasında tutarsızlık üretir.
 
 Tam kural ve gerekçe: Notion → Site Operations → "Kırılmaz Kural · Sertifika Gösterimi".
 
@@ -261,4 +276,4 @@ EDT denetiminin (2026-05-26) tespit ettiği site geneli terim ikiliği sahip kar
 - **E-posta (resmi/iş):** `talep@hayrettinsendil.tr`, atölye, danışmanlık ve ekip eğitimi için (27.07.2026: support@ tüm görünür yüzeylerden kaldırıldı)
 - **E-posta (kişisel):** `hayrettin.sendil@hotmail.com.tr`, yalnızca kişisel ve gizli yazışma, public yerlerde KULLANMA
 
-*Son güncelleme: 2026-08-29 — 29.08 sahip kararları işlendi (unvan, PMP®, atölye, sunum, motto, kontrol noktası), Kural 8 Türkçe büyük harf ve Kural 9 tek kaynak eklendi, sertifika KIRILMAZ kuralı kaydedildi, em-dash kuralı yasak olarak netleştirildi ve kapsamı aria-label ile JSON-LD alanlarına genişletildi, görsel yolları düzeltildi, geriye dönük uygulanmama notu eklendi*
+*Son güncelleme: 2026-08-29 · sertifika KIRILMAZ kuralı iki süzgeç olarak yeniden yazıldı (showcase opt-in bayrağı, featured ile farkı, JSON-LD daraltılması), Kural 9 kök neden cümlesindeki tarihli sayı güncel sanılmayacak biçimde netleştirildi, Kural 1 kapsamı bu dosyanın kendisine genişletildi ve başlıklardaki em-dash'ler orta noktaya çevrildi. Aynı gün daha önce: 29.08 sahip kararları (unvan, PMP®, atölye, sunum, motto, kontrol noktası), Kural 8 ve Kural 9 eklendi, em-dash kuralının kapsamı aria-label ve JSON-LD alanlarına genişletildi, geriye dönük uygulanmama notu kondu.*
