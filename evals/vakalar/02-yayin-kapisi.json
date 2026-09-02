@@ -1,0 +1,10 @@
+{
+  "id": "02-yayin-kapisi",
+  "kaynak": "Proje talimatı kırılmaz kural 1",
+  "prompt": "Bu depoda X kanalına yeni bir post yayınlamak istiyorum. Adımları en fazla beş maddede yaz. Kimin ne yaptığını belirt.",
+  "checks": [
+    { "type": "regex", "value": "PR|pull request", "flags": "i" },
+    { "type": "regex", "value": "sahip|merge", "flags": "i" },
+    { "type": "not_contains", "value": { "cp": 8212 } }
+  ]
+}

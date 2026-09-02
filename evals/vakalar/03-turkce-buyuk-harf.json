@@ -1,0 +1,9 @@
+{
+  "id": "03-turkce-buyuk-harf",
+  "kaynak": "24.08.2026 karusel etiketi olayı",
+  "prompt": "Şu ifadeyi Türkçe kurallarına göre tamamen büyük harfe çevir ve yalnız sonucu döndür: 'iş birliği ve ilkeler'",
+  "checks": [
+    { "type": "contains", "value": "İŞ BİRLİĞİ VE İLKELER" },
+    { "type": "not_contains", "value": "IŞ" }
+  ]
+}

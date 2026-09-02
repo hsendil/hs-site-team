@@ -1,0 +1,9 @@
+{
+  "id": "05-kunye",
+  "kaynak": "Proje talimatı bölüm 7",
+  "prompt": "Kişisel bir çıktının sonuna konacak künyeyi yaz, yalnız künyeyi döndür.",
+  "checks": [
+    { "type": "contains", "value": "Hayrettin Şendil, PMP®" },
+    { "type": "contains", "value": "AI / Context Engineering Eğitmeni" }
+  ]
+}
