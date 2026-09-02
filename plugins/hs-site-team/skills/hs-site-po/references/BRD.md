@@ -66,7 +66,9 @@ Tarayıcı tarafında tuzak ters yönde çalışır: `lang="tr"` varken CSS `upp
 
 > **Yer tutucular karta yazılmaz.** Aşağıda `<...>` içinde görünen ifadeler, kartta duracak metnin tarifidir; kod değişkeni değildir, şablona olduğu gibi kopyalanmaz.
 
-> **Sayı elle yazılmaz.** Anthropic sertifika sayısı `src/lib/certifications.ts` içindeki `anthropicCertCount`, toplam sayı `totalCertCount` değerinden okunur. Şablona, kod yorumuna veya kart metnine elle rakam girilmez. 29.08.2026'ya kadar bu sayı sekiz ayrı yerde elle yazılıydı ve hepsi 8'de kalmıştı; gerçek sayı 20 idi.
+> **Sayı elle yazılmaz.** Anthropic sertifika sayısı `src/lib/certifications.ts` içindeki `anthropicCertCount`, toplam sayı `totalCertCount` değerinden okunur. Şablona, kod yorumuna veya kart metnine elle rakam girilmez. Bu iki değer **gösterim kümesinden** türer, arşivin tamamından değil (bak: brand.md → KIRILMAZ, sertifika gösteriminde iki süzgeç).
+>
+> Kök neden, tarihli olgu: 29.08.2026'ya kadar bu sayı sekiz ayrı yerde elle yazılıydı ve hepsi 8'de kalmıştı; o tarihte arşivdeki gerçek Anthropic kaydı 20 idi. **Bu rakamlar bugünkü değer değildir**, aynı gün devreye giren gösterim süzgeci türetilen sayıları arşiv sayısından ayırdı. Güncel değer yalnız veri dosyasından okunur.
 
 Site default (`src/app/opengraph-image.tsx`):
 - Eyebrow: `HAYRETTİNSENDİL.TR` (#A78BFA, **elle büyük harf**, transform yok)
@@ -118,3 +120,4 @@ AI / Context Engineering Eğitmeni
 - **Tek otorite:** brand.md değişmediği sürece kod renkleri stabil kalır
 - **Next.js convention enjeksiyonu:** `opengraph-image` dosya konvansiyonu, manuel `metadata.openGraph.images` yerine route otomatik enjekte eder
 - **Tek kaynak:** sayı ve liste veri dosyasından türetilir, karta elle yazılmaz
+- **Türetilen sayı hangi kümeden türediği yazılır:** aynı dosya hem arşivi hem gösterim kümesini tutuyorsa, hangisinden okunduğu belirtilmezse kart bir gün sessizce yanlış sayı gösterir.
