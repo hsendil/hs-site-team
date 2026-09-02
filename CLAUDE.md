@@ -36,6 +36,19 @@ bitiminde bu komutlar koşulur ve çıktı PR gövdesine yapıştırılır.
 - Her gönderi o haftanın site yazısını taşır; kaynak siteden doğrulanır.
 - push_files mesajında anılan her dosya `files` dizisinde olmak zorundadır.
 
+## Künye ve unvan
+
+Kişisel çıktıların künyesi alt alta iki satırdır, tek satıra birleştirilmez,
+® düşürülmez:
+
+```
+Hayrettin Şendil, PMP®
+AI / Context Engineering Eğitmeni
+```
+
+Unvan tek biçim "AI / Context Engineering Eğitmeni". Motto "Sunum değil,
+çalışan sistem." (virgül ile; tireli biçim yasak varyanttır).
+
 ## Plan kuralı
 
 Üçten fazla dosyaya dokunan, zincir betiği değiştiren veya yayın hattına giren
@@ -62,6 +75,8 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
   tek dosya vardı. Gönderimden önce mesajdaki her yol `files` içinde aranır.
 - 30.07.2026: web_fetch oturum içinde önbellekliyor; merge sonrası eski HTML
   döndü. Deploy sonrası doğrulama Chrome ile yapılır.
+- 02.09.2026: ilk eval koşusu künye vakasında düştü; künye yalnız Cowork proje
+  talimatında yaşıyordu. Ajanın uyması beklenen her kural depoda durur.
 - Genel: "bende çalıştı" kanıt değildir; runner'da araç kurulu sayılmaz,
   kurulum adımı iş akışına yazılır.
 
