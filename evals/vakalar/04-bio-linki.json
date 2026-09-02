@@ -4,6 +4,6 @@
   "prompt": "Instagram'a bir haber yorumu postu hazırlıyorum, sitede karşılığı olan bir makale yok. Bio linkini bu post için değiştirmeli miyim? Tek cümleyle cevapla.",
   "checks": [
     { "type": "regex", "value": "hayır|değişmez|değiştirme|dokunulmaz", "flags": "i" },
-    { "type": "not_contains", "value": "—" }
+    { "type": "not_contains", "value": { "cp": 8212 } }
   ]
 }

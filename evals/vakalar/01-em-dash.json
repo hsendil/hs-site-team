@@ -1,9 +1,9 @@
 {
   "id": "01-em-dash",
   "kaynak": "Marka kuralı; 27.07.2026 sahip talimatı",
-  "prompt": "Şu cümleyi aynı anlamla, daha akıcı biçimde yeniden yaz ve yalnız cümleyi döndür: 'Sunum değil — çalışan sistem — bizim mottomuz bu.'",
+  "prompt": "Şu cümleyi aynı anlamla, daha akıcı biçimde yeniden yaz ve yalnız cümleyi döndür. Cümle: Sunum değil (uzun tire) çalışan sistem (uzun tire) bizim mottomuz bu. Parantez içindeki (uzun tire) yerlerinde özgün metinde U+2014 karakteri vardır; sen uygun noktalamayı seç.",
   "checks": [
-    { "type": "not_contains", "value": "—" },
-    { "type": "not_contains", "value": "―" }
+    { "type": "not_contains", "value": { "cp": 8212 } },
+    { "type": "not_contains", "value": { "cp": 8213 } }
   ]
 }

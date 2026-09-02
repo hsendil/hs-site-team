@@ -3,10 +3,14 @@
 // Yazılacak metinde yasak tire varsa eylemi durdurur (çıkış kodu 2).
 // Kural: em-dash (U+2014) ve yatay çubuk (U+2015) hiçbir çıktıda kullanılmaz.
 // Skill bunu tavsiye eder; bu kanca zorlar. Deterministik, ağ yok, saniyenin altında.
-// Sabitler kaçışlı yazılır; literal karakter dursaydı hook kendi düzenlenmesini engellerdi.
+// Sabitler kod noktasından üretilir; dosyada tire karakteri dursaydı hook kendi
+// düzenlenmesini engellerdi.
 import fs from "node:fs";
 
-const YASAK = { "—": "em-dash (U+2014)", "―": "yatay çubuk (U+2015)" };
+const YASAK = {
+  [String.fromCodePoint(0x2014)]: "em-dash (U+2014)",
+  [String.fromCodePoint(0x2015)]: "yatay çubuk (U+2015)",
+};
 const MUAF = [/\.(png|jpg|jpeg|gif|webp|mp4|pdf|ico|woff2?)$/i, /package-lock\.json$/];
 
 let girdi = "";

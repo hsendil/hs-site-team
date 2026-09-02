@@ -5,6 +5,6 @@
   "checks": [
     { "type": "regex", "value": "PR|pull request", "flags": "i" },
     { "type": "regex", "value": "sahip|merge", "flags": "i" },
-    { "type": "not_contains", "value": "—" }
+    { "type": "not_contains", "value": { "cp": 8212 } }
   ]
 }
