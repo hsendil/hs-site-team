@@ -3,6 +3,7 @@
 // Yazılacak metinde yasak tire varsa eylemi durdurur (çıkış kodu 2).
 // Kural: em-dash (U+2014) ve yatay çubuk (U+2015) hiçbir çıktıda kullanılmaz.
 // Skill bunu tavsiye eder; bu kanca zorlar. Deterministik, ağ yok, saniyenin altında.
+// Sabitler kaçışlı yazılır; literal karakter dursaydı hook kendi düzenlenmesini engellerdi.
 import fs from "node:fs";
 
 const YASAK = { "—": "em-dash (U+2014)", "―": "yatay çubuk (U+2015)" };
