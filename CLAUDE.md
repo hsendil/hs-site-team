@@ -29,8 +29,10 @@ bitiminde bu komutlar koşulur ve çıktı PR gövdesine yapıştırılır.
 - İnsan ve ajan main'e doğrudan yazmaz. Tek istisna Chain 4b/5b arşiv
   commit'leridir (`github-actions[bot]`, `[skip ci]`); bu yüzden ruleset'te
   "PR zorunlu" yoktur, insan tarafı `.claude/hooks/komut-kapisi.mjs` ile kilitlidir.
-- Uzun tire hiçbir dosyaya girmez; `yazma-kapisi.mjs` yazmadan önce durdurur,
-  CI `yazim-denetim` merge öncesi ikinci kez bakar.
+- Uzun tire (em-dash) hiçbir çıktıya girmez: dosya, commit mesajı, PR gövdesi ve
+  sohbet yanıtı dahil. Yerine nokta, virgül, noktalı virgül, iki nokta veya
+  parantez. `yazma-kapisi.mjs` dosyayı yazmadan önce durdurur, CI `yazim-denetim`
+  merge öncesi ikinci kez bakar; yanıt metnini yalnız bu kural ve eval korur.
 - Türkçe büyük harf: `toUpperCase()` kullanılmaz, i harfi elle İ yapılır.
 - Instagram bio linki yalnız sitede yayınlanmış makalesi olan gönderide değişir.
 - Her gönderi o haftanın site yazısını taşır; kaynak siteden doğrulanır.
@@ -77,6 +79,8 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
   döndü. Deploy sonrası doğrulama Chrome ile yapılır.
 - 02.09.2026: ilk eval koşusu künye vakasında düştü; künye yalnız Cowork proje
   talimatında yaşıyordu. Ajanın uyması beklenen her kural depoda durur.
+- 02.09.2026: ikinci eval koşusunda model sohbet yanıtına uzun tire yazdı;
+  kural yalnız dosyayı anıyordu. Kural çıktının türüne göre değil, tümü için yazılır.
 - Genel: "bende çalıştı" kanıt değildir; runner'da araç kurulu sayılmaz,
   kurulum adımı iş akışına yazılır.
 
@@ -84,6 +88,6 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
 
 | Kural | Tavsiye | Zorlama |
 |---|---|---|
-| Uzun tire yok | skill metni | `yazma-kapisi.mjs` (PreToolUse) + CI yazım denetimi |
+| Uzun tire yok | bu dosya, skill metni | `yazma-kapisi.mjs` (PreToolUse) + CI yazım denetimi; yanıt metni için eval |
 | Merge sahipte, main'e push yok | bu dosya | `komut-kapisi.mjs` (PreToolUse Bash) + ruleset (force push, silme) |
 | Skill değişince gerileme yok | yok | `evals/` + `agent-evals.yml` (CLAUDE.md, .claude/**, SKILL.md değişince) |
