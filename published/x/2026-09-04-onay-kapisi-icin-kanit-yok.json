@@ -4,7 +4,7 @@
   "source": "blog:onay-kapisi-icin-kanit-yok",
   "title": "Onay kapısı için kanıt yok | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/onay-kapisi-icin-kanit-yok?utm_source=x&utm_medium=social&utm_campaign=blog-onay-kapisi",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-09-03T00:00:00.000Z",
   "model": "claude-fable-5-1",
   "tweets": [
@@ -14,5 +14,15 @@
     "Refleks cevap daha çok gözetim. Haziran 2026 ön baskısı sınırı gösteriyor: yorulan denetçi varsayıldığında güvenlik ters U çiziyor. Bir noktadan sonra daha fazla gözetim sistemi daha güvensiz yapıyor.",
     "Kendi beş depomu taradım: 68 birleştirme talebi, sıfır inceleme kaydı, birinde açılıştan birleştirmeye dokuz saniye. Kâğıt üstünde kapı vardı, fiilen yoktu. Aynı gün dereceli kurdum: önceden onaylı kapsam, deterministik engel, sunucu kuralı.",
     "Çıkış ITIL 4'te yazılı: tekdüze kapı değil, riske göre dereceli değişiklik modeli. Son elli değişikliğinde açılıştan onaya geçen süre kaç dakika?\n\nhttps://hayrettinsendil.tr/blog/onay-kapisi-icin-kanit-yok?utm_source=x&utm_medium=social&utm_campaign=blog-onay-kapisi"
-  ]
+  ],
+  "postedIds": [
+    "2095488597826929038",
+    "2095488607406678188",
+    "2095488616877449571",
+    "2095488626310398174",
+    "2095488635760238738",
+    "2095488645117714873"
+  ],
+  "publishedAt": "2026-09-03T12:26:40.122Z",
+  "url": "https://x.com/HayrettinAi/status/2095488597826929038"
 }
