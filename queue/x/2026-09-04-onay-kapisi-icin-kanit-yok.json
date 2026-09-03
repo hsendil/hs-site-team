@@ -1,0 +1,18 @@
+{
+  "id": "2026-09-04-onay-kapisi-icin-kanit-yok",
+  "platform": "x",
+  "source": "blog:onay-kapisi-icin-kanit-yok",
+  "title": "Onay kapısı için kanıt yok | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/onay-kapisi-icin-kanit-yok?utm_source=x&utm_medium=social&utm_campaign=blog-onay-kapisi",
+  "status": "ready",
+  "createdAt": "2026-09-03T00:00:00.000Z",
+  "model": "claude-fable-5-1",
+  "tweets": [
+    "Onay kapısı tartışılmaz bir iyilik sayılır. DORA'nın (Google Cloud, DevOps Research and Assessment) 2019'dan beri tekrarlanan bulgusu: dışarıdan yürütülen resmi onay sürecinin değişiklik başarısızlık oranını düşürdüğüne dair kanıt bulunamadı.",
+    "Aynı veri: dış kurul onayı olan kuruluşlarda düşük performans grubunda çıkma olasılığı 2,6 kat yüksek. Açık ve tanımlı bir değişiklik süreci olanlar elit grupta 1,8 kat daha sık. Fark kapının varlığında değil, tanımında.",
+    "Mayıs 2026, EASE çalışması: AI üretimi birleştirme taleplerinin yüzde 61,38'inde kayıtlı hiçbir inceleme yok. Ajanların açtıklarının yüzde 84'ü ya hiç ya da yalnız ajanlarca incelenmiş. Kapı duruyor, akış artıyor, okuma azalıyor.",
+    "Refleks cevap daha çok gözetim. Haziran 2026 ön baskısı sınırı gösteriyor: yorulan denetçi varsayıldığında güvenlik ters U çiziyor. Bir noktadan sonra daha fazla gözetim sistemi daha güvensiz yapıyor.",
+    "Kendi beş depomu taradım: 68 birleştirme talebi, sıfır inceleme kaydı, birinde açılıştan birleştirmeye dokuz saniye. Kâğıt üstünde kapı vardı, fiilen yoktu. Aynı gün dereceli kurdum: önceden onaylı kapsam, deterministik engel, sunucu kuralı.",
+    "Çıkış ITIL 4'te yazılı: tekdüze kapı değil, riske göre dereceli değişiklik modeli. Son elli değişikliğinde açılıştan onaya geçen süre kaç dakika?\n\nhttps://hayrettinsendil.tr/blog/onay-kapisi-icin-kanit-yok?utm_source=x&utm_medium=social&utm_campaign=blog-onay-kapisi"
+  ]
+}
