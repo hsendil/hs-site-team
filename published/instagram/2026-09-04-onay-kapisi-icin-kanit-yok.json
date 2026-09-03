@@ -3,7 +3,7 @@
   "platform": "instagram",
   "source": "blog:onay-kapisi-icin-kanit-yok",
   "format": "karusel",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-09-03T00:00:00.000Z",
   "model": "claude-fable-5-1",
   "caption": "Onay kapısı tartışılmaz bir iyilik sayılır. Veri başka şey söylüyor.\n\nDORA'nın (Google Cloud, DevOps Research and Assessment) 2019'dan beri tekrarlanan bulgusu: dışarıdan yürütülen resmi onay sürecinin değişiklik başarısızlık oranını düşürdüğüne dair kanıt bulunamadı. Dış kurul onayı olan kuruluşlar düşük performans grubunda 2,6 kat daha sık. Açık ve tanımlı bir değişiklik süreci olanlar elit grupta 1,8 kat daha sık.\n\nMayıs 2026, EASE çalışması: AI üretimi birleştirme taleplerinin yüzde 61,38'inde kayıtlı hiçbir inceleme yok. Ajanların açtıklarının yüzde 84'ü ya hiç incelenmemiş ya da yalnız ajanlarca incelenmiş.\n\nRefleks cevap daha çok gözetim. Haziran 2026 ön baskısı: yorulan denetçi varsayıldığında güvenlik ters U çiziyor, bir noktadan sonra fazla gözetim sistemi daha güvensiz yapıyor.\n\nKendi beş depomu taradım: 68 birleştirme talebi, sıfır inceleme kaydı. Kâğıt üstünde kapı vardı, fiilen yoktu. Aynı gün dereceli kurdum.\n\nÇıkış ITIL 4'te yazılı: standart değişiklik, yani önceden onaylı, ek onay gerektirmeyen düşük riskli değişiklik. Tekdüze kapı değil, riske göre dereceli model.\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#ITIL #ITIL4 #ITSM #DORA #DevOps #DegisiklikYonetimi #BTOperasyon #ServisYonetimi #YapayZeka #AIGovernance #AIAgents #Yonetisim #TeknolojiYonetimi",
@@ -38,5 +38,7 @@
     }
   ],
   "bioUrl": "https://hayrettinsendil.tr/blog/onay-kapisi-icin-kanit-yok?utm_source=instagram&utm_medium=social&utm_campaign=karusel-onay-kapisi",
-  "postedId": "17965964538175177"
+  "postedId": "17965964538175177",
+  "publishedAt": "2026-09-03T12:30:49.901Z",
+  "url": "https://www.instagram.com/p/Dc0zzviG-cl/"
 }
