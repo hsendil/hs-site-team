@@ -23,9 +23,10 @@ bitiminde bu komutlar koşulur ve çıktı PR gövdesine yapıştırılır.
   `hs-site-icerik`, `hs-site-sosyal`, `hs-site-teknik`). Kaynak
   `HS/plugin/hs-site/`, kurulum `~/.claude/skills/hs-site/`. Marka, terim,
   içerik boru hattı, sosyal kanal ve teknik yönetişim kuralları oradadır.
-  04.09.2026'da taşındı (PR #49); `plugins/hs-site-team/` altında yalnız boş
-  bir manifest kaldı ve `marketplace.json` hâlâ onu gösteriyor. Kabuğun
-  kaldırılması sahip kararı, henüz verilmedi.
+- **Bu depo artık plugin dağıtmıyor.** 04.09.2026'da üç boş bildirim kaldırıldı:
+  `plugins/` kabuğu, `.claude-plugin/marketplace.json` ve kökteki
+  `.claude-plugin/plugin.json`. Üçü de bileşen taşımıyordu; kural katmanı
+  taşındıktan sonra geriye yalnız iddia kalmıştı.
 - `queue/<kanal>/*.json` yayın kuyruğu; kanal `x`, `linkedin`, `instagram`.
 - `scripts/` zincir betikleri; `.github/workflows/chain*.yml` zincirler.
 - `.claude/hooks/` deterministik kapılar; `evals/` konfigürasyon regresyon seti.
@@ -88,11 +89,11 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
   talimatında yaşıyordu. Ajanın uyması beklenen her kural depoda durur.
 - 02.09.2026: ikinci eval koşusunda model sohbet yanıtına uzun tire yazdı;
   kural yalnız dosyayı anıyordu. Kural çıktının türüne göre değil, tümü için yazılır.
-- 04.09.2026: bir klasör silindi, ona atıf yapan bu dosya güncellenmedi ve
-  silinen yolu "kanonik skill" diye göstermeye devam etti. Aynı satır kökte
-  olmayan bir `skills/` dizinini de anıyordu. Bir kaynak taşınınca ona atıf
-  yapan her dosya **aynı turda** taranır; karar bir yere, atıflar başka yere
-  yazılırsa sonraki oturum eski yolu izler.
+- 04.09.2026 (iki kez peş peşe): bir klasör silindi, ona atıf yapan bu dosya
+  güncellenmedi ve silinen yolu "kanonik skill" diye göstermeye devam etti.
+  Düzeltildikten sonra aynı dosya bu sefer "boş kabuk duruyor, karar bekliyor"
+  diye bayatladı. Bir kaynak taşınınca ona atıf yapan her dosya **aynı turda**
+  taranır ve bu dosyanın kendisi o listenin başında gelir.
 - Genel: "bende çalıştı" kanıt değildir; runner'da araç kurulu sayılmaz,
   kurulum adımı iş akışına yazılır.
 
@@ -105,7 +106,8 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
 | Skill değişince gerileme yok | yok | `evals/` + `agent-evals.yml` |
 
 Eval tetiği `agent-evals.yml` içinde hâlâ `plugins/**/SKILL.md` ve
-`plugins/**/references/**` yollarını dinliyor. Bu yollarda artık dosya yok;
-tetik yanlış değil, boşa düşüyor. Skill metinleri bu depoda olmadığı için
-onların değişimi burada eval koşturmaz. Eval yine `CLAUDE.md` ve `.claude/**`
-değişikliklerinde çalışır.
+`plugins/**/references/**` yollarını dinliyor. `plugins/` dizini artık hiç yok,
+yani bu iki yolun karşılığı kalmadı. Skill metinleri bu depoda olmadığı için
+onların değişimi burada eval koşturmaz; eval yine `CLAUDE.md` ve `.claude/**`
+değişikliklerinde çalışır. Yolları temizlemek zararsız bir düzeltmedir,
+aciliyeti yoktur.
