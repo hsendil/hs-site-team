@@ -1,8 +1,9 @@
 # hs-site-team
 
-hayrettinsendil.tr sitesinin ajan takımı ve sosyal yayın hattı. Site kodu
-burada değil (`hsendil/hayrettinsendil`, private); bu depo skill, kuyruk ve
-zincirleri taşır. Bu dosya her oturumda okunur; bir sayfayı geçmez.
+hayrettinsendil.tr sitesinin sosyal yayın hattı. Site kodu burada değil
+(`hsendil/hayrettinsendil`, private); ajan ve kural katmanı da burada değil
+(aşağıya bak). Bu depo kuyruk, zincir ve yayın betiklerini taşır. Bu dosya her
+oturumda okunur; bir sayfayı geçmez.
 
 ## Komutlar
 
@@ -17,8 +18,14 @@ bitiminde bu komutlar koşulur ve çıktı PR gövdesine yapıştırılır.
 
 ## Yapı
 
-- `plugins/hs-site-team/skills/hs-site-po/` kanonik skill; `references/*.md`
-  rol metinleri (WEB, SEO, CON, BRD, SOC, EDT). Kök `skills/` kalıntıdır, düzenlenmez.
+- **Ajan ve kural katmanı bu depoda değil.** `hs-site` Cowork plugin'i taşır:
+  üç ajan (`edt`, `seo`, `web`) ve dört skill (`hs-site-standart`,
+  `hs-site-icerik`, `hs-site-sosyal`, `hs-site-teknik`). Kaynak
+  `HS/plugin/hs-site/`, kurulum `~/.claude/skills/hs-site/`. Marka, terim,
+  içerik boru hattı, sosyal kanal ve teknik yönetişim kuralları oradadır.
+  04.09.2026'da taşındı (PR #49); `plugins/hs-site-team/` altında yalnız boş
+  bir manifest kaldı ve `marketplace.json` hâlâ onu gösteriyor. Kabuğun
+  kaldırılması sahip kararı, henüz verilmedi.
 - `queue/<kanal>/*.json` yayın kuyruğu; kanal `x`, `linkedin`, `instagram`.
 - `scripts/` zincir betikleri; `.github/workflows/chain*.yml` zincirler.
 - `.claude/hooks/` deterministik kapılar; `evals/` konfigürasyon regresyon seti.
@@ -81,6 +88,11 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
   talimatında yaşıyordu. Ajanın uyması beklenen her kural depoda durur.
 - 02.09.2026: ikinci eval koşusunda model sohbet yanıtına uzun tire yazdı;
   kural yalnız dosyayı anıyordu. Kural çıktının türüne göre değil, tümü için yazılır.
+- 04.09.2026: bir klasör silindi, ona atıf yapan bu dosya güncellenmedi ve
+  silinen yolu "kanonik skill" diye göstermeye devam etti. Aynı satır kökte
+  olmayan bir `skills/` dizinini de anıyordu. Bir kaynak taşınınca ona atıf
+  yapan her dosya **aynı turda** taranır; karar bir yere, atıflar başka yere
+  yazılırsa sonraki oturum eski yolu izler.
 - Genel: "bende çalıştı" kanıt değildir; runner'da araç kurulu sayılmaz,
   kurulum adımı iş akışına yazılır.
 
@@ -88,6 +100,12 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
 
 | Kural | Tavsiye | Zorlama |
 |---|---|---|
-| Uzun tire yok | bu dosya, skill metni | `yazma-kapisi.mjs` (PreToolUse) + CI yazım denetimi; yanıt metni için eval |
+| Uzun tire yok | bu dosya, plugin skill metinleri | `yazma-kapisi.mjs` (PreToolUse) + CI yazım denetimi; yanıt metni için eval |
 | Merge sahipte, main'e push yok | bu dosya | `komut-kapisi.mjs` (PreToolUse Bash) + ruleset (force push, silme) |
-| Skill değişince gerileme yok | yok | `evals/` + `agent-evals.yml` (CLAUDE.md, .claude/**, SKILL.md değişince) |
+| Skill değişince gerileme yok | yok | `evals/` + `agent-evals.yml` |
+
+Eval tetiği `agent-evals.yml` içinde hâlâ `plugins/**/SKILL.md` ve
+`plugins/**/references/**` yollarını dinliyor. Bu yollarda artık dosya yok;
+tetik yanlış değil, boşa düşüyor. Skill metinleri bu depoda olmadığı için
+onların değişimi burada eval koşturmaz. Eval yine `CLAUDE.md` ve `.claude/**`
+değişikliklerinde çalışır.
