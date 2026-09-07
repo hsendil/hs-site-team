@@ -1,0 +1,53 @@
+# Chain 12: Takvim Mutabakati
+#
+# Tek gercek canli sitedir. sitemap.xml'deki yazilari Notion Icerik Takvimi
+# kartlariyla esler: yetim yaziya kart acar, yayin oncesi durumu Yayinda yapar,
+# baslik farkini kapatir, gecikmis karti raporlar. Sapma yoksa sessiz.
+#
+# Pazartesi 07:30 TR (Chain 8 ve haftalik secimden once) ve Carsamba 21:00 TR
+# (yayin gecesi, merge sonrasi). Elle de kosulabilir.
+#
+# Gerekli secret: NOTION_TOKEN (Notion dahili entegrasyon; Icerik Takvimi
+# veritabani bu entegrasyona paylasilmis olmali).
+
+name: 'Chain 12: Takvim Mutabakati'
+
+on:
+  schedule:
+    # Pazartesi 07:30 Europe/Istanbul (04:30 UTC)
+    - cron: '30 4 * * 1'
+    # Carsamba 21:00 Europe/Istanbul (18:00 UTC)
+    - cron: '0 18 * * 3'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Yalniz raporla, Notion ve Issue yazma (1)'
+        required: false
+        default: '0'
+        type: string
+
+concurrency:
+  group: chain12-takvim-mutabakati
+  cancel-in-progress: false
+
+jobs:
+  mutabakat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Site ile Notion'u esle
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DB_ID: 6017db6a5fa94eab97ea68bcf84803e1
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || '0' }}
+        run: node scripts/takvim-mutabakat.mjs
