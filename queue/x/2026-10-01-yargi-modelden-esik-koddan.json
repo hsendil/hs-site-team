@@ -1,0 +1,18 @@
+{
+  "id": "2026-10-01-yargi-modelden-esik-koddan",
+  "platform": "x",
+  "source": "blog:yargi-modelden-esik-koddan",
+  "title": "Yargı modelden, eşik koddan | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=x&utm_medium=social&utm_campaign=blog-yargi-esik",
+  "status": "ready",
+  "createdAt": "2026-10-01T00:00:00.000Z",
+  "model": "claude-fable-5-1",
+  "tweets": [
+    "Bir dil modeline \"bu PR riskli mi\" diye sorduğunda üç paragraf alırsın. İhtiyacın olan tek bir sayı ve o sayıya ne kadar güvenebileceğin. Bu ay o boşluğa oynayan bir ürün çıktı: TypeSafe AI'ın Jev modeli. Aynı şemayı kendi depolarımda denedim.",
+    "Jev metin üretmiyor. Bir durum ve soru listesi alıyor, üç türde tipli karar döndürüyor: seçeneklerden biri (choice), ölçekte seviye (score), evet/hayır olasılığı (noul). Yanında güven değeri ve dağılım. İddia: kalibre olasılık, yüz kat hız. Satıcı ölçümü, bağımsız kanıt yok.",
+    "Asıl kazanım ayrım: yargı modelden, ağırlık ve eşik koddan, geri alınamaz aksiyon insandan. Model \"riski 0 ile 2 arası ölçekte 1.5\" der; \"1.5 ve üstü satır satır okunur\" kuralı kodda durur ve onu sen yazarsın.",
+    "Bekleme listesinde durmak yerine aynı şemayı Mac'te Ollama ile kurdum, sosyal kuyruğuma ve PR'larıma bağladım. Öykünme, kalibre değil. İlk bulgu: besleyici yanlış kaynak yazıyı verince sadakat 0.10, doğrusunu verince 1.00. Modelin cevabı verdiğim bağlam kadar doğru.",
+    "İkinci bulgu: kesin kuralı modele sormadım. Yasak tire, karakter sınırı, kuyruğun güncel yazıyı taşıyıp taşımadığı kodun işi. Üçüncü: iki PR'da \"insan okusun\" 0.7 ve 0.8; on PR'da aynı sayı çıkarsa soru bilgi taşımıyor demektir, listeden çıkar.",
+    "Üç adım: soruyu tipe indir; kesin kuralı modele sorma; güveni ölçmeden eşik yazma. Yargı modelden, eşik koddan.\n\nhttps://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=x&utm_medium=social&utm_campaign=blog-yargi-esik"
+  ]
+}
