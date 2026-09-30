@@ -1,0 +1,41 @@
+{
+  "id": "2026-10-01-yargi-modelden-esik-koddan",
+  "platform": "instagram",
+  "source": "blog:yargi-modelden-esik-koddan",
+  "format": "karusel",
+  "status": "ready",
+  "createdAt": "2026-10-01T00:00:00.000Z",
+  "model": "claude-opus-5-5",
+  "caption": "Bir dil modeline \"bu PR riskli mi\" diye sorduğunda üç paragraf açıklama alırsın. İhtiyacın olan şey tek bir sayı ve o sayıya ne kadar güvenebileceğin.\n\nTypeSafe AI Eylül ortasında Jev adlı modelini duyurdu. Jev metin üretmiyor, sohbet etmiyor. Bir durum ve bir soru listesi alıyor, üç türde tipli karar döndürüyor: seçeneklerden biri (choice), sıralı ölçekte seviye (score), evet ya da hayır olasılığı (noul). Her cevabın yanında güven değeri ve seçenek dağılımı geliyor.\n\nŞirketin iddiası: olasılıklar kalibre, yani model yüzde 70 dediğinde yüz vakanın yetmişi tutuyor; sohbet modellerine göre yüz kat mertebesinde hızlı ve ucuz. Şerh: bu rakamlar satıcının kendi ölçümü, bağımsız bir karşılaştırma henüz yok.\n\nAsıl kazanım dayattığı ayrım: yargı modelden, ağırlık ve eşik koddan, geri alınamaz aksiyon insandan.\n\nAynı şemayı Mac'te Ollama ile kurdum, sosyal kuyruğuma ve PR'larıma bağladım. Bu bir öykünme, kalibre olasılık değil. İlk bulgu: besleyici yanlış kaynak yazıyı verince sadakat 0.10, doğrusunu verince 1.00. Modelin cevabı, ona verdiğin bağlam kadar doğru.\n\nÜç adım:\n1. Soruyu tipe indir.\n2. Kesin kuralı modele sorma.\n3. Güveni ölçmeden eşik yazma.\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #ContextEngineering #AIAgents #LLM #Kalibrasyon #KararKatmani #PromptEngineering #DevOps #CodeReview #ITSM #ITIL4 #Otomasyon #YazilimGelistirme #AIGovernance #TeknolojiYonetimi",
+  "images": [
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/01.jpg",
+      "altText": "Kapak kartı: yargı modelden, eşik koddan; sohbet modeli üç paragraf yazar, ihtiyacın tek bir sayı"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/02.jpg",
+      "altText": "Ne oldu: TypeSafe AI'ın Jev modeli tipli karar verir, choice, score ve noul, her cevapta güven değeri"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/03.jpg",
+      "altText": "Satıcının iddiası: kalibre olasılık, yüzde 70 dediğinde yüz vakanın yetmişi; şerh, bağımsız ölçüm yok"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/04.jpg",
+      "altText": "Asıl kazanım: yargı modelden, ağırlık ve eşik koddan, geri alınamaz aksiyon insandan"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/05.jpg",
+      "altText": "Saha yorumu: yanlış kaynak yazıda sadakat 0.10, doğru yazıda 1.00; şerh, Ollama öykünmesi"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/06.jpg",
+      "altText": "Kesin kural modele sorulmaz: yasak tire, karakter sınırı, hashtag sayısı ve güncellik kodda kalır"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/yargi-esik/07.jpg",
+      "altText": "Kapanış: üç adım, soruyu tipe indir, kesin kuralı modele sorma, güveni ölçmeden eşik yazma; Hayrettin Şendil PMP künyesi"
+    }
+  ],
+  "bioUrl": "https://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=instagram&utm_medium=social&utm_campaign=karusel-yargi-esik"
+}
