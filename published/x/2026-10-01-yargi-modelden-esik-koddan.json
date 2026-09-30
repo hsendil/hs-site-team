@@ -4,7 +4,7 @@
   "source": "blog:yargi-modelden-esik-koddan",
   "title": "Yargı modelden, eşik koddan | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=x&utm_medium=social&utm_campaign=blog-yargi-esik",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-10-01T00:00:00.000Z",
   "model": "claude-fable-5-1",
   "tweets": [
@@ -14,5 +14,15 @@
     "Bekleme listesinde durmak yerine aynı şemayı Mac'te Ollama ile kurdum, sosyal kuyruğuma ve PR'larıma bağladım. Öykünme, kalibre değil. İlk bulgu: besleyici yanlış kaynak yazıyı verince sadakat 0.10, doğrusunu verince 1.00. Modelin cevabı verdiğim bağlam kadar doğru.",
     "İkinci bulgu: kesin kuralı modele sormadım. Yasak tire, karakter sınırı, kuyruğun güncel yazıyı taşıyıp taşımadığı kodun işi. Üçüncü: iki PR'da \"insan okusun\" 0.7 ve 0.8; on PR'da aynı sayı çıkarsa soru bilgi taşımıyor demektir, listeden çıkar.",
     "Üç adım: soruyu tipe indir; kesin kuralı modele sorma; güveni ölçmeden eşik yazma. Yargı modelden, eşik koddan.\n\nhttps://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=x&utm_medium=social&utm_campaign=blog-yargi-esik"
-  ]
+  ],
+  "postedIds": [
+    "2105350794975293792",
+    "2105350804622213254",
+    "2105350814302695549",
+    "2105350824083759350",
+    "2105350833789362304",
+    "2105350843734036548"
+  ],
+  "publishedAt": "2026-09-30T17:35:31.505Z",
+  "url": "https://x.com/HayrettinAi/status/2105350794975293792"
 }
