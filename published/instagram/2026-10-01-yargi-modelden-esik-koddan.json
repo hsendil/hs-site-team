@@ -3,7 +3,7 @@
   "platform": "instagram",
   "source": "blog:yargi-modelden-esik-koddan",
   "format": "karusel",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-10-01T00:00:00.000Z",
   "model": "claude-opus-5-5",
   "caption": "Bir dil modeline \"bu PR riskli mi\" diye sorduğunda üç paragraf açıklama alırsın. İhtiyacın olan şey tek bir sayı ve o sayıya ne kadar güvenebileceğin.\n\nTypeSafe AI Eylül ortasında Jev adlı modelini duyurdu. Jev metin üretmiyor, sohbet etmiyor. Bir durum ve bir soru listesi alıyor, üç türde tipli karar döndürüyor: seçeneklerden biri (choice), sıralı ölçekte seviye (score), evet ya da hayır olasılığı (noul). Her cevabın yanında güven değeri ve seçenek dağılımı geliyor.\n\nŞirketin iddiası: olasılıklar kalibre, yani model yüzde 70 dediğinde yüz vakanın yetmişi tutuyor; sohbet modellerine göre yüz kat mertebesinde hızlı ve ucuz. Şerh: bu rakamlar satıcının kendi ölçümü, bağımsız bir karşılaştırma henüz yok.\n\nAsıl kazanım dayattığı ayrım: yargı modelden, ağırlık ve eşik koddan, geri alınamaz aksiyon insandan.\n\nAynı şemayı Mac'te Ollama ile kurdum, sosyal kuyruğuma ve PR'larıma bağladım. Bu bir öykünme, kalibre olasılık değil. İlk bulgu: besleyici yanlış kaynak yazıyı verince sadakat 0.10, doğrusunu verince 1.00. Modelin cevabı, ona verdiğin bağlam kadar doğru.\n\nÜç adım:\n1. Soruyu tipe indir.\n2. Kesin kuralı modele sorma.\n3. Güveni ölçmeden eşik yazma.\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #ContextEngineering #AIAgents #LLM #Kalibrasyon #KararKatmani #PromptEngineering #DevOps #CodeReview #ITSM #ITIL4 #Otomasyon #YazilimGelistirme #AIGovernance #TeknolojiYonetimi",
@@ -37,5 +37,8 @@
       "altText": "Kapanış: üç adım, soruyu tipe indir, kesin kuralı modele sorma, güveni ölçmeden eşik yazma; Hayrettin Şendil PMP künyesi"
     }
   ],
-  "bioUrl": "https://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=instagram&utm_medium=social&utm_campaign=karusel-yargi-esik"
+  "bioUrl": "https://hayrettinsendil.tr/blog/yargi-modelden-esik-koddan?utm_source=instagram&utm_medium=social&utm_campaign=karusel-yargi-esik",
+  "postedId": "18103607120203838",
+  "publishedAt": "2026-09-30T17:42:54.764Z",
+  "url": "https://www.instagram.com/p/Dd65TIGiWxL/"
 }
