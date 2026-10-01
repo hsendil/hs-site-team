@@ -1,0 +1,41 @@
+{
+  "id": "2026-09-11-ajanin-her-dokunusu-bir-degisiklik",
+  "platform": "instagram",
+  "source": "blog:ajanin-her-dokunusu-bir-degisiklik",
+  "format": "karusel",
+  "status": "ready",
+  "createdAt": "2026-09-11T00:00:00.000Z",
+  "model": "claude-opus-5",
+  "caption": "Değişiklik onay kapın her şeye bakıyorsa kurduğun şey kapı değil, kuyruktur.\n\nStandart değişiklik yeni bir fikir değil. AXELOS'un ITIL 4 Change Enablement uygulama rehberi tarif ediyor: düşük riskli, iyi anlaşılmış, tam belgelenmiş, önceden yetkilendirilmiş değişiklik. Rehber 2020 tarihli, ajanlardan önce yazıldı.\n\nEASE 2026 için hazırlanan çalışma açık kaynak depolarında 33.596 AI üretimi birleştirme talebini inceledi. 20.621'inde, yani yüzde 61,38'inde kayıtlı hiçbir inceleme yok. Ajan tarafından açılan alt kümede oran daha sert: yüzde 84'ü ya hiç incelenmemiş ya da yalnız başka ajanlarca incelenmiş.\n\nYanlış soru ajana güvenilip güvenilmediğidir. Doğru soru, değişikliğin geri alınabilir olup olmadığı ve kalıbının sabit olup olmadığıdır. Güven kişiye bakar, risk işe bakar.\n\nITIL'in niteliklerini kendi depolarımda çalışan dört soruya çevirdim. Eşleme bana ait, rehberin kendi metni değil:\n\n1. Geri alınabilir mi? Tek commit ile geri alınıyorsa evet.\n2. Kalıbı sabit mi? Aynı iş en az beş kez aynı biçimde yapıldıysa evet.\n3. Kapsamı dar mı? Tek dizin veya tek veri dosyası değişiyorsa evet.\n4. Kanıtı otomatik mi? Yeşil bir koşu veya makine kontrolü geçtiyse evet.\n\nDördü de evetse standart değişiklik sayılır ve önceden onaylı kapsama girer. Bir tanesi hayırsa normal değişiklik olur ve kapıya gider.\n\nŞerh: bu tek kişilik bir düzenek, kendi talebimi onaylayan ikinci bir insan yok.\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#ITIL #ITIL4 #ITSM #DegisiklikYonetimi #ChangeEnablement #StandartDegisiklik #DORA #DevOps #BTOperasyon #ServisYonetimi #YapayZeka #AIAgents #AIGovernance #Yonetisim #TeknolojiYonetimi",
+  "images": [
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/01.jpg",
+      "altText": "Kapak kartı: ajanın her dokunuşu bir değişikliktir, kapın her şeye bakıyorsa kurduğun şey kapı değil kuyruktur"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/02.jpg",
+      "altText": "Sorun nerede: standart değişiklik listen boşsa kapın her şeye bakar, ITIL 4 Change Enablement rehberi 2020 tarihli"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/03.jpg",
+      "altText": "Ölçülen büyüklük: EASE 2026 çalışmasında 33.596 talebin 20.621'inde kayıtlı inceleme yok, ajan alt kümesinde oran yüzde 84"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/04.jpg",
+      "altText": "Yanlış soru, doğru soru: güven kişiye bakar, risk işe bakar"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/05.jpg",
+      "altText": "Dört ölçüt: geri alınabilir mi, kalıbı sabit mi, kapsamı dar mı, kanıtı otomatik mi"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/06.jpg",
+      "altText": "Karar kuralı: dördü de evetse standart değişiklik, biri hayırsa normal değişiklik olur ve kapıya gider"
+    },
+    {
+      "url": "https://hayrettinsendil.tr/images/ig/dort-olcut/07.jpg",
+      "altText": "Kapanış: sayamıyorsan kapın da sayamıyor, şerh tek kişilik düzenek, Hayrettin Şendil PMP künyesi"
+    }
+  ],
+  "bioUrl": "https://hayrettinsendil.tr/blog/ajanin-her-dokunusu-bir-degisiklik?utm_source=instagram&utm_medium=social&utm_campaign=karusel-dort-olcut"
+}
