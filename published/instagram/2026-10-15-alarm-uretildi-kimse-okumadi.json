@@ -3,7 +3,7 @@
   "platform": "instagram",
   "source": "blog:alarm-uretildi-kimse-okumadi",
   "format": "karusel",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-10-15T00:00:00.000Z",
   "model": "claude-opus-5-5",
   "caption": "Yayın hattım sessizce durdu ve bunu bana başkası sordu.\n\n12 Ağustos akşamı post gitti, arşiv adımı düştü. İki zincir aynı anda ana dala yazmaya kalkınca biri geri çevrildi. Post yayındaydı, dosya hâlâ kuyruktaydı. Kuyruğa bakıp \"demek çıkmamış\" dersen yanlış yerden bakıyorsun; doğru soru, hesabın akışında ne olduğu.\n\nAsıl açık düşen koşu değildi. Zincir düştüğünde hiçbir yere haber gitmiyordu. Onay isteklerinden biri 14, diğeri 7 gün açık kaldı. Bir sistemin bozulduğunu sahibinin sorması gerekiyorsa o sistem izlenmiyordur.\n\nKurduğum karşılık bir bekçi. Her sabah açık onay isteklerine, takılı kuyruğa ve düşmüş koşulara bakıyor; temiz günlerde hiçbir şey yazmıyor. Sessizlik iyi haber olmalı ki gürültü haber olsun.\n\nAynı deseni çok daha büyük bir sistemde iki kez gördüm (saha gözlemi, ayrıntı paylaşılmıyor). Birinde uyarı üretildi ama okumakla yükümlü kişi yoktu. Diğerinde izleme modülü bütçe için kapatılmıştı, uyarı hiç üretilmedi.\n\nDeğişen şey refleks değildi, kaydın yapısıydı. İnsanın doldurduğu şablon bir dilektir, sistemin doldurduğu yapı bir kontroldür.\n\nKurumunda bir uyarıyı okumakla yükümlü kişinin adı yazılı mı?\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#ITSM #ITIL4 #OlayYonetimi #Izleme #Observability #Monitoring #DevOps #SRE #Otomasyon #BTOperasyon #ServisYonetimi #IncidentManagement #TeknolojiYonetimi #YapayZeka #AIAgents",
@@ -37,5 +37,8 @@
       "altText": "Kapanış: üç madde ve soru, okumakla yükümlü kişinin adı yazılı mı; Hayrettin Şendil PMP künyesi"
     }
   ],
-  "bioUrl": "https://hayrettinsendil.tr/blog/alarm-uretildi-kimse-okumadi?utm_source=instagram&utm_medium=social&utm_campaign=karusel-alarm-okunmadi"
+  "bioUrl": "https://hayrettinsendil.tr/blog/alarm-uretildi-kimse-okumadi?utm_source=instagram&utm_medium=social&utm_campaign=karusel-alarm-okunmadi",
+  "postedId": "18150178249566530",
+  "publishedAt": "2026-10-15T10:40:35.279Z",
+  "url": "https://www.instagram.com/p/Degw5UoGyMt/"
 }
