@@ -98,8 +98,13 @@ Aynı hata ikinci kez görülünce buraya yazılır; tarih kanıttır.
 
 ## Kapılar (tavsiye ile zorlama ayrı)
 
+Kancalar depodadır; yerel ve bulut (claude.ai/code) oturumunda aynı çalışır.
+Bulutta yalnız tek depolu oturum kancaları yükler.
+
 | Kural | Tavsiye | Zorlama |
 |---|---|---|
+| Commit yazarı sahibin adresi | bu dosya | `yazar-kimligi.mjs` (SessionStart sabitler, PreToolUse Bash denetler) |
+| "Bitti" iddiası kanıtlı | bu dosya | `kanit-denetci` alt ajanı, PR öncesi |
 | Uzun tire yok | bu dosya, plugin skill metinleri | `yazma-kapisi.mjs` (PreToolUse) + CI yazım denetimi; yanıt metni için eval |
 | Merge sahipte, main'e push yok | bu dosya | `komut-kapisi.mjs` (PreToolUse Bash) + ruleset (force push, silme) |
 | Skill değişince gerileme yok | yok | `evals/` + `agent-evals.yml` |
