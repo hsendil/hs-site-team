@@ -4,7 +4,7 @@
   "source": "blog:alarm-uretildi-kimse-okumadi",
   "title": "Alarm üretildi, kimse okumadı | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/alarm-uretildi-kimse-okumadi?utm_source=x&utm_medium=social&utm_campaign=blog-alarm-okunmadi",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-10-15T00:00:00.000Z",
   "model": "claude-opus-5-5",
   "tweets": [
@@ -14,5 +14,15 @@
     "Aynı deseni büyük bir sistemde iki kez gördüm. Birinde uyarı üretildi ama okumakla yükümlü kişi yoktu. Diğerinde uyarı hiç üretilmedi; izleme modülü bütçe için kapatılmıştı.",
     "Değişen refleks değil, kaydın yapısıydı. İnsanın doldurduğu şablon bir dilektir, sistemin doldurduğu yapı bir kontroldür. Kaydında boş bırakılabilen alanı bul: ya zorunlu yap ya sistem doldursun.",
     "Kurumunda bir uyarıyı okumakla yükümlü kişinin adı yazılı mı?\n\nhttps://hayrettinsendil.tr/blog/alarm-uretildi-kimse-okumadi?utm_source=x&utm_medium=social&utm_campaign=blog-alarm-okunmadi"
-  ]
+  ],
+  "postedIds": [
+    "2110631611804885423",
+    "2110631621619585287",
+    "2110631631404839184",
+    "2110631641211109675",
+    "2110631651071918262",
+    "2110631660781789371"
+  ],
+  "publishedAt": "2026-10-15T07:19:36.397Z",
+  "url": "https://x.com/HayrettinAi/status/2110631611804885423"
 }
