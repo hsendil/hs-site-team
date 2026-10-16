@@ -1,0 +1,94 @@
+# Kart Üretimi: Instagram karusel kartlarını Actions'ta çizer.
+#
+# Neden: jpg gibi ikili dosyalar GitHub MCP ile gönderilince bozulur. Claude
+# yalnız metin gönderir (kart/<kisa-slug>/uretici.py), kartları bu iş çizer ve
+# aynı dala commit'ler. Böylece kart, kuyruk kaydı ve inceleme tek PR'da durur.
+#
+# Tetik: main dışındaki bir dala kart/**.py push'u.
+# Çıktı: kart/<kisa-slug>/01.jpg ... NN.jpg ve _kontak.jpg (önizleme).
+# Kuyruk kaydındaki adres:
+#   https://raw.githubusercontent.com/hsendil/hs-site-team/main/kart/<kisa-slug>/01.jpg
+# PR merge edildiği an görseller main'de olduğundan Chain 9 aynı merge'de bulur.
+
+name: Kart Üretimi
+
+on:
+  push:
+    branches-ignore: [main]
+    paths: ['kart/**.py']
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'kart/<slug> dizini (boşsa hepsi)'
+        required: false
+        default: ''
+
+concurrency:
+  group: kart-uret-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  uret:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Bağımlılıklar ve Poppins
+        run: |
+          set -euo pipefail
+          pip install --quiet pillow numpy
+          mkdir -p /tmp/fonts
+          for w in Regular Medium Bold Italic; do
+            curl -sfL -o /tmp/fonts/Poppins-$w.ttf \
+              https://raw.githubusercontent.com/google/fonts/main/ofl/poppins/Poppins-$w.ttf
+          done
+
+      - name: Değişen kart setlerini çiz
+        env:
+          FONT_DIR: /tmp/fonts
+          SLUG: ${{ github.event.inputs.slug }}
+        run: |
+          set -euo pipefail
+          if [ -n "${SLUG:-}" ]; then
+            dirler="kart/$SLUG"
+          elif git diff --name-only HEAD~1 HEAD -- kart | grep -q '^kart/ortak.py$'; then
+            dirler=$(ls -d kart/*/)
+          else
+            dirler=$(git diff --name-only HEAD~1 HEAD -- 'kart/*/uretici.py' | xargs -r -n1 dirname | sort -u)
+          fi
+          if [ -z "$dirler" ]; then echo "Çizilecek set yok."; exit 0; fi
+          for d in $dirler; do
+            d=${d%/}
+            echo "== $d"
+            python "$d/uretici.py"
+            python - "$d" <<'PY'
+          import sys, glob
+          from PIL import Image
+          d = sys.argv[1]
+          kartlar = sorted(glob.glob(f"{d}/[0-9][0-9].jpg"))
+          assert 2 <= len(kartlar) <= 10, f"{d}: kart sayısı {len(kartlar)}, 2 ile 10 olmalı"
+          for k in kartlar:
+              im = Image.open(k)
+              assert im.format == "JPEG" and im.size == (1080, 1350), f"{k}: {im.format} {im.size}"
+          print(f"{d}: {len(kartlar)} kart, hepsi 1080x1350 JPEG")
+          PY
+          done
+
+      - name: Kartları dala commit'le
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain kart)" ]; then echo "Değişiklik yok."; exit 0; fi
+          git config user.name  "hs-site-team bot"
+          git config user.email "actions@github.com"
+          git add kart
+          git commit -m "kart: karusel kartları çizildi"
+          git push
