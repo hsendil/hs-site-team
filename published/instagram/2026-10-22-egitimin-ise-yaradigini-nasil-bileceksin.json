@@ -3,7 +3,7 @@
   "platform": "instagram",
   "source": "blog:egitimin-ise-yaradigini-nasil-bileceksin",
   "format": "karusel",
-  "status": "queued",
+  "status": "published",
   "createdAt": "2026-10-22T00:00:00.000Z",
   "model": "claude-opus-5-5",
   "caption": "Bir eğitim bittiğinde elinde katılım listesi ve memnuniyet anketi kalıyorsa, ikisi de eğitimin yapıldığını gösterir. İşe yaradığını göstermez.\n\nPwC'nin 29 Eylül 2026'da yayımladığı 2026 Global Workforce Hopes and Fears araştırması 48 ülke ve bölgede, 29 sektörde 49.364 çalışanla yapıldı. İşinde yapay zekâ kullandığını söyleyenler yüzde 64, bir yılda 10 puan artış. Öğrenme kaynağına erişebildiğini söyleyenler ise yüzde 59'dan yüzde 51'e düştü. Kullanım artıyor, eğitime erişim azalıyor.\n\nErişim daraldığında soru değişir: kaç kişi eğitim aldı değil, verilen eğitim neyi değiştirdi. Yeni beceriyi büyük ölçüde uyguladığını söyleyenler yüzde 40; bu beyan düzeyinde bir cevap. Şerh: sayılar çalışanların kendi beyanı, araştırma eğitimin etkisini ölçmüyor.\n\nProgram sonu formu eğitmenin anlatımını ölçer, ekibin çalışma biçimini ölçmez. Başlangıç ölçülmediyse fark da ölçülemez. Memnuniyet yüksek olabilir, fark sıfır olabilir.\n\nAynı disiplini kendi aracım OpsDepth'in tanıtım metnine uyguladım. Giriş sayfasında süre vaatleri vardı; 18 Ekim'de kayıtlara baktım, süresi ölçülebilen kayıt dört. Süre cümlelerini kaldırdım.\n\nÜç adım: ölçütü yaz, başlangıcı ölç, tekrarı program sonu ve 3 ile 6 ay sonrası için takvime koy.\n\nSon eğitimden önce ekibinin nerede olduğunu biliyor musun?\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #YapayZekaEgitimi #KurumsalEgitim #OgrenmeVeGelisim #Olcme #IKYonetimi #DijitalDonusum #EgitimYonetimi #Yetkinlik #LnD #AIReadiness #KurumsalYapayZeka",
@@ -37,5 +37,8 @@
       "altText": "Kapanış: üç adım, ölçütü yaz, başlangıcı ölç, tekrarı takvime koy; Hayrettin Şendil PMP künyesi"
     }
   ],
-  "bioUrl": "https://hayrettinsendil.tr/blog/egitimin-ise-yaradigini-nasil-bileceksin?utm_source=instagram&utm_medium=social&utm_campaign=karusel-egitim-olcum"
+  "bioUrl": "https://hayrettinsendil.tr/blog/egitimin-ise-yaradigini-nasil-bileceksin?utm_source=instagram&utm_medium=social&utm_campaign=karusel-egitim-olcum",
+  "postedId": "18117952381800252",
+  "publishedAt": "2026-10-22T11:43:41.752Z",
+  "url": "https://www.instagram.com/p/Dey5rltFqij/"
 }
