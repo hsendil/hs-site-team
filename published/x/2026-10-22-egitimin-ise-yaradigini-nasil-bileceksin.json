@@ -4,7 +4,7 @@
   "source": "blog:egitimin-ise-yaradigini-nasil-bileceksin",
   "title": "Eğitimin işe yaradığını nasıl bileceksin? | Hayrettin Şendil",
   "sourceUrl": "https://hayrettinsendil.tr/blog/egitimin-ise-yaradigini-nasil-bileceksin?utm_source=x&utm_medium=social&utm_campaign=blog-egitim-olcum",
-  "status": "queued",
+  "status": "published",
   "createdAt": "2026-10-22T00:00:00.000Z",
   "model": "claude-opus-5",
   "tweets": [
@@ -14,5 +14,15 @@
     "Program sonu formu eğitmenin anlatımını ölçer, ekibin çalışma biçimini ölçmez.\n\nDeğişimi görmek için başlangıç noktası gerekir. Başlangıç ölçülmediyse fark da ölçülemez.\n\nMemnuniyet yüksek olabilir, fark sıfır olabilir.",
     "Aynı disiplini kendi aracıma uyguladım. OpsDepth giriş sayfasında süre vaatleri vardı.\n\n18 Ekim'de kayıtlara baktım: süresi ölçülebilen kayıt dört. Bir vaat için yeterli değil.\n\nSüre cümlelerini kaldırdım.",
     "Üç adım: ölçütü yaz, başlangıcı ölç, tekrarı takvime koy.\n\nTakvimde olmayan ölçüm yapılmaz.\n\nSunum değil, çalışan sistem.\n\nhttps://hayrettinsendil.tr/blog/egitimin-ise-yaradigini-nasil-bileceksin?utm_source=x&utm_medium=social&utm_campaign=blog-egitim-olcum"
-  ]
+  ],
+  "postedIds": [
+    "2113234197598941241",
+    "2113234207132516700",
+    "2113234216762671514",
+    "2113234226438963656",
+    "2113234236018684024",
+    "2113234245560799666"
+  ],
+  "publishedAt": "2026-10-22T11:41:20.963Z",
+  "url": "https://x.com/HayrettinAi/status/2113234197598941241"
 }
