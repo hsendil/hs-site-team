@@ -44,6 +44,10 @@ jobs:
           DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
         run: node scripts/instagram-post.mjs
 
+      # Arşiv push'u KRİTİK: buraya gelindiyse post zaten yayınlanmıştır.
+      # Üç zincir aynı merge'de tetiklenince 4b ve 5b arşivi önce yazar;
+      # Chain 9 en uzun sürdüğü için push'u reddedilir (run #7 ve #9 böyle
+      # düştü). Reddedilen push rebase edilip 5 kez denenir.
       - name: Arşivi commit'le
         if: github.event.inputs.dry_run != 'true'
         run: |
@@ -56,4 +60,14 @@ jobs:
           git config user.email "actions@github.com"
           git add -A queue published
           git commit -m "chore(instagram): yayınlanan postlar arşive taşındı [skip ci]"
-          git push
+          for deneme in 1 2 3 4 5; do
+            if git push; then
+              echo "Arşiv push edildi (deneme $deneme)."
+              exit 0
+            fi
+            echo "Push reddedildi, rebase ile yeniden deneniyor ($deneme/5)"
+            git pull --rebase --autostash origin main
+            sleep 3
+          done
+          echo "HATA: arşiv 5 denemede push edilemedi. Post GİTTİ, kuyruk temizlenmedi."
+          exit 1
