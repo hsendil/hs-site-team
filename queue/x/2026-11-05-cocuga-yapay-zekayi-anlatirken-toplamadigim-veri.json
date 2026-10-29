@@ -1,0 +1,18 @@
+{
+  "id": "2026-11-05-cocuga-yapay-zekayi-anlatirken-toplamadigim-veri",
+  "platform": "x",
+  "source": "blog:cocuga-yapay-zekayi-anlatirken-toplamadigim-veri",
+  "title": "Çocuğa yapay zekâyı anlatırken toplamadığım veri | Hayrettin Şendil",
+  "sourceUrl": "https://hayrettinsendil.tr/blog/cocuga-yapay-zekayi-anlatirken-toplamadigim-veri?utm_source=x&utm_medium=social&utm_campaign=blog-cocuk-veri",
+  "status": "ready",
+  "createdAt": "2026-10-30T00:00:00.000Z",
+  "model": "claude-opus-5-5",
+  "tweets": [
+    "Çocuklara yapay zekâyı anlatan bir set hazırlarken içerikten ayrı bir karar vermem gerekti:\n\nBu sete kim kayıt olacak ve kimden ne sorulacak?",
+    "KVKK Başkan Yardımcısı, TBMM komisyonunda: mevcut kanunda çocukların kişisel verilerine ilişkin özel bir tanım ya da hüküm yok.\n\nDijital rıza yaşı için taslak hazırlanıyor. Yaş ve takvim belli değil.\n\n(Milliyet, 06.08.2026)",
+    "UNICEF Innocenti: çocukların yapay zekâ kullanıcısı olma olasılığı ebeveynlerininkinin üç katından fazla.\n\nŞerh: veri on ülkeden, Türkiye yok; anket 12 ile 17 yaş. Türkiye için doğrudan geçerli sayılamaz.",
+    "Kullanım hızlı, çocuğa özel kural taslakta.\n\nKural gelene kadar ne sorulacağına eğitimi hazırlayan karar veriyor.\n\nSorulan her bilgi saklanır, bir süre saklanır, sonunda silinmesi gerekir.\n\nHiç toplanmayan veri sızmaz.",
+    "Kendi setimde tek kural: çocuk hesabı yok, çocuğa ait hiçbir bilgi sorulmuyor. Erişimi ebeveyn veya öğretmen açıyor.\n\nEğitimi hazırlıyorsan tek soru: bu bilgi olmadan set çalışır mı? Çalışıyorsa sorma.",
+    "Sunum değil, çalışan sistem.\n\nhttps://hayrettinsendil.tr/blog/cocuga-yapay-zekayi-anlatirken-toplamadigim-veri?utm_source=x&utm_medium=social&utm_campaign=blog-cocuk-veri"
+  ]
+}
