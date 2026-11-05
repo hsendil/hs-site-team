@@ -3,7 +3,7 @@
   "platform": "instagram",
   "source": "blog:cocuga-yapay-zekayi-anlatirken-toplamadigim-veri",
   "format": "karusel",
-  "status": "ready",
+  "status": "published",
   "createdAt": "2026-10-30T00:00:00.000Z",
   "model": "claude-opus-5-5",
   "caption": "Çocuğa yapay zekâyı anlatan bir set hazırlarken içerikten ayrı bir karar vermem gerekti: kimden ne sorulacak.\n\nKVKK Başkan Yardımcısı, TBMM komisyonunda mevcut kanunda çocukların kişisel verilerine ilişkin özel bir tanım ya da hüküm bulunmadığını söyledi (Milliyet, 06.08.2026). Dijital rıza yaşı için taslak hazırlanıyor; yaş ve takvim belli değil.\n\nUNICEF Innocenti'ye göre çocukların yapay zekâ kullanıcısı olma olasılığı ebeveynlerininkinin üç katından fazla. Şerh: veri on ülkeden, Türkiye yok; anket 12 ile 17 yaş.\n\nKural gelene kadar ne sorulacağına eğitimi hazırlayan karar veriyor. Hiç toplanmayan veri sızmaz, saklanmaz, silinmesi de gerekmez.\n\nSet kızımın ihtiyacından çıktı; yaşına uygun bir anlatım bulamadım. Ücretsiz: altı modül, çalışma kâğıtları, ebeveyn rehberi ve öğretmen için ders akışı.\n\nKendi setimde tek kural: çocuk hesabı yok, çocuğa ait hiçbir bilgi sorulmuyor. Erişimi ebeveyn veya öğretmen açıyor.\n\nEbeveynsen sor: çocuğun adına hesap açılıyor mu, aydınlatma metninde saklama süresi yazıyor mu?\n\nYazının tamamı: hayrettinsendil.tr (profildeki link)\n\nSunum değil, çalışan sistem.\n\n#YapayZeka #YapayZekaEgitimi #KVKK #VeriGizliligi #CocuklarVeTeknoloji #Ebeveyn #Ogretmen #DijitalGuvenlik #Egitim #CocuklarIcinYapayZeka",
@@ -37,5 +37,8 @@
       "altText": "Ne yapmalı: ebeveyn ve öğretmen için iki soru, eğitimi hazırlayan için tek soru; Hayrettin Şendil PMP künyesi"
     }
   ],
-  "bioUrl": "https://hayrettinsendil.tr/blog/cocuga-yapay-zekayi-anlatirken-toplamadigim-veri?utm_source=instagram&utm_medium=social&utm_campaign=karusel-cocuk-veri"
+  "bioUrl": "https://hayrettinsendil.tr/blog/cocuga-yapay-zekayi-anlatirken-toplamadigim-veri?utm_source=instagram&utm_medium=social&utm_campaign=karusel-cocuk-veri",
+  "postedId": "17912564421309279",
+  "publishedAt": "2026-11-05T07:02:37.697Z",
+  "url": "https://www.instagram.com/p/DfWcpNWlrrJ/"
 }
